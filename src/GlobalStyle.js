@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     // color: #858796;
     color: #000;
+    margin:0px;
   }
 
   #app {

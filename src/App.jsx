@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react'
 import WalletConnectDialog from './components/walletConnect/index';
 import GlobalStyle from './GlobalStyle';
+import Header from './components/header';
 const App = () => {
   const [openWalletConnect, setOpenWalletConnect] = useState(false);
   const [account, setAcount] = useState("");
@@ -18,7 +19,7 @@ const App = () => {
   
   return (
     <>
-    {(account == "" || account == null) ?  
+    {/* {(account == "" || account == null) ?  
      <button onClick={handleOpen}>Connect</button>
      :
      <>
@@ -39,7 +40,8 @@ const App = () => {
         }}
         setAcount={setAcount}
         setCode={setCode}
-      />
+      /> */}
+      <Header></Header>
       <GlobalStyle/>
     </>
   )

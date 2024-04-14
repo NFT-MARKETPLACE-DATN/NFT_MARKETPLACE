@@ -15,25 +15,19 @@ import NFT_logo from "../../images/logos/NFT-Marketplace.svg"
 import WalletConnect from './WalletConnect';
 import PropTypes from 'prop-types';
 
-import { getConnected } from "../../utils/walletConnet"
 
 const WalletConnectDialog = (props) => {
     const { visible, onClose, setAcount,setCode } = props;
     const onCloseDialog = () => {
         onClose();
     };
-
-    const onConnectWallet = async () => {
-        const account = await getConnected();
-        // setAcount(account.walletAddress);
-        // console.log(account);
-    }
+    
     return (
         <Dialog
             fullWidth
             maxWidth="xs"
             open={visible}
-            onClose={onCloseDialog}
+            // onClose={onCloseDialog}
             className='dialogs'
          
         >

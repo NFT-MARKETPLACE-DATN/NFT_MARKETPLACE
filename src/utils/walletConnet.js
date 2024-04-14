@@ -17,7 +17,7 @@ export const getConnected = async () => {
   // );
   // console.log('window.ethereum.isExodus', window.ethereum.isExodus);
   try {
-    if (!window.phantom?.solana) return;
+    // if (!window.phantom?.solana) return;
      let account = null;
      if ('phantom' in window) {
       const provider = window.phantom?.solana;
@@ -33,7 +33,7 @@ export const getConnected = async () => {
         }
         return {
           walletAddress: null,
-          code:1
+          code:2
         };
       }
     }

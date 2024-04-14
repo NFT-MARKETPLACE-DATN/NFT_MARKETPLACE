@@ -10,7 +10,6 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-
     Dialog,
     IconButton,
     Box,
@@ -26,6 +25,10 @@ const WalletConnect = (props) => {
     const {setAcount, onCloseDialog, setCode} = props;
     const onConnectWallet = async () => {
         const account = await getConnected();
+        console.log(account);
+        if(account.code == 1){
+            localStorage.setItem('walletAdress',account.walletAddress)
+        }
         setAcount(account.walletAddress);
         setCode(account.code);
         onCloseDialog();
@@ -35,7 +38,7 @@ const WalletConnect = (props) => {
         <WalletConnectStyle>
             <img className="marketplace-logo" src={NFT_logo} alt="marketplace" />
 
-            <div className="connect-title">Connect to NFT Marketplace</div>
+            <div className="connect-title">Connect to ArtChain</div>
 
             {/* <Grid container spacing="20px" className="listEx"> */}
                 <Grid
@@ -58,8 +61,8 @@ const WalletConnect = (props) => {
                             <img
                                 src={PhanTomWalletLogo}
                                 alt="PhanTom Wallet"
-                                height={32}
-                                width={32}
+                                height={35}
+                                width={35}
                                 className="logoImage"
                             />
                             <div className="itemName">

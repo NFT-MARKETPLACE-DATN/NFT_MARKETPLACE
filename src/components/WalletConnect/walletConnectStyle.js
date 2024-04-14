@@ -12,7 +12,16 @@ const WalletConnectStyle = styled.div`
        // border-radius:50%;
     }
     .connect-title{
-        margin-top:10px
+        margin-top:10px;
+        line-height:32px;
+        font-weight:600;
+        font-size:24px;
+
+        @media screen and (max-width: 400px) {
+            font-size:16px;
+            line-height:24px;
+            margin-top:5px;
+          }
     }
     .phantom-wallet{
         width:100%;
@@ -29,13 +38,20 @@ const WalletConnectStyle = styled.div`
                     display: flex;
                     align-items: center;
                     gap:10px;
+                    @media screen and (max-width: 400px) {
+                        gap:15px;
+                      }
                     .logoImage{
                         border-radius:50%;
                     }
                     .itemName{
                         font-size: 16px;
                         color: rgb(112, 112, 112);
-                        text-transform:capitalize;
+                        text-transform: capitalize;
+                        @media screen and (max-width: 400px) {
+                            font-size:14px;
+                            
+                          }
                     }
                 
                 }
