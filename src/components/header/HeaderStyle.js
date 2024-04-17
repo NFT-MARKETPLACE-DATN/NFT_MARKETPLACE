@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const HeaderStyle = styled.div`
     width: 100%;
     box-shadow: 0 0.15rem 1.75rem 0 rgb(58 59 69 / 15%);

@@ -60,7 +60,6 @@ const Header = () => {
     return (
         <>
             <HeaderStyle>
-
                 <Grid container className='bottomHeader'>
                     <Grid item xs={6} sm={5} className="right-header">
 
@@ -85,7 +84,6 @@ const Header = () => {
                                     Mint NFT
                                 </Button> */}
                             </Box>
-
                             {(account == "" || account == null) ?
                                 <Button
                                     className="connectBtn"
