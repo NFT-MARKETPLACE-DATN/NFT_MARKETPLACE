@@ -12,6 +12,9 @@ const HeaderStyle = styled.div`
         justify-content: flex-end;
         padding:10px 20px;
         background:rgb(255, 255, 255);
+        .right-header{
+
+        }
         .left-header{
             display: flex;
             .left-header-item{
@@ -20,10 +23,57 @@ const HeaderStyle = styled.div`
                 gap:10px;
                 justify-content: space-between;
                 @media screen and (max-width: 600px) {
-                    justify-content:unset;
+                    // justify-content:unset;
                     margin-left: 10px;
-
+                }
+                @media screen and (max-width: 400px) {
+                    margin-left: 5px;
+                }
+              .userLogin{
+                display:flex;
+                gap:15px;
+                @media screen and (max-width: 600px) {
+                  gap:5px;
+                }
+                @media screen and (max-width: 400px) {
+                  align-items:center;
+                  // gap:5px;
+                }
+                .userIcon{
+                  .userBtn {
+                    cursor: pointer;
+                    border: 0;
+                    padding: 0;
+                    font-size: 0px;
+                    // background-color: #e2e2e2;
+                    border-radius: 50%;
+                    border: 4px solid #f9f9f9;
+                    span {
+                      @media screen and (max-width: 993px) {
+                        display: none;
+                      }
+                    }
+                    img {
+                      height: 30px;
+                      width: 30px;
+                      border-radius: 50%;
+                      padding: 4px;
+                      @media screen and (max-width: 400px) {
+                        height: 25px;
+                        width: 25px;
+                        padding: 2px;
+                      }
+                      @media screen and (max-width: 280px) {
+                        height: 20px;
+                        width: 20px;
+                      }
+                    }
                   }
+                  .userBtnActive {
+                    border-color: #ccdbec;
+                  }
+                }
+              }
                 .disconnectBtn,
                 .connectBtn{
                     gap:10px;
@@ -32,11 +82,27 @@ const HeaderStyle = styled.div`
                     text-transform: capitalize;
                     border-radius: 10px;
                     @media screen and (max-width: 600px) {
-                        font-size: 14px;
+                        font-size: 13px;
                         min-width:100px;
                         gap:10px;
                       }
-                }
+                    @media screen and (max-width: 400px) {
+                        font-size: 12px;
+                        min-width:70px;
+                        height:90%;
+                        padding:0px;
+                        .loginIcon{
+                          display:none;
+                        }
+                        // gap:5px;
+                      }
+                      @media screen and (max-width: 280px) {
+                        font-size: 7px;
+                        height:80%;
+                        min-width:50px;
+                        padding:0px;
+                      }
+                  }
                 .connectBtn:hover{
                     background: linear-gradient(to right, rgb(205, 116, 204), rgb(255, 189, 89), rgb(112, 221, 136));
                 }
@@ -45,55 +111,53 @@ const HeaderStyle = styled.div`
 
                 }
 
-                .left-menu-mobile{
-                    @media screen and (max-width: 600px) {
-                        align-items: center;
-                        display: flex;
-                      }
-                    .menu-icon {
-                        width: 32px;
-                        height: 20px;
-                        position: relative;
-                        cursor: pointer;
-                        color: #004b9e;
-                        font-size: 12px;
-                        font-weight: bold;
-                        @media screen and (max-width: 430px) {
-                          font-size: 11px;
-                        }
-                      }
-                    .btnToggleMenu {
-                        border: 0;
-                        background: none;
-                        height:100%
-                        @media screen and (min-width: 600px) {
-                          display: none;
-                        }
-                    }
-                    .bar {
-                        width: 100%;
-                        height: 4px;
-                        background-color: #004b9e;
-                        margin-bottom: 6px;
-                        transition: transform 0.3s ease;
-                        border-radius: 20px;
-                      }
-                    .open .bar:first-child {
-                        transform: translateY(5px) rotate(45deg);
-                      }
-                    .bar:last-child {
-                        margin-bottom: 0;
-                      }
-                    .open .bar:last-child {
-                        transform: translateY(-5px) rotate(-45deg);
-                        margin-bottom: 4px;
-                      }
+                // .left-menu-mobile{
+                //     @media screen and (max-width: 600px) {
+                //         align-items: center;
+                //         display: flex;
+                //       }
+                //     .menu-icon {
+                //         width: 32px;
+                //         height: 20px;
+                //         position: relative;
+                //         cursor: pointer;
+                //         color: #004b9e;
+                //         font-size: 12px;
+                //         font-weight: bold;
+                //         @media screen and (max-width: 430px) {
+                //           font-size: 11px;
+                //         }
+                //       }
+                //     .btnToggleMenu {
+                //         border: 0;
+                //         background: none;
+                //         height:100%
+                //         @media screen and (min-width: 600px) {
+                //           display: none;
+                //         }
+                //     }
+                //     .bar {
+                //         width: 100%;
+                //         height: 4px;
+                //         background-color: #004b9e;
+                //         margin-bottom: 6px;
+                //         transition: transform 0.3s ease;
+                //         border-radius: 20px;
+                //       }
+                //     .open .bar:first-child {
+                //         transform: translateY(5px) rotate(45deg);
+                //       }
+                //     .bar:last-child {
+                //         margin-bottom: 0;
+                //       }
+                //     .open .bar:last-child {
+                //         transform: translateY(-5px) rotate(-45deg);
+                //         margin-bottom: 4px;
+                //       }
                    
-                }
+                // }
             }
-           
-           
-        }
+      }
      
     }
 

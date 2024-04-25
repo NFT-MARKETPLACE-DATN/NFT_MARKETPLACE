@@ -67,9 +67,9 @@ module.exports = (env, argv) => {
   const config = {
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
-      alias: {
-        '@pages': path.resolve(__dirname, './src/pages')
-      }
+      // alias: {
+      //   '@pages': path.resolve(__dirname, './src/pages')
+      // }
     },
     entry: ['./src/index.js'],
     module: {

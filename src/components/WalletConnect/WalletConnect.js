@@ -61,8 +61,8 @@ const WalletConnect = (props) => {
                             <img
                                 src={PhanTomWalletLogo}
                                 alt="PhanTom Wallet"
-                                height={35}
-                                width={35}
+                                height={50}
+                                width={50}
                                 className="logoImage"
                             />
                             <div className="itemName">

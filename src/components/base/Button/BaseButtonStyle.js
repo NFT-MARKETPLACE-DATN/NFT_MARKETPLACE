@@ -54,9 +54,15 @@ const BaseButtonStyle = styled.div`
         font-size: 12px;
         min-width: 100px;
       }
-      @media screen and (max-width: 280px) {
+      @media screen and (max-width: 400px) {
         padding: 6px;
-        font-size: 9px;
+        min-width: 70px;
+        font-size: 10px;
+      }
+      @media screen and (max-width: 280px) {
+        padding: 3px;
+        font-size: 7px;
+        min-width: 50px;
       }
     }
     button:hover {

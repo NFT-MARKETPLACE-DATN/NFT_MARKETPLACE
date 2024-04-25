@@ -50,9 +50,7 @@ const WalletConnectDialog = (props) => {
             </DialogTitle>
             <DialogContent
                 style={{
-                    marginTop: '10px',
                     height:"100%"
-
                 }}>
                 {/* <div className="login">PhanTom</div>
                     <button onClick={onConnectWallet}>Connect</button>

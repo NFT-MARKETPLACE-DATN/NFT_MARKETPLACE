@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     // color: #858796;
     color: #000;
     margin:0px;
+    background: #f0f3f5;
   }
 
   #app {
@@ -28,9 +29,16 @@ const GlobalStyle = createGlobalStyle`
         height:14px;
     }
   }
- .MuiDialog-paperFullWidth{
-    max-width:300px !important;
+//  .MuiDialog-paperFullWidth{
+//     max-width:300px !important;
+//   }
+  .MuiDialogContent-root{
+    @media screen and (max-width: 400px) {
+      padding:10px !important;
+    }
+     
   }
+
 `;
 
 export default GlobalStyle;
