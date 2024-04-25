@@ -45,6 +45,36 @@ const HomePage = () => {
             url: "",
             descrioption: "",
             pirce: 10
+        },
+        {
+            name: "3",
+            url: "",
+            descrioption: "",
+            pirce: 10
+        },
+        {
+            name: "3",
+            url: "",
+            descrioption: "",
+            pirce: 10
+        },
+        {
+            name: "3",
+            url: "",
+            descrioption: "",
+            pirce: 10
+        },
+        {
+            name: "3",
+            url: "",
+            descrioption: "",
+            pirce: 10
+        },
+        {
+            name: "3",
+            url: "",
+            descrioption: "",
+            pirce: 10
         }
     ]
 
@@ -80,7 +110,7 @@ const HomePage = () => {
                     <Grid container spacing={2}>
                         {listItem.map((item, index) => (
                             <Grid item xs={6} md={3} key={index}>
-                                <Card variant="outlined" style={{ width: "100%" }}>
+                                <Card variant="outlined" style={{ width: "100%", height:'200px'}}>
                                     <CardContent>
                                         {item.name}
                                     </CardContent>
