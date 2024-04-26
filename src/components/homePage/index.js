@@ -25,7 +25,7 @@ import HomePageStye from "./HomePageStyle";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import "swiper/swiper-bundle.css"
-
+import ItemList from "../listItem/index";
 const HomePage = () => {
     const listItem = [
         {
@@ -107,19 +107,7 @@ const HomePage = () => {
                         </Card>
                     </Box> */}
                     {/* <Box sx={{ flexGrow: 1 }}> */}
-                    <Grid container spacing={2}>
-                        {listItem.map((item, index) => (
-                            <Grid item xs={6} md={3} key={index}>
-                                <Card variant="outlined" style={{ width: "100%", height:'200px'}}>
-                                    <CardContent>
-                                        {item.name}
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        )
-
-                        )}
-                    </Grid>
+                        <ItemList data ={listItem} />
                     {/* </Box> */}
                 </div>
             </div>
