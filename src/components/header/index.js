@@ -19,7 +19,7 @@ import HeaderStyle from "./HeaderStyle";
 import WalletConnectDialog from "../walletConnect";
 import InstallPhanTomWallet from "../walletConnect/InstallPhanTomWallet";
 import BaseButton from '../base/Button';
-// import { MenuItem } from '@mui/base';
+import { toast } from 'react-toastify';
 
 const Header = () => {
     const [isOpenWalletConnect, setIsOpenWalletConnect] = useState(false);
@@ -45,7 +45,8 @@ const Header = () => {
         await window.phantom.solana.disconnect({ onlyIfTrusted: true });
         setAcount("")
         setCode()
-        localStorage.removeItem('walletAdress')
+        localStorage.removeItem('walletAdress');
+        // localStorage.clear();
     }
     const handleOpenUserInfo = (event) => {
         setBgColor("");
@@ -139,7 +140,7 @@ const Header = () => {
                                             </button>
                                             <Menu
                                                 anchorEl={anchorEl}
-                                                open={anchorEl}
+                                                open={open}
                                                 onClose={handleClose}
                                                 className="wrapHeaderMenu"
                                                 MenuListProps={{

@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
 //  .MuiDialog-paperFullWidth{
 //     max-width:300px !important;
 //   }
+.baseToast {
+  z-index: 9999999999999999 !important;
+}
   .MuiDialogContent-root{
     @media screen and (max-width: 400px) {
       padding:10px !important;

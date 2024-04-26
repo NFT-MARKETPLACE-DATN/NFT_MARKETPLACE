@@ -28,7 +28,7 @@ const ItemList = (props) => {
     <ListItemStyle>
       <Grid container spacing={2}>
         {data.map((item, index) => (
-          <Grid item xs={6} md={4} key={index}>
+          <Grid item xs={6} md={3} key={index}>
             <Card variant='outlined' style={{ width: '100%', height: '200px' }}>
               <CardContent>{item.name}</CardContent>
             </Card>

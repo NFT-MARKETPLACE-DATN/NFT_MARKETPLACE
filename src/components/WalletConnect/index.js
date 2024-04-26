@@ -14,7 +14,7 @@ import CloseIcon from "../../images/closeIc.svg";
 import NFT_logo from "../../images/logos/NFT-Marketplace.svg"
 import WalletConnect from './WalletConnect';
 import PropTypes from 'prop-types';
-
+import { toast } from 'react-toastify';
 
 const WalletConnectDialog = (props) => {
     const { visible, onClose, setAcount,setCode } = props;

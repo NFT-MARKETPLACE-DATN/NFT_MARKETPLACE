@@ -20,6 +20,7 @@ import {
     DialogTitle,
     DialogContent,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 
 const WalletConnect = (props) => {
     const {setAcount, onCloseDialog, setCode} = props;
@@ -31,7 +32,9 @@ const WalletConnect = (props) => {
         }
         setAcount(account.walletAddress);
         setCode(account.code);
+        toast.success("Success")
         onCloseDialog();
+       
         // console.log(account);
     }
     return (
