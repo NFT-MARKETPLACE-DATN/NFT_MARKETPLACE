@@ -5,6 +5,7 @@ const HeaderStyle = styled.div`
     box-shadow: 0 0.15rem 1.75rem 0 rgb(58 59 69 / 15%);
     position: sticky;
     z-index: 10;
+    top:0;
     // border-bottom: 1px solid #ccc;
     background-color: rgb(241, 245, 250);
     .bottomHeader{
@@ -21,7 +22,7 @@ const HeaderStyle = styled.div`
                 display: flex;
                 width: 100%;
                 gap:10px;
-                justify-content: space-between;
+                justify-content: flex-end;
                 @media screen and (max-width: 600px) {
                     // justify-content:unset;
                     margin-left: 10px;

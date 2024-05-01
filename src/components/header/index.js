@@ -55,7 +55,7 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null)
         setBgColor("#189e00");
-        
+
     };
     useEffect(() => {
         if (Number(code) == 0) {
@@ -82,7 +82,7 @@ const Header = () => {
                     </Grid>
                     <Grid item xs={8} sm={7} className="left-header">
                         <div className='left-header-item'>
-                            <Box
+                            {/* <Box
                                 alignContent={"center"}
                             >
                                 <BaseButton
@@ -91,15 +91,7 @@ const Header = () => {
                                     type="secondary"
                                     variant='contained'
                                 />
-                                {/* <Button
-                                    width="100%"
-                                    variant="contained"
-                                    className="btnMint"
-                                    color='secondary'
-                                    >
-                                    Mint NFT
-                                </Button> */}
-                            </Box>
+                            </Box> */}
                             {(account == "" || account == null) ?
                                 <Button
                                     className="connectBtn"
@@ -148,7 +140,10 @@ const Header = () => {
                                                 }}
                                             >
                                                 <MenuItem>
-                                                <div>asdfsdaf</div>
+                                                    <div>Profile</div>
+                                                </MenuItem>
+                                                <MenuItem>
+                                                    <div>Mint NFT</div>
                                                 </MenuItem>
                                             </Menu>
                                         </div>
@@ -156,29 +151,6 @@ const Header = () => {
 
                                 </>
                             }
-                            {/* <Box
-                                sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}
-                                className="left-menu-mobile"
-                            >
-                                <button
-                                    type="button"
-                                    className="btnToggleMenu"
-                                    onClick={event => {
-                                        handleClickMenuMobile(event);
-                                    }}
-                                >
-                                    <Box
-                                        className={
-                                            anchorMenuMobile ? 'menu-icon open' : 'menu-icon'
-                                        }
-                                    >
-                                        <div className="bar" />
-                                        <div className="bar" />
-                                        {anchorMenuMobile ? 'Close' : 'Menu'}
-
-                                    </Box>
-                                </button>
-                            </Box> */}
                         </div>
 
 

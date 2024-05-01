@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: sans-serif,Noto Sans JP ;
     font-size: 1rem;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
