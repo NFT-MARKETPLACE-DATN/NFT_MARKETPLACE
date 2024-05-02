@@ -20,7 +20,9 @@ const AccountPageStyle = styled.div`
     background-color: #ffff;
     // padding:0px 10px;
     margin: 0 10px;
+
     .accountInfo {
+      position: relative;
       .account-background {
         position: relative;
         max-height: 320px;
@@ -33,13 +35,36 @@ const AccountPageStyle = styled.div`
         }
       }
       .account-logo {
-        wight: 100%;
+        // width: 100%;
+        height: 40px;
+        @media screen and (max-width: 1000px) {
+          
+        }
         .logo {
           height: 120px;
           width: 120px;
           border-radius: 50%;
           padding: 4px;
+          // position: absolute;
+          // bottom: 10px;
+          position: relative;
+          top: -100px;
+          @media screen and (max-width: 1000px) {
+            height: 90px;
+            width: 90px;
+            // bottom: 30px;
+            top: -75px;
+          }
+          @media screen and (max-width: 600px) {
+            height: 60px;
+            width: 60px;
+            top: -45px;
+          }
+
         }
+      }
+      .account-name{
+        
       }
     }
   }

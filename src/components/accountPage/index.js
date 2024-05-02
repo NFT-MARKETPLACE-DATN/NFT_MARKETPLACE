@@ -57,7 +57,10 @@ const AccountPage = () => {
             <div className='account-logo'>
               <img className='logo' src={userIcon} alt="icon-account" style={{ backgroundColor: "#189e00" }}></img>
             </div>
-            <div className='account-name'></div>
+            <div className='account-name'>
+              Unnamed
+              <div></div>
+            </div>
           </div>
           <div className='accountTab'>
             <Tabs
