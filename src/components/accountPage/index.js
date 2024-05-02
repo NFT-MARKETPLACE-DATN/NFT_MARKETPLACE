@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 
 import AccountPageStyle from './AccountPageStyle';
-
+import userIcon from "../../images/logos/account.svg";
 
 const AccountPage = () => {
   const [value, setValue] = useState("One");
@@ -51,8 +51,12 @@ const AccountPage = () => {
       <AccountPageStyle>
         <div className='account'>
           <div className='accountInfo'>
-            <div className='account-background'></div>
-            <div className='account-logo'></div>
+            <div className='account-background'>
+              <div className='backgroundInfo'></div>
+            </div>
+            <div className='account-logo'>
+              <img className='logo' src={userIcon} alt="icon-account" style={{ backgroundColor: "#189e00" }}></img>
+            </div>
             <div className='account-name'></div>
           </div>
           <div className='accountTab'>
