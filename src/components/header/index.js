@@ -20,6 +20,9 @@ import WalletConnectDialog from "../walletConnect";
 import InstallPhanTomWallet from "../walletConnect/InstallPhanTomWallet";
 import BaseButton from '../base/Button';
 import { toast } from 'react-toastify';
+// import history from '../../utils/history';
+
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [isOpenWalletConnect, setIsOpenWalletConnect] = useState(false);
@@ -32,7 +35,8 @@ const Header = () => {
     // const [isOpen, setIsOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-
+    const location = useLocation();
+    const navigate = useNavigate();
     // const handleClickMenuMobile = event => {
     //     setAnchorMenuMobile(event.currentTarget);
     //     setIsOpen(!isOpen);
@@ -139,8 +143,12 @@ const Header = () => {
                                                     'aria-labelledby': 'basic-button',
                                                 }}
                                             >
-                                                <MenuItem>
-                                                    <div>Profile</div>
+                                                <MenuItem >
+                                                    <div onClick={()=>{
+                                                        // history.push('/account');
+                                                        navigate('/account');
+                                                        handleClose();
+                                                    }}>Profile</div>
                                                 </MenuItem>
                                                 <MenuItem>
                                                     <div>Mint NFT</div>

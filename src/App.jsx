@@ -4,7 +4,7 @@ import GlobalStyle from './GlobalStyle'
 import Header from './components/header'
 import HomePage from './components/homePage'
 import BaseToast from './components/base/Toast'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ErroPage from './components/erroPage'
 import AccountPage from './components/accountPage'
 const App = () => {
@@ -23,16 +23,17 @@ const App = () => {
   // }
   return (
     <>
-      <Header />
-      <BaseToast />
-      <BrowserRouter>
+      {/* <Router> */}
+        <Header />
+        <BaseToast />
+        {/* <BrowserRouter> */}
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/users/*' element={<ErroPage></ErroPage>} />
-          <Route path='/account' element={<AccountPage/>}></Route>
+          <Route path='/account' element={<AccountPage />}></Route>
         </Routes>
-      </BrowserRouter>
-
+        {/* </BrowserRouter> */}
+      {/* </Router> */}
       <GlobalStyle />
     </>
   )
