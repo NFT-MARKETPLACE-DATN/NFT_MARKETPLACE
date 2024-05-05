@@ -28,11 +28,11 @@ const WalletConnect = (props) => {
         const account = await getConnected();
         console.log(account);
         if(account.code == 1){
-            localStorage.setItem('walletAdress',account.walletAddress)
+            localStorage.setItem('walletAdress',account.walletAddress);
+            toast.success("Success")
         }
         setAcount(account.walletAddress);
         setCode(account.code);
-        toast.success("Success")
         onCloseDialog();
        
         // console.log(account);
