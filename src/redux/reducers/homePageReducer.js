@@ -10,7 +10,7 @@ const homePageReducer = (state = initialState, action) => {
         case FETCH_DATA:
             return {
                 ...state,
-                account: action.payload,
+                account: action.data,
                 walllet: true,
             };
         default:

@@ -4,7 +4,8 @@ import {fetchDatas} from "../actions/homePageAction";
 
 function* fetchDataSaga() {
     try {
-        const todos = yield call(getTodos);
+        console.log("fasdfasdf");
+        // const todos = yield call();
     } catch (error) {
     }
 }

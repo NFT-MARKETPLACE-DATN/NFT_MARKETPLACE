@@ -1,5 +1,6 @@
 import {FETCH_DATA} from "../constants/homePageConstant";
 
-export const fetchDatas = () => ({
-  type: FETCH_DATA
+export const fetchDatas = (data) => ({
+  type: FETCH_DATA,
+  data
 })
