@@ -118,27 +118,32 @@ const HomePage = () => {
                     modules={[Navigation, Pagination, Scrollbar, A11y,EffectCube,Autoplay]}
                     rewind
                     // navigation
-                    grabCursor={true}
+                    // grabCursor={true}
                     className="mySwiper"
                     loop
                     autoplay={{
                         delay: 2500,
                         disableOnInteraction: false,
                       }}
+                    spaceBetween={30}
                     // pagination={{ clickable: true }}
                     // scrollbar={{ draggable: true }}
-                    slidesPerView={2}
-                    effect={'cube'}
-                    cubeEffect={{
-                        shadow: true,
-                        slideShadows: true,
-                        shadowOffset: 20,
-                        shadowScale: 0.94,
-                      }}
+                    slidesPerView={3}
+                    // effect={'cube'}
+                    // cubeEffect={{
+                    //     shadow: true,
+                    //     slideShadows: true,
+                    //     shadowOffset: 20,
+                    //     shadowScale: 0.94,
+                    //   }}
                 >
                     <SwiperSlide><img className='slide1' src='https://api.mintty.com/_upload_service/image/10f7fe94-26cc-4257-92f7-f31f22bc85b2-1651116156747' alt='imgae' /></SwiperSlide>
                     <SwiperSlide>Slide 2</SwiperSlide>
                     <SwiperSlide>Slide 3</SwiperSlide>
+                    <SwiperSlide>Slide 4</SwiperSlide>
+                    <SwiperSlide>Slide 5</SwiperSlide>
+                    <SwiperSlide>Slide 6</SwiperSlide>
+
                 </Swiper>
             </div>
             <div className='main-homepage'>
