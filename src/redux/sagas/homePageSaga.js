@@ -2,9 +2,9 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import {FETCH_DATA} from "../constants/homePageConstant";
 import {fetchDatas} from "../actions/homePageAction";
 
-function* fetchDataSaga() {
+function* fetchDataSaga(data) {
     try {
-        console.log("fasdfasdf");
+        console.log(data.data);
         // const todos = yield call();
     } catch (error) {
     }

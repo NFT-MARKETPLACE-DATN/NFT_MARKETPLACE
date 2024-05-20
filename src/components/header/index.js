@@ -86,16 +86,6 @@ const Header = () => {
                     </Grid>
                     <Grid item xs={8} sm={7} className="left-header">
                         <div className='left-header-item'>
-                            {/* <Box
-                                alignContent={"center"}
-                            >
-                                <BaseButton
-                                    text="Mint NFT"
-                                    className="btnMint"
-                                    type="secondary"
-                                    variant='contained'
-                                />
-                            </Box> */}
                             {(account == "" || account == null) ?
                                 <Button
                                     className="connectBtn"
@@ -143,14 +133,18 @@ const Header = () => {
                                                     'aria-labelledby': 'basic-button',
                                                 }}
                                             >
-                                                <MenuItem >
-                                                    <div onClick={()=>{
+                                                <MenuItem onClick={()=>{
                                                         // history.push('/account');
                                                         navigate('/account');
                                                         handleClose();
-                                                    }}>Profile</div>
+                                                    }}>
+                                                    <div >Profile</div>
                                                 </MenuItem>
-                                                <MenuItem>
+                                                <MenuItem 
+                                                onClick={()=>{
+                                                    navigate('/mint');
+                                                    handleClose();
+                                                }}>
                                                     <div>Mint NFT</div>
                                                 </MenuItem>
                                             </Menu>
