@@ -148,7 +148,8 @@ module.exports = (env, argv) => {
       ...config.plugins,
       new webpack.ProgressPlugin(),
       new CompressionPlugin({
-        test: /\.(css|js)$/,
+        filename: '[path][base].gz',
+        test: /\.(css|js|html|svg)$/,
         algorithm: 'brotliCompress'
       }),
       new CleanWebpackPlugin()

@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "build:analyze": "webpack --mode production --env analyze",
-    "preview": "serve dist/ -s",
+    "preview": "serve build/ -s",
     "lint": "eslint --ext js,jsx,ts,tsx src/",
     "lint:fix": "eslint --fix --ext js,jsx,ts,tsx src/"
   },
@@ -28,6 +28,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/styles": "^5.15.15",
     "@mui/system": "^5.15.15",
+    "formik": "^2.4.6",
     "history": "^5.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
