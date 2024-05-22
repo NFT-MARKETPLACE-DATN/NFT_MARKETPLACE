@@ -17,7 +17,37 @@ const MintNFTStyle = styled.div`
         background-color: #ffff;
       }
 
-
+      .imageNFT {
+        position: relative;
+        .imageInput {
+          position: absolute;
+          height: 100%;
+          div > input {
+            height: 260px;
+            padding:0px;
+            // max-width: 468px;
+            width:100%;
+            opacity: 0;
+          }
+        }
+      }
+      .uploadImgBtn {
+        width: 100%;
+        height: 260px;
+        background-color: #f1f5fa;
+        border: none;
+        padding: 60px;
+        border-radius: 6px;
+    
+        .uploadImgText {
+          font-size: 14px;
+          color: #707070;
+          margin-top: 40px;
+        }
+      }
+      .imgInfoError {
+        background-color: #ffe8e8;
+      }
 `
 
 export default MintNFTStyle
