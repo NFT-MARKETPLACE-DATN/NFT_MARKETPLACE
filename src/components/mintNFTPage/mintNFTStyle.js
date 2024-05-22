@@ -15,39 +15,76 @@ const MintNFTStyle = styled.div`
       }
       .MintNFTPage{
         background-color: #ffff;
+        display:flex;
+        flex-direction: column;
+        @media screen and (min-width: 1200px) {
+          padding:0 4rem 4rem 4rem;
+          // padding-right:4rem;
       }
-
-      .imageNFT {
-        position: relative;
-        .imageInput {
-          position: absolute;
-          height: 100%;
-          div > input {
-            height: 260px;
-            padding:0px;
-            // max-width: 468px;
-            width:100%;
-            opacity: 0;
+        .header{
+          .headerInfo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            max-width:600px;
           }
         }
-      }
-      .uploadImgBtn {
-        width: 100%;
-        height: 260px;
-        background-color: #f1f5fa;
-        border: none;
-        padding: 60px;
-        border-radius: 6px;
-    
-        .uploadImgText {
-          font-size: 14px;
-          color: #707070;
-          margin-top: 40px;
+        .formCreateNFT{
+          display:flex;
+          width:100%;
+          height:100%;
+          gap:8vw;
+          .imageNFT {
+            position: relative;
+            width:100%;
+            max-width:600px;
+            max-height:600px;
+            .imageInput {
+              position: absolute;
+              height: 100%;
+              div{
+                height: 100%;
+                input {
+                  // height: 260px;
+                  height: 100%;
+                  padding:0px;
+                  // max-width: 468px;
+                  width:100%;
+                  opacity: 0;
+                }
+              }
+              // div > 
+            }
+            .uploadImgBtn {
+              width: 100%;
+              // height: 260px;
+              height: 100%;
+              background-color: #f1f5fa;
+              border: none;
+              padding: 60px;
+              border-radius: 6px;
+          
+              .uploadImgText {
+                font-size: 14px;
+                color: #707070;
+                margin-top: 40px;
+              }
+            }
+            .imgInfoError {
+              background-color: #ffe8e8;
+            }
+          }
+          .imformationNFT{
+            max-width:600px;
+            width:100%;
+            max-hieght:100%;
+          }
+          
         }
       }
-      .imgInfoError {
-        background-color: #ffe8e8;
-      }
+     
+     
 `
 
 export default MintNFTStyle
