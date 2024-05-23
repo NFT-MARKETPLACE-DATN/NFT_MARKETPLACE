@@ -46,16 +46,18 @@ const MintNFTPage = () => {
   return (
     <MintNFTStyle>
       <div className='MintNFTPage'>
-        <div className='header'>
+        <div className='header comon-style'>
           <div className='headerInfo'>
             <span className='title'>Create an NFT</span>
             <span className='informationMinNFT'>
               Once your item in minted you will not be able to change any of its information
             </span>
           </div>
+          <div className='headerInfo'></div>
         </div>
+
         {/* <div > */}
-        <form onSubmit={formik.handleSubmit} className='formCreateNFT'>
+        <form onSubmit={formik.handleSubmit} className='formCreateNFT comon-style'>
           <div className='imageNFT'>
             <TextField
               key={fileKey}
@@ -144,8 +146,8 @@ const MintNFTPage = () => {
             </Box>
           </div>
         </form>
-        {/* </div> */}
-      </div>
+        </div>
+      {/* </div> */}
     </MintNFTStyle>
   )
 }

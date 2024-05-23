@@ -23,23 +23,26 @@ import {
   CardMedia
 } from '@mui/material'
 import ListItemStyle from './ListItemStyle'
-import PhanTomWalletLogo from "../../images/logos/PhantomIcon.svg";
+import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg'
 
 const ItemList = (props) => {
   const { data } = props
+
+  const handlerClick = (i) => {
+    console.log(i)
+  }
   return (
     <ListItemStyle>
-      <Grid className='gird' container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid className='gird' container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {data.map((item, index) => (
           <Grid item xs={6} md={3} key={index}>
-            <Card variant='outlined' style={{ width: '100%', height: '300px' }}>
-            <CardMedia alt='fasdf' image={PhanTomWalletLogo} component='img' height='180px'></CardMedia>
-              <CardContent >
-                {item.name}</CardContent>
-              <CardActions>
-                <Button>Click </Button>
-              </CardActions>
-            </Card>
+            <Button onClick={() => handlerClick(item)}>
+              <Card variant='outlined' className='infoNFT'>
+                <CardMedia alt='fasdf' image={PhanTomWalletLogo} component='img' className='imageNFT'></CardMedia>
+                <CardContent className='nameNFT'>{item.name}</CardContent>
+                {/* <CardActions>Click</CardActions> */}
+              </Card>
+            </Button>
           </Grid>
         ))}
       </Grid>

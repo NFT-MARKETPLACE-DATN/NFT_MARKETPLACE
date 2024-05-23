@@ -169,7 +169,7 @@ const HomePage = () => {
                         </Card>
                     </Box> */}
                     {/* <Box sx={{ flexGrow: 1 }}> */}
-                    <ItemList data={listItem} />
+                    <ItemList data={listItem1} />
                     {/* </Box> */}
                 </div>
             </div>

@@ -21,6 +21,11 @@ const MintNFTStyle = styled.div`
           padding:0 4rem 4rem 4rem;
           // padding-right:4rem;
       }
+        .comon-style{
+          display: flex;
+          justify-content: center;
+          gap: 8vw;
+        }
         .header{
           .headerInfo{
             display: flex;
@@ -31,10 +36,8 @@ const MintNFTStyle = styled.div`
           }
         }
         .formCreateNFT{
-          display:flex;
           width:100%;
           height:100%;
-          gap:8vw;
           .imageNFT {
             position: relative;
             width:100%;
