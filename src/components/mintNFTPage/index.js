@@ -53,7 +53,7 @@ const MintNFTPage = () => {
               Once your item in minted you will not be able to change any of its information
             </span>
           </div>
-          <div className='headerInfo'></div>
+          <div className='headerInfo headerMobi'></div>
         </div>
 
         {/* <div > */}
@@ -109,6 +109,7 @@ const MintNFTPage = () => {
                 variant='outlined'
                 placeholder='Name your NFT'
                 type='text'
+                fullWidth
                 name='nameNFT'
                 error={formik.touched.nameNFT && !!formik.errors.nameNFT}
                 helperText={formik.touched.nameNFT && formik.errors.nameNFT}
@@ -121,6 +122,7 @@ const MintNFTPage = () => {
                 variant='outlined'
                 //  placeholder="Name your NFT"
                 type='text'
+                fullWidth
                 name='supplyNFT'
                 //  onBlur={formik.handleBlur}
                 error={formik.touched.supplyNFT && !!formik.errors.supplyNFT}
