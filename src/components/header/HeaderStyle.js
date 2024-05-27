@@ -78,6 +78,7 @@ const HeaderStyle = styled.div`
                 .disconnectBtn,
                 .connectBtn{
                     gap:10px;
+                    with:100%;
                     min-width:110px;
                     font-size: 16px;
                     text-transform: capitalize;

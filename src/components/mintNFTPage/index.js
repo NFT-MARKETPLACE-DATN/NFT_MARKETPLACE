@@ -26,10 +26,14 @@ import {
 } from '@mui/material'
 import { validate } from './validate'
 import { toast } from 'react-toastify'
+import DeleteIcon from '../../images/logos/deleteIcon.svg'
 
 const MintNFTPage = () => {
-  const [fileKey, setFileKey] = useState(0)
+  // const [fileKey, setFileKey] = useState(0)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
+  const handlerDeleteImageNFT = () => {
+    setImagePreviewUrl(null)
+  }
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -59,47 +63,89 @@ const MintNFTPage = () => {
         {/* <div > */}
         <form onSubmit={formik.handleSubmit} className='formCreateNFT comon-style'>
           <div className='imageNFT'>
-            <TextField
-              key={fileKey}
-              fullWidth
-              hiddenLabel
-              name='imageNFT'
-              inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
-              type='file'
-              variant='outlined'
-              onChange={(event) => {
-                console.log(event.target.files[0])
-                const file = event.target.files[0]
-                // console.log('file onchange', file);
-                const fileSize = file.size / (1024 * 1024)
-                if (fileSize > 10) {
-                  toast.error('10MB 未満の Img ファイルをインポートしてください。')
-                  return
-                }
-                if (file) {
-                  const fileUrl = URL.createObjectURL(file)
-                  setImagePreviewUrl(fileUrl)
-                  formik.setFieldValue('imageNFT', fileUrl)
-                  setFileKey(fileKey + 1)
-                }
-              }}
-              error={formik.touched.imageNFT && !!formik.errors.imageNFT}
-              helperText={formik.touched.imageNFT && formik.errors.imageNFT}
-              className='imageInput'
-            />
-            <button
-              type='button'
-              className={
-                formik.touched.imageNFT && formik.errors.imageNFT ? 'uploadImgBtn imgInfoError' : 'uploadImgBtn'
-              }
-            >
-              {/* <img src={CsvIcon} alt="file-csv" /> */}
-              <div className='uploadImgText'>ここにファイルをドラッグ＆ドロップしてください。</div>
-            </button>
-            {imagePreviewUrl && (
-              <div>
-                <img src={imagePreviewUrl} alt='Preview' style={{ maxWidth: '100%', marginTop: '20px' }} />
-              </div>
+            {!imagePreviewUrl ? (
+              <>
+                <TextField
+                  key='Image' //fileKey
+                  fullWidth
+                  hiddenLabel
+                  name='imageNFT'
+                  inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
+                  type='file'
+                  variant='outlined'
+                  onChange={(event) => {
+                    console.log(event.target.files[0])
+                    const file = event.target.files[0]
+                    if (file) {
+                      const fileSize = file.size / (1024 * 1024)
+                      if (fileSize > 10) {
+                        toast.error('10MB 未満の Img ファイルをインポートしてください。')
+                        return
+                      }
+                      const fileUrl = URL.createObjectURL(file)
+                      setImagePreviewUrl(fileUrl)
+                      formik.setFieldValue('imageNFT', fileUrl)
+                      // setFileKey(fileKey + 1)
+                    }
+                  }}
+                  error={formik.touched.imageNFT && !!formik.errors.imageNFT}
+                  helperText={formik.touched.imageNFT && formik.errors.imageNFT}
+                  className='imageInput'
+                />
+                <button
+                  type='button'
+                  className={
+                    formik.touched.imageNFT && formik.errors.imageNFT ? 'uploadImgBtn imgInfoError' : 'uploadImgBtn'
+                  }
+                >
+                  {/* <img src={CsvIcon} alt="file-csv" /> */}
+                  <div className='uploadImgText'>Upload Img</div>
+                </button>
+              </>
+            ) : (
+              <>
+                <div className='imageHover'>
+                  <img src={imagePreviewUrl} alt='Preview' style={{ maxWidth: '100%' }} />
+                </div>
+                <div className='hoverNFT'>
+                  <TextField
+                    key='Image'
+                    fullWidth
+                    hiddenLabel
+                    name='imageNFT'
+                    inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
+                    type='file'
+                    variant='outlined'
+                    onChange={(event) => {
+                      console.log(event.target.files[0])
+                      const file = event.target.files[0]
+                      if (file) {
+                        const fileSize = file.size / (1024 * 1024)
+                        if (fileSize > 10) {
+                          toast.error('10MB 未満の Img ファイルをインポートしてください。')
+                          return
+                        }
+                        const fileUrl = URL.createObjectURL(file)
+                        setImagePreviewUrl(fileUrl)
+                        formik.setFieldValue('imageNFT', fileUrl)
+                        // setFileKey(fileKey + 1)
+                      }
+                    }}
+                    error={formik.touched.imageNFT && !!formik.errors.imageNFT}
+                    helperText={formik.touched.imageNFT && formik.errors.imageNFT}
+                    className='imageInput imgExist'
+                  />
+                  <button
+                    type='button'
+                    className={
+                      formik.touched.imageNFT && formik.errors.imageNFT ? 'deleteImgIcon imgInfoError' : 'deleteImgIcon'
+                    }
+                    onClick={handlerDeleteImageNFT}
+                  >
+                    <img src={DeleteIcon} />
+                  </button>
+                </div>
+              </>
             )}
           </div>
           <div className='imformationNFT'>
@@ -148,7 +194,7 @@ const MintNFTPage = () => {
             </Box>
           </div>
         </form>
-        </div>
+      </div>
       {/* </div> */}
     </MintNFTStyle>
   )

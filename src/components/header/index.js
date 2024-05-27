@@ -107,7 +107,7 @@ const Header = () => {
                                             onMouseEnter={() => setIsHovered(true)}
                                             onMouseLeave={() => setIsHovered(false)}
                                         >
-                                            {isHovered ? `Disconnect` : `${account.substring(0, 5)}... | {}`}
+                                            {isHovered ? `Disconnect` : `${account.substring(0, 3)}... | 10 SOL`}
                                         </Button>
                                         <div className='userIcon'>
                                             <button

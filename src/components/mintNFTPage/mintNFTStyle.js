@@ -49,14 +49,33 @@ const MintNFTStyle = styled.div`
         align-items: center;
         padding: 15px 0 15px 0;
       }
+      .imageNFT:hover{
+        background-color: #e0e0e0;
+        .hoverNFT{
+          display:block;
+        }
+      }
       .imageNFT {
         position: relative;
         width: 100%;
         max-width: 600px;
         max-height: 600px;
+        overflow: hidden;
+        @media screen and (max-width: 1200px) {
+          max-width: 500px;
+          max-height: 500px;
+        }
         @media screen and (max-width: 650px) {
-          max-width: 400px;
-          max-height: 400px;
+          max-width: 380px;
+          max-height: 380px;
+        }
+        @media screen and (max-width: 450px) {
+          max-width: 270px;
+          max-height: 270px;
+        }
+        @media screen and (max-width: 320px) {
+          max-width: 200px;
+          max-height: 200px;
         }
         .imageInput {
           position: absolute;
@@ -91,6 +110,27 @@ const MintNFTStyle = styled.div`
         }
         .imgInfoError {
           background-color: #ffe8e8;
+        }
+        .imageHover{
+          width: 100%;
+          // height:100%;
+          img{
+            width: 100%;
+            // height:100%;
+          }
+        }
+        .hoverNFT{
+          display:none;
+        }
+        .imgExist{
+          top:0;
+        }
+        .deleteImgIcon{
+          position:absolute;
+          top:3px;
+          right:3px;
+          border: 0px;
+          background-color: #e0e0e0;
         }
       }
       .imformationNFT {
