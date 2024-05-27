@@ -21,7 +21,7 @@ export const getConnected = async () => {
      let account = null;
      if ('phantom' in window) {
       const provider = window.phantom?.solana;
-  
+      
       if (provider?.isPhantom) {
         let address = await provider.connect();
         account = address.publicKey.toString();

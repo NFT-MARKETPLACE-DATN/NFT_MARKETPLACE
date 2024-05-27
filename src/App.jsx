@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import WalletConnectDialog from './components/walletConnect/index'
+import WalletConnectDialog from './containers/WalletConnect/index'
 import GlobalStyle from './GlobalStyle';
 import Header from './components/header';
 import HomePage from './components/homePage';
-import BaseToast from './components/base/Toast';
+import BaseToast from './containers/base/Toast';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ErroPage from './components/erroPage';
 import AccountPage from './components/accountPage';
 import MintNFTPage from './components/mintNFTPage';
+import DetailNFTPage from './components/nftPage';
 const App = () => {
   // const [openWalletConnect, setOpenWalletConnect] = useState(false)
   // const [account, setAcount] = useState('')
@@ -33,6 +34,7 @@ const App = () => {
           <Route path='/users/*' element={<ErroPage></ErroPage>} />
           <Route path='/account' element={<AccountPage />}></Route>
           <Route path='/mint' element={<MintNFTPage />}></Route>
+          <Route path='/nft' element={<DetailNFTPage/>}></Route>
         </Routes>
         {/* </BrowserRouter> */}
       {/* </Router> */}

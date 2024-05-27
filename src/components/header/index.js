@@ -16,9 +16,9 @@ import WalletIcon from '@mui/icons-material/Wallet';
 import userIcon from "../../images/logos/account.svg"
 import userIconClick from "../../images/logos/accountClick.svg"
 import HeaderStyle from "./HeaderStyle";
-import WalletConnectDialog from "../walletConnect";
-import InstallPhanTomWallet from "../walletConnect/InstallPhanTomWallet";
-import BaseButton from '../base/Button';
+import WalletConnectDialog from "../../containers/WalletConnect";
+import InstallPhanTomWallet from "../../containers/WalletConnect/InstallPhanTomWallet";
+import BaseButton from '../../containers/base/Button';
 import { toast } from 'react-toastify';
 // import history from '../../utils/history';
 
