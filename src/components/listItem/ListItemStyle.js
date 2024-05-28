@@ -8,12 +8,21 @@ const ListItemStyle = styled.div`
         .css-1v2c24a-MuiGrid-root {
             margin: 0;
         }
+        // .bttNFT:hover +.buyNFT {
+        //     display:block;
+        // }
+        .itemNFT:hover{
+            .buyNFT {
+                display:block;
+            }
+        }
         .itemNFT{
             // padding:12px;
             padding-left:0px;
             // @media screen and (max-width: 1600px) {
             //     padding-left: 0px ;
             //   }
+           
             .bttNFT{
                 width:100%;
                 padding:0px;
@@ -65,6 +74,10 @@ const ListItemStyle = styled.div`
                     }
                     .nameNFT{
                        
+                    }
+                    .buyNFT{
+                        // display:none;
+                        padding-bottom: 10px;
                     }
                 }
             }

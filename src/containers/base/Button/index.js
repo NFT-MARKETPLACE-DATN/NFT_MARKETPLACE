@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import BaseButtonStyle from './BaseButtonStyle';
 
 const BaseButton = props => {
-  const { text, className, divClassName, type, width, height, typeButton, variant } = props;
+  const { text, className, divClassName, type, width, height, typeButton, variant,icon } = props;
   const renderClassName = () => {
     switch (type) {
       case 'primary':
@@ -30,7 +30,7 @@ const BaseButton = props => {
           sx={{ width, height, boxShadow: 'none !important' }}
         //   {...props}
         >
-          {text}
+          {text} {icon? <img src={icon} className='icon'/>:""}
         </Button>
       </div>
     </BaseButtonStyle>
@@ -46,6 +46,7 @@ BaseButton.propTypes = {
   divClassName: PropTypes.string,
   typeButton: PropTypes.string,
   variant:PropTypes.string,
+  icon:PropTypes.any,
 };
 
 export default BaseButton;

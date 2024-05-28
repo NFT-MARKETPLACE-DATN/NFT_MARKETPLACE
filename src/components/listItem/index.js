@@ -22,10 +22,11 @@ import {
   Button,
   CardMedia
 } from '@mui/material'
-import ListItemStyle from './ListItemStyle'
-import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg'
+import ListItemStyle from './ListItemStyle';
+import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg';
+import BuyIcon from '../../images/logos/BuyIcon.svg'
 import { useNavigate } from 'react-router-dom';
-
+import BaseButton from '../../containers/base/Button';
 const ItemList = (props) => {
   const { data } = props;
   const navigate = useNavigate();
@@ -43,6 +44,17 @@ const ItemList = (props) => {
                 <CardMedia alt='fasdf' image={PhanTomWalletLogo} component='img' className='imageNFT'></CardMedia>
                 <CardContent className='nameNFT'>{item.name}</CardContent>
                 {/* <CardActions>Click</CardActions> */}
+                <div className="buyNFT">
+                <BaseButton text='Buy' className='' type='primary' width='90%' icon={BuyIcon}/>
+                {/* <Button 
+                 variant="outlined"
+                 size="large"
+                 type='primary'
+                >Buy</Button> */}
+                </div>
+               
+              
+                
               </Card>
             </Button>
           </Grid>

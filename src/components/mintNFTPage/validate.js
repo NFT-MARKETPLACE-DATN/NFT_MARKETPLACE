@@ -4,7 +4,7 @@ export const validate = values => {
       errors.imageNFT = 'IamgeError';
     }
     if(!values.nameNFT){
-      errors.imageNFT = "No name"
+      errors.nameNFT = "No name"
     }
     if(!values.supplyNFT){
       errors.supplyNFT = " no ádsf"

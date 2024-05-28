@@ -27,7 +27,8 @@ import {
 import { validate } from './validate'
 import { toast } from 'react-toastify'
 import DeleteIcon from '../../images/logos/deleteIcon.svg'
-
+import UploadIcon from '../../images/logos/UploadIcon.svg'
+import BaseButton from '../../containers/base/Button'
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
@@ -45,157 +46,176 @@ const MintNFTPage = () => {
     validate,
     onSubmit: async (values) => {
       // await dispatch(register(values));
+      // console.log("asdfsdf");
+      console.log(values.descriptionNFT)
     }
   })
   return (
     <MintNFTStyle>
       <div className='MintNFTPage'>
-        <div className='header comon-style'>
-          <div className='headerInfo'>
-            <span className='title'>Create an NFT</span>
-            <span className='informationMinNFT'>
-              Once your item in minted you will not be able to change any of its information
-            </span>
+          <div className='header comon-style'>
+            <div className='headerInfo'>
+              <span className='title'>Create an NFT</span>
+              <span className='informationMinNFT'>
+                Once your item in minted you will not be able to change any of its information
+              </span>
+            </div>
+            <div className='headerInfo headerMobi'></div>
           </div>
-          <div className='headerInfo headerMobi'></div>
-        </div>
 
-        {/* <div > */}
-        <form onSubmit={formik.handleSubmit} className='formCreateNFT comon-style'>
-          <div className='imageNFT'>
-            {!imagePreviewUrl ? (
-              <>
-                <TextField
-                  key='Image' //fileKey
-                  fullWidth
-                  hiddenLabel
-                  name='imageNFT'
-                  inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
-                  type='file'
-                  variant='outlined'
-                  onChange={(event) => {
-                    console.log(event.target.files[0])
-                    const file = event.target.files[0]
-                    if (file) {
-                      const fileSize = file.size / (1024 * 1024)
-                      if (fileSize > 10) {
-                        toast.error('10MB 未満の Img ファイルをインポートしてください。')
-                        return
-                      }
-                      const fileUrl = URL.createObjectURL(file)
-                      setImagePreviewUrl(fileUrl)
-                      formik.setFieldValue('imageNFT', fileUrl)
-                      // setFileKey(fileKey + 1)
-                    }
-                  }}
-                  error={formik.touched.imageNFT && !!formik.errors.imageNFT}
-                  helperText={formik.touched.imageNFT && formik.errors.imageNFT}
-                  className='imageInput'
-                />
-                <button
-                  type='button'
-                  className={
-                    formik.touched.imageNFT && formik.errors.imageNFT ? 'uploadImgBtn imgInfoError' : 'uploadImgBtn'
-                  }
-                >
-                  {/* <img src={CsvIcon} alt="file-csv" /> */}
-                  <div className='uploadImgText'>Upload Img</div>
-                </button>
-              </>
-            ) : (
-              <>
-                <div className='imageHover'>
-                  <img src={imagePreviewUrl} alt='Preview' style={{ maxWidth: '100%' }} />
-                </div>
-                <div className='hoverNFT'>
+          <form onSubmit={formik.handleSubmit} className='formCreateNFT comon-style'>
+            <div className='imageNFT'>
+              {!imagePreviewUrl ? (
+                <>
                   <TextField
-                    key='Image'
+                    key='Image' //fileKey
                     fullWidth
                     hiddenLabel
                     name='imageNFT'
                     inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
                     type='file'
                     variant='outlined'
+                    onBlur={formik.handleBlur}
                     onChange={(event) => {
                       console.log(event.target.files[0])
                       const file = event.target.files[0]
                       if (file) {
                         const fileSize = file.size / (1024 * 1024)
                         if (fileSize > 10) {
-                          toast.error('10MB 未満の Img ファイルをインポートしてください。')
+                          toast.error('> 10MB ')
                           return
                         }
                         const fileUrl = URL.createObjectURL(file)
                         setImagePreviewUrl(fileUrl)
                         formik.setFieldValue('imageNFT', fileUrl)
+                        formik.errors.imageNFT = ''
                         // setFileKey(fileKey + 1)
                       }
                     }}
                     error={formik.touched.imageNFT && !!formik.errors.imageNFT}
                     helperText={formik.touched.imageNFT && formik.errors.imageNFT}
-                    className='imageInput imgExist'
+                    className='imageInput'
                   />
                   <button
                     type='button'
                     className={
-                      formik.touched.imageNFT && formik.errors.imageNFT ? 'deleteImgIcon imgInfoError' : 'deleteImgIcon'
+                      formik.touched.imageNFT && formik.errors.imageNFT ? 'uploadImgBtn imgInfoError' : 'uploadImgBtn'
                     }
-                    onClick={handlerDeleteImageNFT}
                   >
-                    <img src={DeleteIcon} />
+                    <img src={UploadIcon} alt='upload-image' />
+                    <div className='uploadImgText'>Upload Media</div>
+                    <div className='imageSize'>
+                      <span>Max size: 10MB</span>
+                      <span>JPG, PNG, GIF, SVG</span>
+                    </div>
                   </button>
-                </div>
-              </>
-            )}
-          </div>
-          <div className='imformationNFT'>
-            <Box>
-              <div className='label'>Collection *</div>
-              <TextField
-                variant='outlined'
-                placeholder='Name your NFT'
-                type='text'
-                fullWidth
-                name='nameNFT'
-                error={formik.touched.nameNFT && !!formik.errors.nameNFT}
-                helperText={formik.touched.nameNFT && formik.errors.nameNFT}
-              />
-            </Box>
+                </>
+              ) : (
+                <>
+                  <div className='imageHover'>
+                    <img src={imagePreviewUrl} alt='Preview' style={{ maxWidth: '100%' }} />
+                  </div>
+                  <div className='hoverNFT'>
+                    <TextField
+                      key='Image'
+                      fullWidth
+                      hiddenLabel
+                      name='imageNFT'
+                      inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
+                      type='file'
+                      variant='outlined'
+                      onBlur={formik.handleBlur}
+                      onChange={(event) => {
+                        console.log(event.target.files[0])
+                        const file = event.target.files[0]
+                        if (file) {
+                          const fileSize = file.size / (1024 * 1024)
+                          if (fileSize > 10) {
+                            toast.error('10MB 未満の Img ファイルをインポートしてください。')
+                            return
+                          }
+                          const fileUrl = URL.createObjectURL(file)
+                          setImagePreviewUrl(fileUrl)
+                          formik.setFieldValue('imageNFT', fileUrl)
+                          // setFileKey(fileKey + 1)
+                        }
+                      }}
+                      error={formik.touched.imageNFT && !!formik.errors.imageNFT}
+                      helperText={formik.touched.imageNFT && formik.errors.imageNFT}
+                      className='imageInput imgExist'
+                    />
+                    <button
+                      type='button'
+                      className={
+                        formik.touched.imageNFT && formik.errors.imageNFT
+                          ? 'deleteImgIcon imgInfoError'
+                          : 'deleteImgIcon'
+                      }
+                      onClick={handlerDeleteImageNFT}
+                    >
+                      <img src={DeleteIcon} />
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className='imformationNFT'>
+              <Box>
+                <div className='label'>Collection *</div>
+                <TextField
+                  variant='outlined'
+                  placeholder='Name your NFT'
+                  type='text'
+                  fullWidth
+                  name='nameNFT'
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  // value={formik.values.nameNFT}
+                  error={formik.touched.nameNFT && !!formik.errors.nameNFT}
+                  helperText={formik.touched.nameNFT && formik.errors.nameNFT}
+                />
+              </Box>
 
-            <Box>
-              <div className='label'>Supply *</div>
-              <TextField
-                variant='outlined'
-                //  placeholder="Name your NFT"
-                type='text'
-                fullWidth
-                name='supplyNFT'
-                //  onBlur={formik.handleBlur}
-                error={formik.touched.supplyNFT && !!formik.errors.supplyNFT}
-                helperText={formik.touched.supplyNFT && formik.errors.supplyNFT}
-              />
-            </Box>
+              <Box>
+                <div className='label'>Supply *</div>
+                <TextField
+                  variant='outlined'
+                  //  placeholder="Name your NFT"
+                  type='text'
+                  fullWidth
+                  onBlur={formik.handleBlur}
+                  name='supplyNFT'
+                  onChange={formik.handleChange}
+                  // value={formik.values.supplyNFT}
+                  error={formik.touched.supplyNFT && !!formik.errors.supplyNFT}
+                  helperText={formik.touched.supplyNFT && formik.errors.supplyNFT}
+                />
+              </Box>
 
-            <Box>
-              <div className='label'>Description NFT </div>
-              <TextField
-                className='input'
-                fullWidth
-                hiddenLabel
-                multiline
-                rows={5}
-                type='text'
-                variant='outlined'
-                name='descriptionNFT'
-                placeholder='Enter a Description'
-                // value={notes}
-                // onChange={(event) => setNotes(event.target.value.trimStart())}
-              />
-            </Box>
-          </div>
-        </form>
-      </div>
-      {/* </div> */}
+              <Box>
+                <div className='label'>Description NFT </div>
+                <TextField
+                  className='input'
+                  fullWidth
+                  hiddenLabel
+                  multiline
+                  rows={5}
+                  type='text'
+                  variant='outlined'
+                  name='descriptionNFT'
+                  onChange={formik.handleChange}
+                  // value={formik.values.descriptionNFT}
+                  placeholder='Enter a Description'
+                  // value={notes}
+                  // onChange={(event) => setNotes(event.target.value.trimStart())}
+                />
+              </Box>
+            </div>
+            <div className='bttCreate'>
+              <BaseButton text='Create' className='' type='primary' width='100%' />
+            </div>
+          </form>
+        </div>
     </MintNFTStyle>
   )
 }

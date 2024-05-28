@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const BaseButtonStyle = styled.div`
   .btnBox {
@@ -14,8 +14,10 @@ const BaseButtonStyle = styled.div`
       background: #004b9e;
       border: 5px solid #ccdbec;
       text-transform: none;
-      ${'' /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
-        0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 1px 10px 0px rgba(0, 0, 0, 0.1); */}
+      ${
+        '' /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 1px 10px 0px rgba(0, 0, 0, 0.1); */
+      }
       box-shadow: none !important;
       @media screen and (max-width: 600px) {
         padding: 6px 16px;
@@ -25,18 +27,19 @@ const BaseButtonStyle = styled.div`
         padding: 6px;
         font-size: 12px;
       }
-
+      .icon {
+        margin-left: 10px;
+      }
     }
     button:hover {
       border: 5px solid #004b9e;
     }
-  
   }
   .btnBoxBorder {
-    .btnMint:hover{
+    .btnMint:hover {
       background-color: #f4c402;
       transform: translateY(-2px);
-      color:#fff
+      color: #fff;
     }
     button {
       color: #004b9e;
@@ -64,12 +67,14 @@ const BaseButtonStyle = styled.div`
         font-size: 7px;
         min-width: 50px;
       }
+      .icon {
+        margin-left: 10px;
+      }
     }
     button:hover {
       border: 2px solid #004b9e;
       background-color: #eff4f9;
     }
-
   }
   .btnBoxNone {
     button {
@@ -82,8 +87,10 @@ const BaseButtonStyle = styled.div`
       border: 2px solid #eff4f9;
       text-transform: none;
       padding: 10px 0px;
-      ${'' /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
-        0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 1px 10px 0px rgba(0, 0, 0, 0.1); */}
+      ${
+        '' /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 1px 10px 0px rgba(0, 0, 0, 0.1); */
+      }
       box-shadow: none !important;
       @media screen and (max-width: 850px) {
         width: 160px;
@@ -96,11 +103,14 @@ const BaseButtonStyle = styled.div`
         padding: 6px;
         font-size: 9px;
       }
+      .icon {
+        margin-left: 10px;
+      }
     }
     button:hover {
       border: 2px solid #004b9e;
     }
   }
-`;
+`
 
-export default BaseButtonStyle;
+export default BaseButtonStyle
