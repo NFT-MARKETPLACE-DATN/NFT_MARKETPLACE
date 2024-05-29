@@ -19,12 +19,16 @@ const HomePageStye = styled.div`
     }
     .silde{
         margin-top:10px;
+        height:300px;
         .mySwiper{
             height:100%;
-            .slide1{
-                // height:30%;
-                width: 90%
+     
+                .slide1{
+                    height:100%;
+                    width: 90%
+                
             }
+           
         }
     }
     .main-homepage{

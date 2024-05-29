@@ -120,6 +120,7 @@ const AccountPageStyle = styled.div`
           // bottom: 10px;
           position: relative;
           top: -100px;
+          left:-10px;
           @media screen and (max-width: 1000px) {
             height: 90px;
             width: 90px;
@@ -138,6 +139,23 @@ const AccountPageStyle = styled.div`
         
       }
     }
+    // .mainAccountPage{
+      .accountTab{
+        .MuiTabs-root{
+          .MuiTabs-scroller{
+            .MuiTabs-flexContainer{
+              button{
+                text-transform: capitalize;
+              }
+            }
+          }
+        }
+      }
+      .accountPageItem{
+        
+      }
+      // }
+    
   }
 `
 

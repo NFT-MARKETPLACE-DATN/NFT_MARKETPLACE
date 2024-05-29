@@ -26,12 +26,16 @@ import {
 } from '@mui/material'
 import { validate } from './validate'
 import { toast } from 'react-toastify'
-import DeleteIcon from '../../images/logos/deleteIcon.svg'
-import UploadIcon from '../../images/logos/UploadIcon.svg'
-import BaseButton from '../../containers/base/Button'
+import DeleteIcon from '../../images/logos/deleteIcon.svg';
+import UploadIcon from '../../images/logos/UploadIcon.svg';
+import BaseButton from '../../containers/base/Button';
+import MintNFTDialog from '../../containers/MintNFTDialog';
+
 const MintNFTPage = () => {
+
   // const [fileKey, setFileKey] = useState(0)
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false)
   const handlerDeleteImageNFT = () => {
     setImagePreviewUrl(null)
   }
@@ -47,7 +51,10 @@ const MintNFTPage = () => {
     onSubmit: async (values) => {
       // await dispatch(register(values));
       // console.log("asdfsdf");
-      console.log(values.descriptionNFT)
+      console.log(values.descriptionNFT);
+
+      setIsOpenDialogMintNFT(true);
+  
     }
   })
   return (
@@ -216,6 +223,12 @@ const MintNFTPage = () => {
             </div>
           </form>
         </div>
+      <MintNFTDialog
+       visible={isOpenDialogMintNFT}
+       onClose={() => {
+        setIsOpenDialogMintNFT(false)
+       }}
+      ></MintNFTDialog>
     </MintNFTStyle>
   )
 }

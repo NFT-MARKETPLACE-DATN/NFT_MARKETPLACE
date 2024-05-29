@@ -22,17 +22,17 @@ import {
   Button,
   CardMedia
 } from '@mui/material'
-import ListItemStyle from './ListItemStyle';
-import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg';
+import ListItemStyle from './ListItemStyle'
+import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg'
 import BuyIcon from '../../images/logos/BuyIcon.svg'
-import { useNavigate } from 'react-router-dom';
-import BaseButton from '../../containers/base/Button';
+import { useNavigate } from 'react-router-dom'
+import BaseButton from '../../containers/base/Button'
 const ItemList = (props) => {
-  const { data } = props;
-  const navigate = useNavigate();
+  const { data, account } = props
+  const navigate = useNavigate()
   const handlerClick = (item) => {
     console.log(item)
-    navigate(`/nft?id=${item.id}`);
+    navigate(`/nft?id=${item.id}`)
   }
   return (
     <ListItemStyle>
@@ -41,20 +41,30 @@ const ItemList = (props) => {
           <Grid item xs={6} md={3} key={index} className='itemNFT'>
             <Button onClick={() => handlerClick(item)} className='bttNFT'>
               <Card variant='outlined' className='infoNFT'>
-                <CardMedia alt='fasdf' image={PhanTomWalletLogo} component='img' className='imageNFT'></CardMedia>
-                <CardContent className='nameNFT'>{item.name}</CardContent>
+                {/* <CardMedia alt='fasdf' image={item.url} component='img' className='imageNFT'></CardMedia> */}
+                <div className='imageNFT'>
+                  <img src={item.url} className='img'></img>
+                </div>
+                <CardContent className='nameNFT'>{item.pirce} SOL</CardContent>
                 {/* <CardActions>Click</CardActions> */}
-                <div className="buyNFT">
-                <BaseButton text='Buy' className='' type='primary' width='90%' icon={BuyIcon}/>
-                {/* <Button 
+                <div className='buyNFT'>
+                  {/* <BaseButton text='Buy' className='' type='primary' width='90%' icon={BuyIcon}/> */}
+                  {/* <Button 
                  variant="outlined"
                  size="large"
                  type='primary'
                 >Buy</Button> */}
+                  {/* <Button className='connectBtn' width='100%' variant='contained' >
+                  Buy
+                </Button> */}
+                  {!account ? (
+                    <div className='bttBuy'>
+                      <img src={BuyIcon}></img>Buy
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
-               
-              
-                
               </Card>
             </Button>
           </Grid>

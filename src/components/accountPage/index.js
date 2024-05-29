@@ -21,32 +21,86 @@ import {
   CardActions,
   Tabs,
   Tab
-} from '@mui/material'
+} from '@mui/material';
 
-import AccountPageStyle from './AccountPageStyle'
-import userIcon from '../../images/logos/account.svg'
-import { toast } from 'react-toastify'
-
+import AccountPageStyle from './AccountPageStyle';
+import userIcon from '../../images/logos/account.svg';
+import FormatPaint from "../../images/logos/FormatPaint.svg";
+import { toast } from 'react-toastify';
+import ItemList from '../listItem/index';
 const AccountPage = () => {
-  const [value, setValue] = useState('One')
-  const [selectTab, setSelectTab] = useState(1)
-  const [imagePreviewBackGround, setImagePreviewBackGround] = useState(null)
+  let listItem = [
+    {
+      id: 1,
+      name: '1',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwtZC6XZY4bYTIn-l0bPAj7PmPslRT-_2Uw&s',
+      descrioption: '',
+      pirce: 1
+    }
+  ]
+  const listItem1 = [
+    {
+      id: 1,
+      name: '1',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrv-C3ZAG_79rftgcNgNKhu9dSNpPoCqXiZw&s',
+      descrioption: '',
+      pirce: 5
+    },
+    {
+      id: 2,
+      name: '2',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Wype2GahvkPKVLoCJCbyABpNsi1mQXM4Tw&s',
+      descrioption: '',
+      pirce: 10
+    },
+    {
+      id: 3,
+      name: '3',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnBTLM3fiejglJvrp6eFHlWRjIjQ-iZrvosQ&s',
+      descrioption: '',
+      pirce: 3
+    },
+    {
+      id: 5,
+      name: '1',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwtZC6XZY4bYTIn-l0bPAj7PmPslRT-_2Uw&s',
+      descrioption: '',
+      pirce: 1
+    }
+
+
+  ]
+  const listItem2 = [
+    {
+      id: 1,
+      name: '6',
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwtZC6XZY4bYTIn-l0bPAj7PmPslRT-_2Uw&s',
+      descrioption: '',
+      pirce: 2
+    },
+    {
+      id: 1,
+      name: '7',
+      url: 'https://www.hollywoodreporter.com/wp-content/uploads/2021/10/Mutant-Demon-Ape-Credit-0xb1-copy-H-2021.jpg?w=1296',
+      descrioption: '',
+      pirce: 3
+    }
+  ]
+
+  const [value, setValue] = useState(1);
+  const [selectTab, setSelectTab] = useState(1);
+  const [imagePreviewBackGround, setImagePreviewBackGround] = useState(null);
+  const [listNFT, setListNFT] = useState(listItem1)
   const handleChangeTab = (event, newValue) => {
-    if (newValue == 'One') {
-      if (value == selectTab) return
-      setSelectTab(1)
-    } else if (newValue == 'Two') {
-      if (value == selectTab) return
-      setSelectTab(2)
-    } else if (newValue == 'There') {
-      if (value == selectTab) return
-      setSelectTab(3)
-    } else return
+    console.log(newValue);
+    setSelectTab(newValue)
     setValue(newValue)
   }
-  // useEffect(()=>{
-  //     console.log(selectTab);
-  // },[selectTab])
+  useEffect(()=>{
+    if(selectTab == 1) setListNFT(listItem1);
+    else if(selectTab == 2 )setListNFT(listItem);
+    else if(selectTab == 3)  setListNFT(listItem2);
+  },[selectTab])
   return (
     <>
       <AccountPageStyle>
@@ -80,7 +134,7 @@ const AccountPage = () => {
                       className='imageInput'
                     />
                     <button type='button' className={'uploadImgBtn'}>
-                      <img src={userIcon} alt='upload-image' className='IconUploadBackGround' />
+                      <img src={FormatPaint} alt='upload-image' className='IconUploadBackGround' />
                     </button>
                   </>
                 ) : (
@@ -112,7 +166,7 @@ const AccountPage = () => {
                         className='imageInput imgExist'
                       ></TextField>
                       <button type='button' className={'uploadImgBtn'} >
-                        <img src={userIcon} alt='upload-image' className='IconUploadBackGround' />
+                        <img src={FormatPaint} alt='upload-image' className='IconUploadBackGround' />
                       </button>
                     </div>
                   </>
@@ -135,10 +189,15 @@ const AccountPage = () => {
               indicatorColor='secondary'
               aria-label='secondary tabs example'
             >
-              <Tab value='One' label='Item One' />
-              <Tab value='Two' label='Item Two' />
-              <Tab value='There' label='Item Three' />
+              <Tab value={1}  label='All' />
+              <Tab value={2} label='Listed' />
+              <Tab value={3} label='Offers made' />
+              <Tab value={4} label='Deals' />
+              <Tab value={5} label='Created' />
             </Tabs>
+          </div>
+          <div className='accountPageItem'>
+          <ItemList data={listNFT} account={true} />
           </div>
         </div>
       </AccountPageStyle>

@@ -48,9 +48,10 @@ const Header = () => {
   }
   const handleDisConnect = async () => {
     await window.phantom.solana.disconnect({ onlyIfTrusted: true })
-    setAcount('')
-    setCode()
-    localStorage.removeItem('walletAdress')
+    setAcount('');
+    setCode();
+    localStorage.removeItem('walletAdress');
+    navigate('/')
     // localStorage.clear();
   }
   const handleOpenUserInfo = (event) => {
@@ -85,7 +86,7 @@ const Header = () => {
             {/* <div className='nftLogo'> */}
             <div onClick={()=>navigate('/')} className='logoLink'>
               <img src={NFT_logo} className='nftLogo'></img>
-              <div> ArtChain</div>
+              <div className='logoText'> ArtChain</div>
             </div>
 
             {/* </div> */}

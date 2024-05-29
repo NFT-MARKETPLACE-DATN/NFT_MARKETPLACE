@@ -30,6 +30,7 @@ const ListItemStyle = styled.div`
                     // max-width: 100%;
                     height: 100%;
                     width: 380px;
+                    // height:380px;
                     border-radius:10%;
                     @media screen and (max-width: 1600px) {
                         width: 250px;
@@ -68,8 +69,14 @@ const ListItemStyle = styled.div`
                         // min-width: 100%;
                         // min-height: 100%;
                         // max-height: 100%;
-                        // height:100%;
-                        width:100%;
+                        height:200px;
+                        // width:200px;
+                        // padding:2px;
+                        .img{
+                            height:100%;
+                            width:100%;  
+                            border-radius:10%;
+                        }
                         
                     }
                     .nameNFT{
@@ -77,7 +84,35 @@ const ListItemStyle = styled.div`
                     }
                     .buyNFT{
                         // display:none;
+                        // display: flex;
+                        // justify-content: center;
                         padding-bottom: 10px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        width: 100%;
+                        .bttBuy{
+                            display: flex;
+                            justify-content: center;
+                            // height:40px;
+                            width:90%;
+                            // background-color:#1976d2;
+                            border-radius:10%;
+                            color: #ffffff;
+                            font-size: 16px;
+                            border-radius: 30px;
+                            padding: 7px 0px;
+                            background: #004b9e;
+                            border: 5px solid #ccdbec;
+                            text-transform: none;
+                            box-shadow: none !important;
+                           img{
+                            margin-right:10px
+                           }
+                        }
+                        .bttBuy:hover{
+                            border: 5px solid #004b9e;
+                        }
                     }
                 }
             }

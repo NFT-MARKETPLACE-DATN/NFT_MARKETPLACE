@@ -19,11 +19,18 @@ const HeaderStyle = styled.div`
           .logoLink{
             display:flex;
             cursor: pointer;
+            align-items: center;
             .nftLogo{
               // width:100%;
               // min-width:10px;
               height:50px;
-              width:50px
+              width:50px;
+              margin-right:10px;
+            }
+            .logoText{
+              font-size: 24px;
+              line-height: 30px;
+              font-weight: 600;
             }
           }
           
