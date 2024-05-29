@@ -28,10 +28,81 @@ const AccountPageStyle = styled.div`
         max-height: 320px;
         overflow: hidden;
         .backgroundInfo {
-          height: 0px;
+          height: 100%;
           padding-bottom: 25%;
           position: relative;
           background-color: rgba(229, 232, 235, 0.314);
+          .imageInput {
+            position: absolute;
+            max-height: 320px;
+            height: 100%;
+            div {
+              height: 100%;
+              input {
+                // height: 260px;
+                height: 100%;
+                padding: 0px;
+                // max-width: 468px;
+                width: 100%;
+                opacity: 0;
+              }
+            }
+          }
+          .imageInput:hover + .uploadImgBtn{
+            display:block;
+          }
+          .uploadImgBtn {
+            display:none;
+            // width: 100%;
+            // height: 260px;
+            // height: 100%;
+            height:30px;
+            width:30px;
+            background-color: #f1f5fa;
+            border: none;
+            // padding: 60px;
+            border-radius: 6px;
+            // display:flex;
+            left: 50%;
+            top: 125px;
+            position: absolute;
+            @media screen and (max-width: 900px) {
+              top: 100px;
+            }
+            @media screen and (max-width: 650px) {
+              top: 70px;
+            }
+            @media screen and (max-width: 500px) {
+              top: 55px;
+            }
+            // .IconUploadBackGround{
+            //   height:30px;
+            //   width:30px;
+            // }
+          }
+          .imageHover{
+            width: 100%;
+            // height:100%;
+            max-height: 320px;
+            img {
+              width: 100%;
+              max-height: 320px;
+            }
+          }
+          // .imageHover:hover +.hoverNFT{
+          //   display:block;
+          // }
+          .imgExist {
+            top: 0;
+          }
+          .deleteImgIcon {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            border: 0px;
+            background-color: #e0e0e0;
+          }
+  
         }
       }
       .account-logo {

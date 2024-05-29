@@ -18,7 +18,7 @@ const MintNFTStyle = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 0 4rem 4rem 4rem;
+    padding: 2rem 5rem 5rem 5rem;
     // @media screen and (min-width: 650px) {
     //   padding: 0 4rem 4rem 4rem;
     // };
@@ -172,7 +172,7 @@ const MintNFTStyle = styled.div`
         .bttCreate {
           // transform: translateY(0%) translateZ(0px);
           position: absolute;
-          bottom: 0;
+          bottom: 10px;
           width: 300px;
           @media screen and (max-width: 500px) {
             width: 200px;

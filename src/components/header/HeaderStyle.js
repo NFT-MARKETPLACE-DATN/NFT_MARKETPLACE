@@ -7,14 +7,27 @@ const HeaderStyle = styled.div`
     z-index: 10;
     top:0;
     // border-bottom: 1px solid #ccc;
+    min-height:70px;
     background-color: rgb(241, 245, 250);
     .bottomHeader{
         display: flex;
         justify-content: flex-end;
-        padding:10px 20px;
+        padding:1rem 2rem;
+        height:100%;
         background:rgb(255, 255, 255);
         .right-header{
-
+          .logoLink{
+            display:flex;
+            cursor: pointer;
+            .nftLogo{
+              // width:100%;
+              // min-width:10px;
+              height:50px;
+              width:50px
+            }
+          }
+          
+         
         }
         .left-header{
             display: flex;
@@ -78,7 +91,7 @@ const HeaderStyle = styled.div`
                 .disconnectBtn,
                 .connectBtn{
                     gap:10px;
-                    with:100%;
+                    // width:100%;
                     min-width:110px;
                     font-size: 16px;
                     text-transform: capitalize;

@@ -24,7 +24,7 @@ import {
   CardHeader,
   CardMedia,
   Avatar,
-  Tooltip
+  Tooltip,
 } from '@mui/material'
 import DetailNFTStyle from './DetailNFTStyle'
 import SolanaIcon from '../../images/logos/SolanaIcon.svg'
@@ -54,9 +54,19 @@ const DetailNFT = () => {
             </Card>
           </div>
           <div className='infoNFT'>
-            <div className='label'>Description</div>
-            <div className='creatorNFT'>By adsfsasdf</div>
-            <div className='detailsNFT'></div>
+            <Card>
+              <CardContent className='label'>
+                <img src="" alt='fasdf'/>
+                Description
+                </CardContent>
+              <CardContent className='creatorNFT'>By adsfsasdf</CardContent>
+              <CardActions className='detailsNFT'>
+                
+              </CardActions>
+              {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
+
+              </Collapse> */}
+            </Card>
           </div>
         </div>
         <div className='marketNFT'>
