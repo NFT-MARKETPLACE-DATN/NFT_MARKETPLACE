@@ -12,7 +12,7 @@ const DetailNFTStyle = styled.div`
         padding-left: 1rem;
         padding-right: 1rem;
       }
-    .itemNFT{
+    .nftItem{
         background-color: #ffff;
         display:flex;
         padding:20px;
@@ -23,7 +23,7 @@ const DetailNFTStyle = styled.div`
         @media screen and (max-width: 600px) {
           padding:5px;
         }
-        .descriptionNFT{
+        .infoNFT{
           max-width:50%;
           // gap:10px;
           // display: flex;
@@ -31,8 +31,29 @@ const DetailNFTStyle = styled.div`
           .imageNFT{
             width:100%;
           }
-          .infoNFT{
+          .descriptionNFT{
             margin-top:10px;
+            .labelDescription{
+              display: flex;
+              align-items: center;
+              .labelText{
+                line-height: 30px;
+                font-weight: 600;
+                font-size: 18px; 
+                margin-left:5px;          
+              }
+            }
+            .creatorNFT{
+              align-items: center;
+              // color: rgb(138, 147, 155);
+              display: flex;
+          
+              .labelHeader{
+                line-height: 24px;
+                font-size: 16px;
+                color: rgb(138, 147, 155);
+              }
+            }
           }
         }
     }

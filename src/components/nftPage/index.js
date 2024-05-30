@@ -26,16 +26,17 @@ import {
   Avatar,
   Tooltip,
 } from '@mui/material'
-import DetailNFTStyle from './DetailNFTStyle'
-import SolanaIcon from '../../images/logos/SolanaIcon.svg'
+import DetailNFTStyle from './DetailNFTStyle';
+import SolanaIcon from '../../images/logos/SolanaIcon.svg';
+import SubjectIcon from "../../images/logos/SubjectIcon.svg";
 import { useSearchQuery } from '../../utils/helpers'
 const DetailNFT = () => {
   const params = useSearchQuery()
   console.log(params)
   return (
     <DetailNFTStyle>
-      <div className='itemNFT'>
-        <div className='descriptionNFT'>
+      <div className='nftItem'>
+        <div className='infoNFT'>
           <div className='imageNFT'>
             <Card variant='outlined' className=''>
               <CardHeader
@@ -53,13 +54,18 @@ const DetailNFT = () => {
               ></CardMedia>
             </Card>
           </div>
-          <div className='infoNFT'>
-            <Card>
-              <CardContent className='label'>
-                <img src="" alt='fasdf'/>
-                Description
+          <div className='descriptionNFT'>
+            <Card className='infoDescriptionNFT'>
+              <CardContent className='labelDescription'>
+                <img src={SubjectIcon} alt='fasdf'/>
+                <div className='labelText'>Description</div>
+                
                 </CardContent>
-              <CardContent className='creatorNFT'>By adsfsasdf</CardContent>
+              <CardContent className='creatorNFT'>
+                <spna className='labelHeader'>By&nbsp;</spna> 
+                <span className='labelText'>adsfsasdf</span>
+                
+                </CardContent>
               <CardActions className='detailsNFT'>
                 
               </CardActions>
