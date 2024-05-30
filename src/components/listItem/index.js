@@ -38,7 +38,7 @@ const ItemList = (props) => {
     <ListItemStyle>
       <Grid className='gird' container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {data.map((item, index) => (
-          <Grid item xs={6} md={3} key={index} className='itemNFT'>
+          <Grid item xs={6} md={3} xl={3} key={index} className='itemNFT'>
             <Button onClick={() => handlerClick(item)} className='bttNFT'>
               <Card variant='outlined' className='infoNFT'>
                 {/* <CardMedia alt='fasdf' image={item.url} component='img' className='imageNFT'></CardMedia> */}

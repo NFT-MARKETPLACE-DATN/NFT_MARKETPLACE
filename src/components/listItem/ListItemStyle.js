@@ -33,7 +33,10 @@ const ListItemStyle = styled.div`
                     // height:380px;
                     border-radius:10%;
                     @media screen and (max-width: 1600px) {
-                        width: 250px;
+                        width: 300px;
+                    }
+                    @media screen and (max-width: 1400px) {
+                        width: 265px;
                     }
                     @media screen and (max-width: 1200px) {
                         width: 230px;
@@ -69,9 +72,33 @@ const ListItemStyle = styled.div`
                         // min-width: 100%;
                         // min-height: 100%;
                         // max-height: 100%;
-                        height:200px;
+                        height:280px;
                         // width:200px;
                         // padding:2px;
+                        @media screen and (max-width: 1600px) {
+                            height:250px;
+                        }
+                        @media screen and (max-width: 1200px) {
+                            height:220px;
+                        }
+                        @media screen and (max-width: 900px) {
+                            height:280px;
+                        }
+                        @media screen and (max-width: 750px) {
+                            height:260px;
+                        }
+                        @media screen and (max-width: 650px) {
+                            height:230px;
+                        }
+                        @media screen and (max-width: 500px) {
+                            height:200px;
+                        }
+                        @media screen and (max-width: 400px) {
+                            height:180px;
+                        }
+                        @media screen and (max-width: 370px) {
+                            height:160px;
+                        }
                         .img{
                             height:100%;
                             width:100%;  

@@ -19,15 +19,51 @@ const HomePageStye = styled.div`
     }
     .silde{
         margin-top:10px;
-        height:300px;
+        height:400px;
+        @media screen and (max-width: 1600px) {
+            height:350px;
+        }
+        @media screen and (max-width: 1100px) {
+            height:300px;
+        }
+        @media screen and (max-width: 1000px) {
+            height:350px;
+        }
+        // @media screen and (max-width: 900px) {
+        //     height:260px;
+        // }
+        // @media screen and (max-width: 750px) {
+        //     height:230px;
+        // }
+        @media screen and (max-width: 750px) {
+            height:280px;
+        }
+        @media screen and (max-width: 600px) {
+            height:350px;
+        }
+        @media screen and (max-width: 480px) {
+            height:280px;
+        }
+        @media screen and (max-width: 400px) {
+            height:240px;
+        }
         .mySwiper{
             height:100%;
-     
+            .slide{
+                display: flex;
+                justify-content: center;
                 .slide1{
                     height:100%;
-                    width: 90%
-                
+                    width: 95%;
+                    @media screen and (max-width: 1000px) {
+                        width: 100%;
+                    }
+                    @media screen and (max-width: 600px) {
+                        width: 95%;
+                    }
+                }
             }
+
            
         }
     }

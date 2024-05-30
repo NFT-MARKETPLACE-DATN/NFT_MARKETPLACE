@@ -165,10 +165,10 @@ const HomePage = () => {
             delay: 2500,
             disableOnInteraction: false
           }}
-          spaceBetween={30}
+          spaceBetween={20}
           // pagination={{ clickable: true }}
           // scrollbar={{ draggable: true }}
-          slidesPerView={3}
+          // slidesPerView={4}
           // effect={'cube'}
           // cubeEffect={{
           //     shadow: true,
@@ -176,6 +176,23 @@ const HomePage = () => {
           //     shadowOffset: 20,
           //     shadowScale: 0.94,
           //   }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            600: {
+              slidesPerView: 2,
+            },
+            1000: {
+              slidesPerView: 3,
+            },
+            1450: {
+              slidesPerView: 4,
+            },
+            1600: {
+              slidesPerView: 5,
+            },
+          }}
         >
           <SwiperSlide className='slide'>
             <img
@@ -205,6 +222,20 @@ const HomePage = () => {
               alt='imgae'
             />
           </SwiperSlide>
+          <SwiperSlide className='slide'>
+            <img
+              className='slide1'
+              src='https://i.seadn.io/gcs/files/f6497290ed37ccb7cbbe662a5b0a100f.png?auto=format&dpr=1&w=1000'
+              alt='imgae'
+            />
+          </SwiperSlide>
+          <SwiperSlide className='slide'>
+            <img
+              className='slide1'
+              src='https://i.seadn.io/gcs/files/f6497290ed37ccb7cbbe662a5b0a100f.png?auto=format&dpr=1&w=1000'
+              alt='imgae'
+            />
+          </SwiperSlide>
         </Swiper>
       </div>
       <div className='main-homepage'>
@@ -212,9 +243,33 @@ const HomePage = () => {
           <Tabs
             value={value}
             onChange={handleChangeTab}
-            textColor='secondary'
-            indicatorColor='secondary'
-            aria-label='secondary tabs example'
+            // textColor='secondary'
+            // indicatorColor='secondary'
+            // aria-label='secondary tabs example'
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{
+              '& .MuiTab-root': {
+                minWidth: 120,
+                color: 'text.primary',
+                '&.Mui-selected': {
+                  color: 'white', // Color when tab is selected
+                  backgroundColor:'secondary.main',
+                  borderRadius: '8px',
+                  underline: 'none',
+                },
+                '&:hover': {
+                  // backgroundColor: 'action.hover', // Color when tab is hovered
+                },
+                
+              },
+              '& .MuiTabs-indicator':{
+                display:'none'
+              },
+              '& .MuiTabs-scrollButtons': {
+                color: 'secondary.main',
+              },
+            }}
           >
             <Tab value={1} label='ALL' />
             <Tab value={2} label='NFT Monkey' />

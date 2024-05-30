@@ -188,6 +188,29 @@ const AccountPage = () => {
               textColor='secondary'
               indicatorColor='secondary'
               aria-label='secondary tabs example'
+              variant="scrollable"
+              scrollButtons="auto"
+              sx={{
+                '& .MuiTab-root': {
+                  minWidth: 120,
+                  color: 'text.primary',
+                  '&.Mui-selected': {
+                    color: 'white', // Color when tab is selected
+                    backgroundColor:'secondary.main',
+                    borderRadius: '8px',
+                    underline: 'none',
+                  },
+                  '&:hover': {
+                    // backgroundColor: 'action.hover', // Color when tab is hovered
+                  },
+                },
+                '& .MuiTabs-indicator':{
+                  display:'none'
+                },
+                '& .MuiTabs-scrollButtons': {
+                  color: 'secondary.main',
+                },
+              }}
             >
               <Tab value={1}  label='All' />
               <Tab value={2} label='Listed' />
