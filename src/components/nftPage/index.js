@@ -29,10 +29,19 @@ import {
 import DetailNFTStyle from './DetailNFTStyle';
 import SolanaIcon from '../../images/logos/SolanaIcon.svg';
 import SubjectIcon from "../../images/logos/SubjectIcon.svg";
-import { useSearchQuery } from '../../utils/helpers'
+import InfoIcon from "../../images/logos/InfoIcon.svg";
+import { useSearchQuery } from '../../utils/helpers';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const DetailNFT = () => {
-  const params = useSearchQuery()
-  console.log(params)
+  const params = useSearchQuery();
+  const [isCollapse, setIsCollapse] =useState(false);
+
+  const onCollapse = ()=>{
+    setIsCollapse(!isCollapse);
+  };
+  // console.log(params);
   return (
     <DetailNFTStyle>
       <div className='nftItem'>
@@ -59,25 +68,45 @@ const DetailNFT = () => {
               <CardContent className='labelDescription'>
                 <img src={SubjectIcon} alt='fasdf'/>
                 <div className='labelText'>Description</div>
-                
+              
                 </CardContent>
+                <hr width="100%"/>
               <CardContent className='creatorNFT'>
-                <spna className='labelHeader'>By&nbsp;</spna> 
+                <span className='labelHeader'>By&nbsp;</span> 
                 <span className='labelText'>adsfsasdf</span>
                 
                 </CardContent>
-              <CardActions className='detailsNFT'>
-                
-              </CardActions>
-              {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-
-              </Collapse> */}
+                <hr width="100%"/>
+                <CardContent className='infoSmartContract'>
+                  <div className='labelInfoSC'>
+                  <img src={InfoIcon} alt='fasdf'/>
+                  <div className='labelText'>Detail</div>
+                  </div>
+                 
+                  <IconButton onClick={event => onCollapse()}>
+                    {isCollapse ? <ExpandLess /> : <ExpandMore />}
+                  </IconButton>
+                </CardContent>
+                {/* <hr width="100%"/> */}
+              {/* <CardActions className='detailsNFT'>
+                sdfsdf
+              </CardActions> */}
+     
             </Card>
+            <Card>
+            <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+                fasdfsadfsdf
+            </Collapse>
+            </Card>
+        
           </div>
         </div>
         <div className='marketNFT'>
           <div className='colationName'></div>
-          <div className='ownerNFT'>Owner By fsadfsdf</div>
+          <div className='ownerNFT'>
+            <div>Owner By fsadfsdf</div>
+            <div></div>
+            </div>
           <div className='catergoryNFT'>PFPs</div>
           <div className='listingNFT'>
             <TextField></TextField>
