@@ -272,8 +272,8 @@ const HomePage = () => {
             }}
           >
             <Tab value={1} label='ALL' />
-            <Tab value={2} label='NFT Monkey' />
-            <Tab value={3} label='NFT Nature' />
+            <Tab value={2} label='Trending' />
+            <Tab value={3} label='Marketplace' />
           </Tabs>
         </div>
         <div className='list-item'>

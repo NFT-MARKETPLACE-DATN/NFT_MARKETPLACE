@@ -35,6 +35,7 @@ const App = () => {
           <Route path='/account' element={<AccountPage />}></Route>
           <Route path='/mint' element={<MintNFTPage />}></Route>
           <Route path='/nft' element={<DetailNFTPage/>}></Route>
+          <Route path='/user' element={<DetailNFTPage/>}></Route>
         </Routes>
         {/* </BrowserRouter> */}
       {/* </Router> */}
