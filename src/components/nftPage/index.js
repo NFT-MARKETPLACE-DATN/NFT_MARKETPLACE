@@ -25,6 +25,7 @@ import {
   CardMedia,
   Avatar,
   Tooltip,
+  Button
 } from '@mui/material'
 import DetailNFTStyle from './DetailNFTStyle';
 import SolanaIcon from '../../images/logos/SolanaIcon.svg';
@@ -104,21 +105,36 @@ const DetailNFT = () => {
           </div>
         </div>
         <div className='marketNFT'>
-          <div className='colationName'>Pepe</div>
-          <div className='ownerNFT'>
+          <div className='nameNFT'>
+            <div className='colationName'>Pepe</div>
+            <div className='ownerNFT'>
             <div>Owner By fsadfsdf</div>
             <div></div>
             </div>
-          {/* <div className='catergoryNFT'>PFPs</div> */}
+            {/* <div className='catergoryNFT'>PFPs</div> */}
+          </div>
           <div className='listingNFT'>
-            <div className='priceNFT'>
-              <div className='titilePrice'>Current price</div>
-              <div className='price'>3 SOL</div>
-            </div>
+              <Card className='priceItemNFT'>
+                <div className='titilePrice'>Current price</div>
+                <CardContent>
+                  <div className='price'>3 SOL</div>
+                </CardContent>
+              
+              </Card>
+            
+
             
             <div className='tradeNFT'>
-              <div className='priceNFT'>Buy </div>
-              <div className='offerNFT'>Make offer</div>
+              <div className='priceNFT'>
+                <Button className='buyBtn' width='100%' variant='contained'>
+                  Buy
+                </Button>
+                </div>
+              <div className='offerNFT'>
+                <Button className='makeOfferBtn' width='100%' >
+                   Make offer  
+                </Button>
+                </div>
             </div>
           </div>
         </div>
