@@ -49,7 +49,8 @@ const AccountPageStyle = styled.div`
             }
           }
           .imageInput:hover + .uploadImgBtn{
-            display:block;
+            justify-content: center;
+            display: flex;
           }
           .uploadImgBtn {
             display:none;
@@ -136,11 +137,15 @@ const AccountPageStyle = styled.div`
         }
       }
       .account-name{
-        
+        line-height: 36px;
+        font-weight: 600;
+        font-size: 32px;
+        margin-left: 15px;
       }
     }
     // .mainAccountPage{
       .accountTab{
+        margin-top:15px;
         .MuiTabs-root{
           .MuiTabs-scroller{
             .MuiTabs-flexContainer{

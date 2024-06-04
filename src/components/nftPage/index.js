@@ -34,6 +34,8 @@ import { useSearchQuery } from '../../utils/helpers';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+
 const DetailNFT = () => {
   const params = useSearchQuery();
   const [isCollapse, setIsCollapse] =useState(false);
@@ -102,16 +104,19 @@ const DetailNFT = () => {
           </div>
         </div>
         <div className='marketNFT'>
-          <div className='colationName'></div>
+          <div className='colationName'>Pepe</div>
           <div className='ownerNFT'>
             <div>Owner By fsadfsdf</div>
             <div></div>
             </div>
-          <div className='catergoryNFT'>PFPs</div>
+          {/* <div className='catergoryNFT'>PFPs</div> */}
           <div className='listingNFT'>
-            <TextField></TextField>
-            <div className='priceNFT'>3 SOL</div>
-            <div className=''>
+            <div className='priceNFT'>
+              <div className='titilePrice'>Current price</div>
+              <div className='price'>3 SOL</div>
+            </div>
+            
+            <div className='tradeNFT'>
               <div className='priceNFT'>Buy </div>
               <div className='offerNFT'>Make offer</div>
             </div>

@@ -16,7 +16,7 @@ const DetailNFTStyle = styled.div`
     background-color: #ffff;
     display: flex;
     padding: 20px;
-    gap: 15px;
+    gap: 30px;
     @media screen and (max-width: 1200px) {
       padding: 10px;
     }
@@ -58,14 +58,44 @@ const DetailNFTStyle = styled.div`
           display: flex;
           align-items: center;
           justify-content: space-between;
-          .labelInfoSC{
-            display:flex;
-            align-items: center; 
-            gap:10px;
-            .labelText{
+          .labelInfoSC {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .labelText {
               font-size: 18px;
             }
           }
+        }
+      }
+    }
+    .marketNFT {
+      .colationName {
+        font-size: 30px;
+        font-weight: 600;
+        max-width: 100%;
+        margin: 0px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: normal;
+      }
+      .ownerNFT{
+        margin-bottom:20px;
+      }
+      .listingNFT{
+        .priceNFT{
+          .price{
+            align-items: center;
+            display: flex;
+            font-weight: 600;
+            font-size: 30px;
+          }
+        }
+        .tradeNFT{
+          display: flex;
+          // justify-content: center;
+          gap: 10px;
+
         }
       }
     }
