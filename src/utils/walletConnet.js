@@ -27,11 +27,13 @@ export const getConnected = async () => {
         account = address.publicKey.toString();
         if (account !== undefined) {
           return {
+            provider: provider,
             walletAddress: account,
             code:1
           };
         }
         return {
+          provider:provider,
           walletAddress: null,
           code:2
         };

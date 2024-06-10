@@ -35,15 +35,34 @@ import { useSearchQuery } from '../../utils/helpers';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import { getConnected } from "../../utils/walletConnet";
+import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram } from '@solana/web3.js';
 
 const DetailNFT = () => {
   const params = useSearchQuery();
   const [isCollapse, setIsCollapse] =useState(false);
-
+  const connection = new Connection("https://solana-devnet.g.alchemy.com/v2/P4DtZuchPeew_-sMonOKOBavg0B8pj0j", 'confirmed');
   const onCollapse = ()=>{
     setIsCollapse(!isCollapse);
   };
+
+  
+  const handleCreateTransaction = async()=> {
+    const wallet =await getConnected();
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: new PublicKey(wallet.walletAddress),
+        toPubkey: new PublicKey("3GNad18DSitYpiyQuaGgRLvUpT96oe2Arotgj9adQAna"),
+        lamports: 1000000, // Số lượng lamports (1 SOL = 10^9 lamports)
+      })
+    );
+    transaction.feePayer = new PublicKey(wallet.walletAddress);
+    const { blockhash } = await connection.getRecentBlockhash();
+    transaction.recentBlockhash = blockhash;
+    const signedTransaction = await wallet.provider.signTransaction(transaction);
+    console.log(signedTransaction);
+    console.log(transaction);
+  }
   // console.log(params);
   return (
     <DetailNFTStyle>
@@ -126,7 +145,7 @@ const DetailNFT = () => {
             
             <div className='tradeNFT'>
               <div className='priceNFT'>
-                <Button className='buyBtn' width='100%' variant='contained'>
+                <Button className='buyBtn' width='100%' variant='contained' onClick={handleCreateTransaction}>
                   Buy
                 </Button>
                 </div>
