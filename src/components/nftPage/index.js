@@ -59,9 +59,16 @@ const DetailNFT = () => {
     transaction.feePayer = new PublicKey(wallet.walletAddress);
     const { blockhash } = await connection.getRecentBlockhash();
     transaction.recentBlockhash = blockhash;
-    const signedTransaction = await wallet.provider.signTransaction(transaction);
-    console.log(signedTransaction);
     console.log(transaction);
+    try {
+      const signedTransaction = await wallet.provider.signTransaction(transaction);
+      console.log(signedTransaction);
+    } catch (error) {
+      console.log(error);
+    }
+  
+    
+
   }
   // console.log(params);
   return (
