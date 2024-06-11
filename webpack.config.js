@@ -67,6 +67,13 @@ module.exports = (env, argv) => {
   const config = {
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    //   fallback: {
+    //     "stream": require.resolve("stream-browserify"),
+    //     "buffer": require.resolve("buffer")
+    // }
+      fallback: {
+      buffer: require.resolve('buffer/'),
+    },
       // alias: {
       //   '@pages': path.resolve(__dirname, './src/pages')
       // }
@@ -139,7 +146,16 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'public', 'index.html'),
         filename: 'index.html'
-      })
+      }),
+    //   new webpack.ProvidePlugin({
+    //     Buffer: ['buffer', 'Buffer'],
+    // }),
+    //   new webpack.ProvidePlugin({
+    //     process: 'process/browser',
+    // }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
     ]
   };
 
