@@ -1,17 +1,17 @@
-import {FETCH_DATA} from "../constants/homePageConstant";
+import {SET_WALLET} from "../constants/homePageConstant";
 
 const initialState = {
     account:null,
-    walllet:false
+    wallet:false
 };
 
 const homePageReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_DATA:
+        case SET_WALLET:
             return {
                 ...state,
                 account: action.data,
-                walllet: true,
+                wallet: true,
             };
         default:
             return state;

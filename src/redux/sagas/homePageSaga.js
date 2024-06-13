@@ -1,5 +1,5 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import {FETCH_DATA} from "../constants/homePageConstant";
+import {SET_WALLET} from "../constants/homePageConstant";
 import {fetchDatas} from "../actions/homePageAction";
 
 function* fetchDataSaga(data) {
@@ -11,6 +11,6 @@ function* fetchDataSaga(data) {
 }
 
 export default function* todoSaga() {
-    yield takeLatest(FETCH_DATA, fetchDataSaga);
+    yield takeLatest(SET_WALLET, fetchDataSaga);
 
 }

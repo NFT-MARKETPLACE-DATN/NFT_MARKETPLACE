@@ -61,19 +61,24 @@ const webpack = require('webpack')
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production';
-  const isAnalyze = Boolean(env?.analyze);
+  const isProduction = argv.mode === 'production'
+  const isAnalyze = Boolean(env?.analyze)
 
   const config = {
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
-    //   fallback: {
-    //     "stream": require.resolve("stream-browserify"),
-    //     "buffer": require.resolve("buffer")
-    // }
+      //   fallback: {
+      //     "stream": require.resolve("stream-browserify"),
+      //     "buffer": require.resolve("buffer")
+      // }
       fallback: {
-      buffer: require.resolve('buffer/'),
-    },
+        buffer: require.resolve('buffer'),
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify'),
+        vm: require.resolve("vm-browserify"),
+        fs: false,
+        'process/browser': require.resolve('process/browser'),
+      }
       // alias: {
       //   '@pages': path.resolve(__dirname, './src/pages')
       // }
@@ -88,7 +93,7 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(s[ac]ss|css)$/,
-          use: ["style-loader", "css-loader"]
+          use: ['style-loader', 'css-loader']
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
@@ -138,7 +143,7 @@ module.exports = (env, argv) => {
             from: 'public',
             to: '.',
             filter: (name) => {
-              return !name.endsWith('index.html');
+              return !name.endsWith('index.html')
             }
           }
         ]
@@ -147,17 +152,18 @@ module.exports = (env, argv) => {
         template: path.resolve(__dirname, 'public', 'index.html'),
         filename: 'index.html'
       }),
-    //   new webpack.ProvidePlugin({
-    //     Buffer: ['buffer', 'Buffer'],
-    // }),
-    //   new webpack.ProvidePlugin({
-    //     process: 'process/browser',
-    // }),
-    new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer'],
-    }),
+      //   new webpack.ProvidePlugin({
+      //     Buffer: ['buffer', 'Buffer'],
+      // }),
+      //   new webpack.ProvidePlugin({
+      //     process: 'process/browser',
+      // }),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser'
+      }),
     ]
-  };
+  }
 
   if (isProduction) {
     config.plugins = [
@@ -169,17 +175,14 @@ module.exports = (env, argv) => {
         algorithm: 'brotliCompress'
       }),
       new CleanWebpackPlugin()
-    ];
+    ]
     if (isAnalyze) {
-      config.plugins = [...config.plugins, new BundleAnalyzerPlugin()];
+      config.plugins = [...config.plugins, new BundleAnalyzerPlugin()]
     }
     config.optimization = {
-      minimizer: [
-        `...`,
-        new CssMinimizerPlugin()
-      ]
-    };
+      minimizer: [`...`, new CssMinimizerPlugin()]
+    }
   }
 
-  return config;
-};
+  return config
+}

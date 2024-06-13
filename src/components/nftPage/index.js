@@ -36,8 +36,10 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { getConnected } from "../../utils/walletConnet";
-import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram } from '@solana/web3.js';
-
+import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram ,Keypair, sendAndConfirmTransaction} from '@solana/web3.js';
+import { useSelector } from 'react-redux';
+import {initCollection} from "../../utils/createMintNFT";
+import * as token from "@solana/spl-token"
 const DetailNFT = () => {
   const params = useSearchQuery();
   const [isCollapse, setIsCollapse] =useState(false);
@@ -45,29 +47,64 @@ const DetailNFT = () => {
   const onCollapse = ()=>{
     setIsCollapse(!isCollapse);
   };
-
+  const {account, wallet} = useSelector(state => state.globalState || {});
   
   const handleCreateTransaction = async()=> {
     const wallet =await getConnected();
+    // const transaction = new Transaction().add(
+    //   SystemProgram.transfer({
+    //     fromPubkey: new PublicKey(account),
+    //     toPubkey: new PublicKey("3GNad18DSitYpiyQuaGgRLvUpT96oe2Arotgj9adQAna"),
+    //     lamports: 1000000, // Số lượng lamports (1 SOL = 10^9 lamports)
+    //   })
+    // );
+    // transaction.feePayer = new PublicKey(wallet.walletAddress);
+    // const { blockhash } = await connection.getRecentBlockhash();
+    // transaction.recentBlockhash = blockhash;
+    // console.log(transaction);
+    // try {
+    //   const signedTransaction = await wallet.provider.signTransaction(transaction);
+    //   console.log(signedTransaction.serialize());
+    //   const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+    //   console.log(signature);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    const lamports = await token.getMinimumBalanceForRentExemptMint(connection);
+    const collectionAddress = Keypair.generate();
+    console.log(collectionAddress.publicKey.toBase58());
+    const programId = token.TOKEN_PROGRAM_ID
     const transaction = new Transaction().add(
-      SystemProgram.transfer({
+      SystemProgram.createAccount({
         fromPubkey: new PublicKey(wallet.walletAddress),
-        toPubkey: new PublicKey("3GNad18DSitYpiyQuaGgRLvUpT96oe2Arotgj9adQAna"),
-        lamports: 1000000, // Số lượng lamports (1 SOL = 10^9 lamports)
-      })
-    );
+        newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
+        space: token.MINT_SIZE,
+        lamports,
+        programId,
+      }),
+    )
     transaction.feePayer = new PublicKey(wallet.walletAddress);
     const { blockhash } = await connection.getRecentBlockhash();
     transaction.recentBlockhash = blockhash;
-    console.log(transaction);
+    // console.log(transaction);
+    // transaction.sign(collectionAddress);
     try {
       const signedTransaction = await wallet.provider.signTransaction(transaction);
       console.log(signedTransaction);
+      const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+      console.log(signature);
+      // const tx =  await sendAndConfirmTransaction(
+      //   connection,
+      //   signedTransaction,
+      //   [collectionAddress],
+      // );
+      console.log(tx);
     } catch (error) {
       console.log(error);
     }
-  
-    
+    // console.log(account);
+  //  await  initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
+  // testTransaction();
 
   }
   // console.log(params);

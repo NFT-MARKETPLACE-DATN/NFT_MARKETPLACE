@@ -24,6 +24,7 @@ export const getConnected = async () => {
       
       if (provider?.isPhantom) {
         let address = await provider.connect();
+        // console.log(address);
         account = address.publicKey.toString();
         if (account !== undefined) {
           return {

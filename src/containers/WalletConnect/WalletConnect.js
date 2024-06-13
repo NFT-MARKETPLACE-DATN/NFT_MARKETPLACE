@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 // import {fetchDatas} from "../../redux/actions/homePageAction";
-import { fetchDatas } from "../../redux/actions";
+import { setWallet } from "../../redux/actions";
 import { useDispatch, useSelector } from 'react-redux';
 
 const WalletConnect = (props) => {
@@ -30,10 +30,10 @@ const WalletConnect = (props) => {
     const dispatch = useDispatch();
     const onConnectWallet = async () => {
         const account = await getConnected();
-        console.log(account);
+        // console.log(account);
         if(account.code == 1){
             localStorage.setItem('walletAdress',account.walletAddress);
-            dispatch(fetchDatas(account.walletAddress))
+            dispatch(setWallet(account.walletAddress))
             toast.success("Success")
         }
         setAcount(account.walletAddress);

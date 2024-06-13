@@ -1,6 +1,6 @@
-import {FETCH_DATA} from "../constants/homePageConstant";
+import {SET_WALLET} from "../constants/homePageConstant";
 
-export const fetchDatas = (data) => ({
-  type: FETCH_DATA,
+export const setWallet = (data) => ({
+  type: SET_WALLET,
   data
 })

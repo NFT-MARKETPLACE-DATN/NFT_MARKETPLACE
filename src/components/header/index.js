@@ -22,7 +22,8 @@ import BaseButton from '../../containers/base/Button'
 import { toast } from 'react-toastify'
 // import history from '../../utils/history';
 import NFT_logo from '../../images/logos/NFT-Marketplace.svg'
-
+import { useSelector } from 'react-redux';
+// import { createStructuredSelector } from 'reselect';
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const Header = () => {
@@ -35,9 +36,11 @@ const Header = () => {
   const [bgColor, setBgColor] = useState('#189e00')
   // const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const open = Boolean(anchorEl);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const {wallet} = useSelector(state => state.globalState || {});
+// console.log(wallet);
   // const handleClickMenuMobile = event => {
   //     setAnchorMenuMobile(event.currentTarget);
   //     setIsOpen(!isOpen);
@@ -182,5 +185,17 @@ const Header = () => {
     </>
   )
 }
+// const mapStateToProps = createStructuredSelector({
+//   currencies: makeSelectCurrencies(),
+// });
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     dispatch,
+//   };
+// }
+// const withConnect = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// );
 
 export default Header
