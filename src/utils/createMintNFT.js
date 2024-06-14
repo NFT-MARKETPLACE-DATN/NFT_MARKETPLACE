@@ -15,92 +15,86 @@ export const initCollection = async (
   ) => {
     // console.log(connection);
     const con = new Connection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA", 'confirmed');
-    const wallet =await getConnected();
+    const wallet = await getConnected();
     const collectionAddress = Keypair.generate();
     const lamports = await getMinimumBalanceForRentExemptMint(new Connection(connection, 'confirmed'));
-    // const mintState = await getMint(con, collectionAddress.publicKey)
-    // const space = getAccountLenForMint(mintState);
-    // console.log(MINT_SIZE);
-    // console.log(lamports);
     const programId = TOKEN_PROGRAM_ID
-//     const createAccountInstructionAddressCollection = SystemProgram.createAccount({
-//       fromPubkey: new PublicKey(phantomWallet),
-//       newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
-//       space: MINT_SIZE,
-//       lamports,
-//       programId,
-//     });
-//     const initializeMintInstructionAddressCollection = createInitializeMintInstruction(
-//       collectionAddress.publicKey, // Địa chỉ tài khoản mint
-//       0, // Số thập phân (decimals)
-//       new PublicKey(phantomWallet), // mintAuthority
-//       new PublicKey(phantomWallet), // freezeAuthority (nếu có)
-//       TOKEN_PROGRAM_ID
-//     );
-//     console.log("collectionAddress", collectionAddress.publicKey.toBase58());
+    const createAccountInstructionAddressCollection = SystemProgram.createAccount({
+      fromPubkey: new PublicKey(phantomWallet),
+      newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
+      space: MINT_SIZE,
+      lamports,
+      programId,
+    });
+    const initializeMintInstructionAddressCollection = createInitializeMintInstruction(
+      collectionAddress.publicKey, // Địa chỉ tài khoản mint
+      0, // Số thập phân (decimals)
+      new PublicKey(phantomWallet), // mintAuthority
+      new PublicKey(phantomWallet), // freezeAuthority (nếu có)
+      TOKEN_PROGRAM_ID
+    );
+    console.log("collectionAddress", collectionAddress.publicKey.toBase58());
 
-//     const tokenAccountCollection = Keypair.generate();
-//     const createAccountInstructionTokenAccount = SystemProgram.createAccount({
-//       fromPubkey: new PublicKey(phantomWallet),
-//       newAccountPubkey: tokenAccountCollection.publicKey,
-//       space: MINT_SIZE,
-//       lamports,
-//       programId: TOKEN_PROGRAM_ID,
-//     });
-//     const initializeMintInstructionTokenAccount =  createInitializeAccountInstruction(
-//       tokenAccountCollection.publicKey,
-//       collectionAddress.publicKey,
-//       new PublicKey(phantomWallet),
-//       TOKEN_PROGRAM_ID
-//     );
-//     console.log("tokenAccountCollection", tokenAccountCollection.publicKey.toBase58());
-//  // 1 token  collectionMint vào account collectionTokenAccount
-//     const mintToAddressCollectionToTokenAccount = createMintToInstruction(
-//       collectionAddress.publicKey,
-//       tokenAccountCollection.publicKey,
-//       new PublicKey(phantomWallet),
-//       1
-//     )
-
-    // const transaction = new Transaction()
-    // .add(createAccountInstructionAddressCollection)
-    // .add(initializeMintInstructionAddressCollection)
-    // .add(createAccountInstructionTokenAccount)
-    // .add(initializeMintInstructionTokenAccount)
-    // .add(mintToAddressCollectionToTokenAccount)
-
-    const transaction = new Transaction().add(
-      SystemProgram.createAccount({
-        fromPubkey: new PublicKey(phantomWallet),
-        newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
-        space: MINT_SIZE,
-        lamports,
-        programId,
-      }),
-      createInitializeMintInstruction(
-        collectionAddress.publicKey, // Địa chỉ tài khoản mint
-        0, // Số thập phân (decimals)
-        new PublicKey(phantomWallet), // mintAuthority
-      )
-
+    const tokenAccountCollection = Keypair.generate();
+    const createAccountInstructionTokenAccount = SystemProgram.createAccount({
+      fromPubkey: new PublicKey(phantomWallet),
+      newAccountPubkey: tokenAccountCollection.publicKey,
+      space: MINT_SIZE,
+      lamports,
+      programId,
+    });
+    const initializeMintInstructionTokenAccount =  createInitializeAccountInstruction(
+      tokenAccountCollection.publicKey,
+      collectionAddress.publicKey,
+      new PublicKey(phantomWallet),
+      TOKEN_PROGRAM_ID
+    );
+    console.log("tokenAccountCollection", tokenAccountCollection.publicKey.toBase58());
+ // 1 token  collectionMint vào account collectionTokenAccount
+    const mintToAddressCollectionToTokenAccount = createMintToInstruction(
+      collectionAddress.publicKey,
+      tokenAccountCollection.publicKey,
+      new PublicKey(phantomWallet),
+      1
     )
+    // const transaction = new Transaction().add(
+    //   SystemProgram.createAccount({
+    //     fromPubkey: new PublicKey(phantomWallet),
+    //     newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
+    //     space: MINT_SIZE,
+    //     lamports,
+    //     programId,
+    //   }),
+    //   createInitializeMintInstruction(
+    //     collectionAddress.publicKey, // Địa chỉ tài khoản mint
+    //     0, // Số thập phân (decimals)
+    //     new PublicKey(phantomWallet), // mintAuthority
+    //   )
 
-    transaction.feePayer = new PublicKey(phantomWallet);
-    const { blockhash } = await con.getRecentBlockhash();
-    console.log(blockhash);
-    transaction.recentBlockhash = blockhash;
-    const signedTransaction = await wallet.provider.signTransaction(transaction);
-    console.log(signedTransaction);
-    console.log(signedTransaction.serialize());
+    // )
+
+    // transaction.feePayer = new PublicKey(phantomWallet);
+    // const { blockhash } = await con.getRecentBlockhash();
+    // console.log(blockhash);
+    // transaction.recentBlockhash = blockhash;
+    // const signedTransaction = await wallet.provider.signTransaction(transaction);
+    // console.log(signedTransaction);
+    // console.log(signedTransaction.serialize());
     try {
- 
-    //   transaction.addSignature( new PublicKey(phantomWallet), signedTransaction);
-      // const saction = Transaction.from(signedTransaction);
-    //  const tx =  await con.sendAndConfirmTransaction(signedTransaction.serialize());
-    //  await con.confirmTransaction(tx, 'confirmed');
+      const transaction = new Transaction()
+      .add(createAccountInstructionAddressCollection)
+      .add(initializeMintInstructionAddressCollection)
+      .add(createAccountInstructionTokenAccount)
+      .add(initializeMintInstructionTokenAccount)
+      // .add(mintToAddressCollectionToTokenAccount)
+      transaction.feePayer = new PublicKey(phantomWallet);
+      const { blockhash } = await con.getRecentBlockhash();
+      transaction.recentBlockhash = blockhash;
+      transaction.sign(collectionAddress,tokenAccountCollection);
+      const signedTransaction = await wallet.provider.signTransaction(transaction);
+      console.log(signedTransaction);
       const signature = await con.sendRawTransaction(signedTransaction.serialize());
       console.log(signature);
-      // console.log(tx);
     } catch (error) {
       console.log(error);
     }
