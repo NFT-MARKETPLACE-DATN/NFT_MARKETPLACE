@@ -100,6 +100,7 @@ export const initCollection = async (
             name: "MarketPlace Test 2",
             symbol: "ARTCHAIN",
             uri: "https://azure-acute-bee-777.mypinata.cloud/ipfs/QmeheDt5FVAEXS6FAcxyNYtT8JtdXSGoiuYRmyukkCV3F6",
+            //https://azure-acute-bee-777.mypinata.cloud/ipfs/QmbYs1wAD9xJFBGf3YPZccLw5Hkng9WQC1En3D9qTTJdQT
             sellerFeeBasisPoints: 0,
             creators: null,
             collection: null,

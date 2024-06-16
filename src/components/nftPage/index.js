@@ -39,6 +39,8 @@ import { getConnected } from "../../utils/walletConnet";
 import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram ,Keypair, sendAndConfirmTransaction} from '@solana/web3.js';
 import { useSelector } from 'react-redux';
 import {initCollection} from "../../utils/createMintNFT";
+import { approveNFT } from '../../utils/approveNFT';
+import { transferNFT } from '../../utils/transferNFT';
 import * as token from "@solana/spl-token"
 const DetailNFT = () => {
   const params = useSearchQuery();
@@ -98,6 +100,8 @@ const DetailNFT = () => {
     // }
     // console.log(account);
    await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
+    // await approveNFT(account);
+    // await transferNFT();
 
   }
   // console.log(params);
