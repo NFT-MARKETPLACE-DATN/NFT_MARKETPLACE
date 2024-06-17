@@ -33,6 +33,13 @@ const MintNFTStyle = styled.div`
         display: flex;
         justify-content: center;
         gap: 8vw;
+        @media screen and (max-width: 1200px) {
+          gap: 6vw;
+        };
+        @media screen and (max-width: 950px) {
+          gap: 4vw;
+        };
+  
       }
       .header {
         .headerInfo {
@@ -42,7 +49,7 @@ const MintNFTStyle = styled.div`
           width: 100%;
           max-width: 600px;
         }
-        @media screen and (max-width: 650px) {
+        @media screen and (max-width: 800px) {
           .headerMobi {
             display: none;
           }
@@ -61,7 +68,7 @@ const MintNFTStyle = styled.div`
         width: 100%;
         height: 100%;
         padding: 15px 0 5px 0;
-        @media screen and (max-width: 650px) {
+        @media screen and (max-width: 800px) {
           flex-direction: column;
           align-items: center;
           padding: 15px 0 15px 0;
@@ -80,20 +87,28 @@ const MintNFTStyle = styled.div`
           overflow: hidden;
           @media screen and (max-width: 1200px) {
             max-width: 500px;
-            max-height: 500px;
+            max-height: 400px;
           }
-          @media screen and (max-width: 650px) {
-            max-width: 380px;
+          @media screen and (max-width: 950px) {
+            max-width: 430px;
             max-height: 380px;
           }
-          @media screen and (max-width: 450px) {
-            max-width: 270px;
-            max-height: 270px;
+          @media screen and (max-width: 800px) {
+            max-width: 100%;
+            max-height: 500px;
           }
-          @media screen and (max-width: 320px) {
-            max-width: 200px;
-            max-height: 200px;
-          }
+          // @media screen and (max-width: 650px) {
+          //   max-width: 380px;
+          //   max-height: 380px;
+          // }
+          // @media screen and (max-width: 450px) {
+          //   max-width: 270px;
+          //   max-height: 270px;
+          // }
+          // @media screen and (max-width: 320px) {
+          //   max-width: 200px;
+          //   max-height: 200px;
+          // }
           .imageInput {
             position: absolute;
             height: 100%;
@@ -134,10 +149,10 @@ const MintNFTStyle = styled.div`
           }
           .imageHover {
             width: 100%;
-            // height:100%;
+            height:100%;
             img {
               width: 100%;
-              // height:100%;
+              height:100%;
             }
           }
           .hoverNFT {
@@ -167,6 +182,40 @@ const MintNFTStyle = styled.div`
           }
           .label {
             margin-bottom: 5px;
+            line-height: 24px;
+            font-weight: 600;
+            font-size: 16px;
+          }
+          .descriptionTraits{
+            line-height: 20px;
+            font-size: 14px;
+            padding-bottom:1.25rem;
+          }
+          .addTrait{
+            padding:0px;
+            display: flex;
+            justify-content: flex-start;
+            color: black;
+            width: 100%;
+            gap:5px;
+            .labelTrait{
+              line-height: 24px;
+              font-weight: 600;
+              font-size: 16px;
+              text-transform:capitalize;
+            }
+            
+          }
+          .traitNFT{
+            .trait{
+              .vertical-line{
+                width: 2px;
+                height: 100%;
+                background-color: black;
+                border: none;
+                transform: rotate(90deg);
+              }
+            }
           }
         }
         .bttCreate {

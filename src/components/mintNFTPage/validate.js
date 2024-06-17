@@ -6,8 +6,8 @@ export const validate = values => {
     if(!values.nameNFT){
       errors.nameNFT = "No name"
     }
-    if(!values.supplyNFT){
-      errors.supplyNFT = " no ádsf"
+    if(!values.symbolNFT){
+      errors.symbolNFT = " no ádsf"
     }
     return errors;
   };

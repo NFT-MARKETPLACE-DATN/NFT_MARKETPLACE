@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import MintNFTStyle from './mintNFTStyle'
-import { useFormik } from 'formik'
+import MintNFTStyle from './mintNFTStyle';
+import { useFormik } from 'formik';
 import {
   TextField,
   InputAdornment,
@@ -22,36 +22,52 @@ import {
   CardContent,
   CardActions,
   Tabs,
-  Tab
-} from '@mui/material'
+  Tab,
+  Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { validate } from './validate';
 import { toast } from 'react-toastify';
 import DeleteIcon from '../../images/logos/deleteIcon.svg';
+import EditIcon from '../../images/logos/EditIcon.svg';
 import UploadIcon from '../../images/logos/UploadIcon.svg';
 import BaseButton from '../../containers/base/Button';
-import MintNFTDialog from '../../containers/MintNFTDialog';
+import {MintNFTDialog, AddTraitDialog} from '../../containers/MintNFTDialog';
 import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase';
 import {uploadMetaData} from "../../utils/uploadMetaData";
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
-  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false)
+  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
+  const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
+  const [nftTrait, setNftTrait] = useState([]);
   const handlerDeleteImageNFT = () => {
     setImagePreviewUrl(null)
+  }
+  const handlerAddTrait = () => {
+    setIsOpenDialogAddTrait(true)
+  };
+  const handlerEditTrait = (item,index) =>{
+    console.log(nftTrait);
+  };
+  const handlerDeleteTrait = (item,index) =>{
+    console.log(nftTrait);
+    console.log(index);
+    setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index));
   }
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       imageNFT: null,
       nameNFT: null,
-      supplyNFT: 0,
+      symbolNFT: null,
       descriptionNFT: null,
-      attributes:[]
+      // attributes:[]
     },
     validate,
     onSubmit: async (values) => {
       // await dispatch(register(values));
-       const imageURL =  await uploadImgaeFirebase(values.imageNFT,"imageNFT");
+      const imageURL =  await uploadImgaeFirebase(values.imageNFT,"imageNFT");
       const data = {
         name: values.nameNFT,
         symbol: values.nameNFT,
@@ -176,7 +192,7 @@ const MintNFTPage = () => {
           </div>
           <div className='imformationNFT'>
             <Box>
-              <div className='label'>Collection *</div>
+              <div className='label'>Name *</div>
               <TextField
                 variant='outlined'
                 placeholder='Name your NFT'
@@ -192,18 +208,18 @@ const MintNFTPage = () => {
             </Box>
 
             <Box>
-              <div className='label'>Supply *</div>
+              <div className='label'>Symbol *</div>
               <TextField
                 variant='outlined'
-                //  placeholder="Name your NFT"
+                placeholder="Symbol your NFT"
                 type='text'
                 fullWidth
                 onBlur={formik.handleBlur}
-                name='supplyNFT'
+                name='symbolNFT'
                 onChange={formik.handleChange}
                 // value={formik.values.supplyNFT}
-                error={formik.touched.supplyNFT && !!formik.errors.supplyNFT}
-                helperText={formik.touched.supplyNFT && formik.errors.supplyNFT}
+                error={formik.touched.symbolNFT && !!formik.errors.symbolNFT}
+                helperText={formik.touched.symbolNFT && formik.errors.symbolNFT}
               />
             </Box>
 
@@ -214,7 +230,7 @@ const MintNFTPage = () => {
                 fullWidth
                 hiddenLabel
                 multiline
-                rows={5}
+                rows={4}
                 type='text'
                 variant='outlined'
                 name='descriptionNFT'
@@ -224,6 +240,51 @@ const MintNFTPage = () => {
                 // value={notes}
                 // onChange={(event) => setNotes(event.target.value.trimStart())}
               />
+            </Box>
+
+            <Box>
+              <div className='label'>Trains NFT </div>
+              <div className='descriptionTraits'>Traits describe attributes of your item. They appear as filters inside your collection page and are also listed out inside your item page.</div>
+              <Button className='addTrait' onClick={handlerAddTrait}>
+                <AddIcon/>
+                <span className='labelTrait'>Add trait</span>
+              </Button>
+              <div className='traitNFT'>
+                {nftTrait && nftTrait.map((item,index)=>(
+                    <TextField
+                     key={index}
+                     className='trait'
+                     fullWidth
+                     hiddenLabel
+                     name="search"
+                     type="text"
+                     variant="outlined"
+                     margin="dense"
+                     autoComplete="off"
+                    //  value={item.trait_type}
+                    disabled
+                     InputProps={{
+                      startAdornment:(
+                        <InputAdornment position="start">
+                        {item.trait_type} | {item.value}
+                        </InputAdornment>
+                      ),
+                       endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={() => handlerEditTrait(item,index)}>
+                              <img src={EditIcon} alt="edit-icon" />
+                            </IconButton>
+                            <IconButton onClick={() => handlerDeleteTrait(item,index)}>
+                              <img src={DeleteIcon} alt="delete-icon" />
+                            </IconButton>
+                          </InputAdornment>
+                       ),
+                     }}
+                   />
+                )
+                 
+                )}
+              </div>
             </Box>
           </div>
           <div className='bttCreate'>
@@ -236,7 +297,14 @@ const MintNFTPage = () => {
         onClose={() => {
           setIsOpenDialogMintNFT(false)
         }}
-      ></MintNFTDialog>
+      />
+      <AddTraitDialog
+        visible={isOpenDialogAddTrait}
+        onClose={() => {
+          setIsOpenDialogAddTrait(false)
+        }}
+        setNftTrait={setNftTrait}
+      />
     </MintNFTStyle>
   )
 }
