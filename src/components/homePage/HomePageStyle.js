@@ -74,7 +74,31 @@ const HomePageStye = styled.div`
         // padding-right:20px;
         .tab-homepage{
             margin-bottom: 15px;
+            display:flex;
+            justify-content: space-between;
+            padding: 10px 10px 0px 10px;
+            .search-homepage{
+                
+                .searchInput{
+                    div {
+                        border-radius: 20px;
+                        background-color: #fafafa;
+                        height: 40px;
+                    }
+                }
+            }
+            .arrow_price{
+                .typeValue {
+                    color: #000;
+                    font-size: 14px;
+                    font-weight: normal;
+                    border-radius: 10px;
+                    min-width: 150px;
+                    text-align: center;
+                  }
+            }
         }
+       
         .list-item{
             width: 100%
             padding-left:5px;

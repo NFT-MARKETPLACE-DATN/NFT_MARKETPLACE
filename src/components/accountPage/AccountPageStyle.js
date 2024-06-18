@@ -45,6 +45,7 @@ const AccountPageStyle = styled.div`
                 // max-width: 468px;
                 width: 100%;
                 opacity: 0;
+                cursor: pointer;
               }
             }
           }

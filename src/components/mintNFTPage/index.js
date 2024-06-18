@@ -45,14 +45,13 @@ const MintNFTPage = () => {
     setImagePreviewUrl(null)
   }
   const handlerAddTrait = () => {
-    setIsOpenDialogAddTrait(true)
+    setIsOpenDialogAddTrait(true);
   };
   const handlerEditTrait = (item,index) =>{
-    console.log(nftTrait);
+    // console.log(nftTrait);
+    setIsOpenDialogAddTrait(true);
   };
   const handlerDeleteTrait = (item,index) =>{
-    console.log(nftTrait);
-    console.log(index);
     setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index));
   }
   const formik = useFormik({
@@ -271,9 +270,9 @@ const MintNFTPage = () => {
                       ),
                        endAdornment: (
                           <InputAdornment position="end">
-                            <IconButton onClick={() => handlerEditTrait(item,index)}>
+                            {/* <IconButton onClick={() => handlerEditTrait(item,index)}>
                               <img src={EditIcon} alt="edit-icon" />
-                            </IconButton>
+                            </IconButton> */}
                             <IconButton onClick={() => handlerDeleteTrait(item,index)}>
                               <img src={DeleteIcon} alt="delete-icon" />
                             </IconButton>

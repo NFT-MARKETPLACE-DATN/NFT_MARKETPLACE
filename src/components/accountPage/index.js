@@ -174,7 +174,7 @@ const AccountPage = () => {
               </div>
             </div>
             <div className='account-logo'>
-              <img className='logo' src={userIcon} alt='icon-account' style={{ backgroundColor: '#189e00' }}></img>
+              <img className='logo' src={userIcon} alt='icon-account' style={{ backgroundColor: '#189e00' }}/>
             </div>
             <div className='account-name'>
               Unnamed

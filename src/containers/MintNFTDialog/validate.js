@@ -3,8 +3,8 @@ const validateNftTrait = values => {
     if (!values.traitType) {
       errors.traitType = 'Requirement Trait Type';
     }
-    if(!values.traitName){
-      errors.traitName = "Requirement Trait Name"
+    if(!values.traitValue){
+      errors.traitValue = "Requirement Trait Name"
     };
     return errors;
   };

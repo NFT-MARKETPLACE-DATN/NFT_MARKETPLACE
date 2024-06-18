@@ -62,7 +62,7 @@ const MintNFTDialog = (props) => {
 
 
 const AddTraitDialog = (props) => {
-    const { visible, onClose, setNftTrait } = props;
+    const { visible, onClose, setNftTrait, nftEdit } = props;
     // const navigate = useNavigate();
     const onCloseDialog = () => {
         onClose();
@@ -71,13 +71,13 @@ const AddTraitDialog = (props) => {
         enableReinitialize: true,
         initialValues: {
           traitType: null,
-          traitName :null
+          traitValue :null
         },
         validate:validateNftTrait,
         onSubmit: (values) => {
            const attribute ={
             trait_type:values.traitType,
-            value:values.traitName
+            value:values.traitValue
            };
            setNftTrait((preValue)=>[...preValue,attribute]);
            onClose();
@@ -106,7 +106,7 @@ const AddTraitDialog = (props) => {
                         gap:"15px"
                     }}>
                     <Box style={{ m: 0, p: 2, gap:'5px', display: 'flex', flexDirection:"column"}}>   
-                        <div style={{ m: 0, p: 2, lineHeight:'24px',fontWeight:600,fontSize:"16px"}} >Type</div>
+                        <div style={{ m: 0, p: 2, lineHeight:'24px',fontWeight:600,fontSize:"16px"}} >Type Name</div>
                         <TextField
                             className='input'
                             hiddenLabel
@@ -124,20 +124,20 @@ const AddTraitDialog = (props) => {
                         />
                     </Box>
                     <Box style={{ m: 0, p: 2, gap:'5px', display: 'flex', flexDirection:"column"}}>
-                        <div style={{ m: 0, p: 2, lineHeight:'24px',fontWeight:600,fontSize:"16px"}} >Name</div>
+                        <div style={{ m: 0, p: 2, lineHeight:'24px',fontWeight:600,fontSize:"16px"}} >Value</div>
                         <TextField
                         className='input'
                         hiddenLabel
                         variant='outlined'
                         placeholder="Ex. Large"
                         type='text'
-                        name="traitName"
+                        name="traitValue"
                         onChange={formik.handleChange}
                         sx={{
                             "& > p":{marginLeft:0,marginRight:0}
                         }}
-                        error={formik.touched.traitName && !!formik.errors.traitName}
-                        helperText={formik.touched.traitName && formik.errors.traitName}
+                        error={formik.touched.traitValue && !!formik.errors.traitValue}
+                        helperText={formik.touched.traitValue && formik.errors.traitValue}
                         fullWidth
                         /> 
                     </Box>

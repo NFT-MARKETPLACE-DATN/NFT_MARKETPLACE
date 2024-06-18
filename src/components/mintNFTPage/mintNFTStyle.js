@@ -197,6 +197,7 @@ const MintNFTStyle = styled.div`
             justify-content: flex-start;
             color: black;
             width: 100%;
+            height: 50px;
             gap:5px;
             .labelTrait{
               line-height: 24px;

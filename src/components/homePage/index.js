@@ -22,12 +22,13 @@ import {
   Tabs,
   Tab
 } from '@mui/material'
-
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import HomePageStye from './HomePageStyle'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Scrollbar, A11y, EffectCube, Autoplay } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
-import ItemList from '../listItem/index'
+import ItemList from '../listItem/index';
+import SearchIcon from '../../images/logos/SearchIcon.svg'
 
 const HomePage = () => {
   let listItem = [
@@ -121,7 +122,8 @@ const HomePage = () => {
     },
 
   ]
-  const [value, setValue] = useState(1)
+  const [value, setValue] = useState(1);
+  const [typePrice,setTypePrice] = useState(10);
   const [selectTab, setSelectTab] = useState(1);
   const [listNFT, setListNFT] = useState(listItem1);
   const handleChangeTab = (event, newValue) => {
@@ -150,6 +152,10 @@ const HomePage = () => {
 
   const handleClickTab = (value) => {
     console.log(value)
+  }
+  const handleChangeTypePrice = (event) =>{
+    setTypePrice(event.target.value);
+    console.log(event.target.value);;
   }
   return (
     <HomePageStye>
@@ -273,8 +279,54 @@ const HomePage = () => {
           >
             <Tab value={1} label='ALL' />
             <Tab value={2} label='Trending' />
-            <Tab value={3} label='Marketplace' />
+            {/* <Tab value={3} label='Marketplace' /> */}
           </Tabs>
+        <div className='search-homepage'>
+          <TextField
+              className={`searchInput`}
+              fullWidth
+              hiddenLabel
+              placeholder="検索"
+              name="search"
+              type="text"
+              variant="outlined"
+              margin="dense"
+              autoComplete="off"
+              // value={searchTerm}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <img src={SearchIcon} alt="search-icon" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              // onChange={handleChangeInput}
+              // onBlur={handleBlurInput}
+            />
+          </div>
+        <div className='arrow_price'>
+          {/* <div className="typeLabel">種別</div> */}
+              <FormControl >
+                <Select
+                  value={typePrice}
+                  onChange={handleChangeTypePrice}
+                  className="typeValue"
+                  IconComponent={KeyboardArrowDownRoundedIcon}
+                >
+                   <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                    {/* {listTradeTypes.filter((tradeType) => tradeType.name !== "SENT" && tradeType.name !== "RECEIVED" && tradeType.name !== "TRANSFER")
+                    .map((item, index) => (
+                      <MenuItem key={index} value={item} className="typeText">
+                        {item.japanName}
+                      </MenuItem>
+                    ))} */}
+                </Select>
+                </FormControl>
+          </div>
         </div>
         <div className='list-item'>
           {/* <Box sx={{ minWidth: "275px" }}>
