@@ -22,7 +22,7 @@ import {
   Button,
   CardMedia
 } from '@mui/material'
-import ListItemAccountStyle from './ListItemStyle'
+import ListItemAccountStyle from './ListItemAccountStyle'
 import PhanTomWalletLogo from '../../images/logos/PhantomIcon.svg'
 import BuyIcon from '../../images/logos/BuyIcon.svg'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ const ItemList = (props) => {
   const navigate = useNavigate()
   const handlerClick = (item) => {
     console.log(item)
-    navigate(`/nft?id=${item.id}`)
+    // navigate(`/nft?id=${item.id}`)
   }
   return (
     <ListItemAccountStyle>

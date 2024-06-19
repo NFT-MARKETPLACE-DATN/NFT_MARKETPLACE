@@ -28,6 +28,7 @@ import userIcon from '../../images/logos/account.svg';
 import FormatPaint from "../../images/logos/FormatPaint.svg";
 import { toast } from 'react-toastify';
 import ItemList from '../listItem/index';
+import IteamListAccount from "../../containers/listItemAccount/index";
 const AccountPage = () => {
   let listItem = [
     {
@@ -101,6 +102,14 @@ const AccountPage = () => {
     else if(selectTab == 2 )setListNFT(listItem);
     else if(selectTab == 3)  setListNFT(listItem2);
   },[selectTab])
+  const detailTabel = () =>{
+    switch(selectTab){
+      case 1:
+        return <IteamListAccount data={listNFT}></IteamListAccount>
+      case 2:
+        return  <IteamListAccount data={listNFT}></IteamListAccount>
+    }
+  }
   return (
     <>
       <AccountPageStyle>
@@ -220,7 +229,7 @@ const AccountPage = () => {
             </Tabs>
           </div>
           <div className='accountPageItem'>
-          <ItemList data={listNFT} account={true} />
+            {detailTabel()}
           </div>
         </div>
       </AccountPageStyle>
