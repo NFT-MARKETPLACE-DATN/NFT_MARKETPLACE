@@ -35,12 +35,15 @@ import BaseButton from '../../containers/base/Button';
 import {MintNFTDialog, AddTraitDialog} from '../../containers/MintNFTDialog';
 import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase';
 import {uploadMetaData} from "../../utils/uploadMetaData";
+import {initCollection} from "../../utils/createMintNFT";
+import { useLocation, useNavigate } from 'react-router-dom'
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
   const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
   const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
   const [nftTrait, setNftTrait] = useState([]);
+  const navigate = useNavigate();
   const handlerDeleteImageNFT = () => {
     setImagePreviewUrl(null)
   }
@@ -54,6 +57,9 @@ const MintNFTPage = () => {
   const handlerDeleteTrait = (item,index) =>{
     setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index));
   }
+  useEffect(()=>{
+    if(!localStorage.getItem('walletAdress'))  navigate('/')
+  },[])
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -71,14 +77,13 @@ const MintNFTPage = () => {
         name: values.nameNFT,
         symbol: values.nameNFT,
         description: values.descriptionNFT,
-        // seller_fee_basis_points: 5,
-        external_url: '',
-        edition: '',
-        background_color: '000000',
+        seller_fee_basis_points: 100,
+        attributes:nftTrait,
         image: imageURL
       }
     const result=  await uploadMetaData(data);
     // console.log(result);
+    // await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
     setIsOpenDialogMintNFT(true);
     }
   })
@@ -198,7 +203,7 @@ const MintNFTPage = () => {
                 type='text'
                 fullWidth
                 name='nameNFT'
-                onBlur={formik.handleBlur}
+                // onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 // value={formik.values.nameNFT}
                 error={formik.touched.nameNFT && !!formik.errors.nameNFT}
@@ -213,7 +218,7 @@ const MintNFTPage = () => {
                 placeholder="Symbol your NFT"
                 type='text'
                 fullWidth
-                onBlur={formik.handleBlur}
+                // onBlur={formik.handleBlur}
                 name='symbolNFT'
                 onChange={formik.handleChange}
                 // value={formik.values.supplyNFT}

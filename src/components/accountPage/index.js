@@ -28,6 +28,7 @@ import userIcon from '../../images/logos/account.svg';
 import FormatPaint from "../../images/logos/FormatPaint.svg";
 import { toast } from 'react-toastify';
 import ItemList from '../listItem/index';
+import { useLocation, useNavigate } from 'react-router-dom'
 import IteamListAccount from "../../containers/listItemAccount/index";
 const AccountPage = () => {
   let listItem = [
@@ -91,7 +92,8 @@ const AccountPage = () => {
   const [value, setValue] = useState(1);
   const [selectTab, setSelectTab] = useState(1);
   const [imagePreviewBackGround, setImagePreviewBackGround] = useState(null);
-  const [listNFT, setListNFT] = useState(listItem1)
+  const [listNFT, setListNFT] = useState(listItem1);
+  const navigate = useNavigate();
   const handleChangeTab = (event, newValue) => {
     console.log(newValue);
     setSelectTab(newValue)
@@ -102,6 +104,10 @@ const AccountPage = () => {
     else if(selectTab == 2 )setListNFT(listItem);
     else if(selectTab == 3)  setListNFT(listItem2);
   },[selectTab])
+  useEffect(()=>{
+    if(!localStorage.getItem('walletAdress'))  navigate('/')
+  },[]);
+
   const detailTabel = () =>{
     switch(selectTab){
       case 1:

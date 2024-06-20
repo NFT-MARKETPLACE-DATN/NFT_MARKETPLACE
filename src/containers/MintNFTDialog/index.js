@@ -18,7 +18,7 @@ import {validateNftTrait} from "./validate";
 
 const MintNFTDialog = (props) => {
     const { visible, onClose, setAcount,setCode } = props;
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const onCloseDialog = () => {
         onClose();
         navigate('/');
