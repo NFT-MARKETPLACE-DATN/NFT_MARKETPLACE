@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import MintNFTStyle from './mintNFTStyle';
-import { useFormik } from 'formik';
+import MintNFTStyle from './mintNFTStyle'
+import { useFormik } from 'formik'
 import {
   TextField,
   InputAdornment,
@@ -24,67 +24,79 @@ import {
   Tabs,
   Tab,
   Button
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { validate } from './validate';
-import { toast } from 'react-toastify';
-import DeleteIcon from '../../images/logos/deleteIcon.svg';
-import EditIcon from '../../images/logos/EditIcon.svg';
-import UploadIcon from '../../images/logos/UploadIcon.svg';
-import BaseButton from '../../containers/base/Button';
-import {MintNFTDialog, AddTraitDialog} from '../../containers/MintNFTDialog';
-import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase';
-import {uploadMetaData} from "../../utils/uploadMetaData";
-import {initCollection} from "../../utils/createMintNFT";
+} from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { validate } from './validate'
+import { toast } from 'react-toastify'
+import DeleteIcon from '../../images/logos/deleteIcon.svg'
+import EditIcon from '../../images/logos/EditIcon.svg'
+import UploadIcon from '../../images/logos/UploadIcon.svg'
+import BaseButton from '../../containers/base/Button'
+import { MintNFTDialog, AddTraitDialog } from '../../containers/MintNFTDialog'
+import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase'
+import { uploadMetaData } from '../../utils/uploadMetaData'
+import { initCollection } from '../../utils/createMintNFT'
 import { useLocation, useNavigate } from 'react-router-dom'
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
-  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
-  const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
-  const [nftTrait, setNftTrait] = useState([]);
-  const navigate = useNavigate();
+  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false)
+  const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false)
+  const [nftTrait, setNftTrait] = useState([])
+  const navigate = useNavigate()
   const handlerDeleteImageNFT = () => {
     setImagePreviewUrl(null)
   }
   const handlerAddTrait = () => {
-    setIsOpenDialogAddTrait(true);
-  };
-  const handlerEditTrait = (item,index) =>{
-    // console.log(nftTrait);
-    setIsOpenDialogAddTrait(true);
-  };
-  const handlerDeleteTrait = (item,index) =>{
-    setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index));
+    setIsOpenDialogAddTrait(true)
   }
-  useEffect(()=>{
-    if(!localStorage.getItem('walletAdress'))  navigate('/')
-  },[])
+  // const handlerEditTrait = (item,index) =>{
+  //   // console.log(nftTrait);
+  //   setIsOpenDialogAddTrait(true);
+  // };
+  const handlerDeleteTrait = (item, index) => {
+    setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index))
+  }
+  useEffect(() => {
+    if (!localStorage.getItem('walletAdress')) navigate('/')
+  }, [])
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       imageNFT: null,
       nameNFT: null,
       symbolNFT: null,
-      descriptionNFT: null,
+      descriptionNFT: null
       // attributes:[]
     },
     validate,
     onSubmit: async (values) => {
       // await dispatch(register(values));
-      const imageURL =  await uploadImgaeFirebase(values.imageNFT,"imageNFT");
-      const data = {
-        name: values.nameNFT,
-        symbol: values.nameNFT,
-        description: values.descriptionNFT,
-        seller_fee_basis_points: 100,
-        attributes:nftTrait,
-        image: imageURL
+      const imageURL = await uploadImgaeFirebase(values.imageNFT, 'imageNFT')
+      if (imageURL.status == true) {
+        const data = {
+          name: values.nameNFT,
+          symbol: values.nameNFT,
+          description: values.descriptionNFT,
+          seller_fee_basis_points: 100,
+          attributes: nftTrait,
+          image: imageURL.result
+        }
+        const uploadDataToIDFS = await uploadMetaData(data)
+        if (uploadDataToIDFS.status == true) {
+          // const result = await initCollection('https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA', account)
+          // if(result.status){
+            // setIsOpenDialogMintNFT(true)
+          // }else{}
+        }else{
+
+        }
+      }else{
+
       }
-    const result=  await uploadMetaData(data);
-    // console.log(result);
-    // await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
-    setIsOpenDialogMintNFT(true);
+
+
+     
     }
   })
   return (
@@ -215,7 +227,7 @@ const MintNFTPage = () => {
               <div className='label'>Symbol *</div>
               <TextField
                 variant='outlined'
-                placeholder="Symbol your NFT"
+                placeholder='Symbol your NFT'
                 type='text'
                 fullWidth
                 // onBlur={formik.handleBlur}
@@ -248,46 +260,48 @@ const MintNFTPage = () => {
 
             <Box>
               <div className='label'>Trains NFT </div>
-              <div className='descriptionTraits'>Traits describe attributes of your item. They appear as filters inside your collection page and are also listed out inside your item page.</div>
+              <div className='descriptionTraits'>
+                Traits describe attributes of your item. They appear as filters inside your collection page and are also
+                listed out inside your item page.
+              </div>
               <Button className='addTrait' onClick={handlerAddTrait}>
-                <AddIcon/>
+                <AddIcon />
                 <span className='labelTrait'>Add trait</span>
               </Button>
               <div className='traitNFT'>
-                {nftTrait && nftTrait.map((item,index)=>(
+                {nftTrait &&
+                  nftTrait.map((item, index) => (
                     <TextField
-                     key={index}
-                     className='trait'
-                     fullWidth
-                     hiddenLabel
-                     name="search"
-                     type="text"
-                     variant="outlined"
-                     margin="dense"
-                     autoComplete="off"
-                    //  value={item.trait_type}
-                    disabled
-                     InputProps={{
-                      startAdornment:(
-                        <InputAdornment position="start">
-                        {item.trait_type} | {item.value}
-                        </InputAdornment>
-                      ),
-                       endAdornment: (
-                          <InputAdornment position="end">
+                      key={index}
+                      className='trait'
+                      fullWidth
+                      hiddenLabel
+                      name='search'
+                      type='text'
+                      variant='outlined'
+                      margin='dense'
+                      autoComplete='off'
+                      //  value={item.trait_type}
+                      disabled
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position='start'>
+                            {item.trait_type} | {item.value}
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position='end'>
                             {/* <IconButton onClick={() => handlerEditTrait(item,index)}>
                               <img src={EditIcon} alt="edit-icon" />
                             </IconButton> */}
-                            <IconButton onClick={() => handlerDeleteTrait(item,index)}>
-                              <img src={DeleteIcon} alt="delete-icon" />
+                            <IconButton onClick={() => handlerDeleteTrait(item, index)}>
+                              <img src={DeleteIcon} alt='delete-icon' />
                             </IconButton>
                           </InputAdornment>
-                       ),
-                     }}
-                   />
-                )
-                 
-                )}
+                        )
+                      }}
+                    />
+                  ))}
               </div>
             </Box>
           </div>

@@ -187,8 +187,19 @@ export const initCollection = async (
       console.log(signedTransaction);
       const signature = await con.sendRawTransaction(signedTransaction.serialize());
       console.log(signature);
+      return {
+        mint_address:collectionAddress.publicKey.toBase58(),
+        token_account : associatedToken.toBase58(),
+        result : signature,
+        status : true
+      }
     } catch (error) {
       console.log(error);
+      return {
+        status : false,
+        result : error
+      }
+     
     }
   };
 
