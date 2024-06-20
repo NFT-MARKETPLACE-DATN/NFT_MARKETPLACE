@@ -37,15 +37,18 @@ import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase'
 import { uploadMetaData } from '../../utils/uploadMetaData'
 import { initCollection } from '../../utils/createMintNFT'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
+  const {account, wallet} = useSelector(state => state.globalState || {});
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
   const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false)
   const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false)
   const [nftTrait, setNftTrait] = useState([])
   const navigate = useNavigate()
   const handlerDeleteImageNFT = () => {
-    setImagePreviewUrl(null)
+    setImagePreviewUrl(null);
+    formik.setFieldValue('imageNFT', null);
   }
   const handlerAddTrait = () => {
     setIsOpenDialogAddTrait(true)
@@ -70,30 +73,54 @@ const MintNFTPage = () => {
       // attributes:[]
     },
     validate,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      event.preventDefault();
       // await dispatch(register(values));
-      const imageURL = await uploadImgaeFirebase(values.imageNFT, 'imageNFT')
-      if (imageURL.status == true) {
-        const data = {
-          name: values.nameNFT,
-          symbol: values.nameNFT,
-          description: values.descriptionNFT,
-          seller_fee_basis_points: 100,
-          attributes: nftTrait,
-          image: imageURL.result
-        }
-        const uploadDataToIDFS = await uploadMetaData(data)
-        if (uploadDataToIDFS.status == true) {
-          // const result = await initCollection('https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA', account)
-          // if(result.status){
-            // setIsOpenDialogMintNFT(true)
-          // }else{}
+      setSubmitting(true);
+      try {
+        const imageURL = await uploadImgaeFirebase(values.imageNFT, 'imageNFT');
+        if (imageURL.status == true) {
+          const data = {
+            name: values.nameNFT,
+            symbol: values.nameNFT,
+            description: values.descriptionNFT,
+            seller_fee_basis_points: 100,
+            image: imageURL.result,
+            attributes: nftTrait,
+            properties: {
+              files: [
+                {
+                  uri: imageURL.result,
+                  type: "image/png"
+                }
+              ],
+              category: "image",
+              creators: [
+                {
+                  address: account,
+                  share: 100
+                }
+              ]
+            },
+          }
+          const uploadDataToIDFS = await uploadMetaData(data);
+          if (uploadDataToIDFS.status == true) {
+            const result =  await initCollection(data,uploadDataToIDFS.result);
+            if(result.status){
+              setIsOpenDialogMintNFT(true)
+            }else{}
+          }else{
+  
+          }
         }else{
-
+  
         }
-      }else{
-
+      } catch (error) {
+        console.log(error);
+      }finally {
+        setSubmitting(false);
       }
+     
 
 
      

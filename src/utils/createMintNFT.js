@@ -4,25 +4,24 @@ import { Connection, Keypair, PublicKey, Transaction, sendAndConfirmTransaction,
 import {
     PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID,
   } from "@metaplex-foundation/mpl-token-metadata";
-// import { loadWalletKey } from "./utils";
 import { getConnected } from "./walletConnet";
 // const bs58 = require('bs58');
 
 // Creates a metaplex collection NFT
 export const initCollection = async (
-    connection,
-    phantomWallet
+  data,
+  metadataURL
   ) => {
-    // console.log(connection);
-    const con = new Connection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA", 'confirmed');
+    const con = new Connection(process.env.SOLANA_URL, 'confirmed');
     const wallet = await getConnected();
     const collectionAddress = Keypair.generate(); //Token mint account
 
-    const lamports = await getMinimumBalanceForRentExemptMint(new Connection(connection, 'confirmed'));
+    const lamports = await getMinimumBalanceForRentExemptMint(new Connection(process.env.SOLANA_URL, 'confirmed'));
     const programId = TOKEN_PROGRAM_ID;
     const associatedTokenProgramId  = ASSOCIATED_TOKEN_PROGRAM_ID;
+    
     const createAccountInstructionAddressCollection = SystemProgram.createAccount({
-      fromPubkey: new PublicKey(phantomWallet),
+      fromPubkey: new PublicKey(wallet.walletAddress),
       newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
       space: MINT_SIZE,
       lamports,
@@ -31,8 +30,8 @@ export const initCollection = async (
     const initializeMintInstructionAddressCollection = createInitializeMintInstruction(
       collectionAddress.publicKey, // Địa chỉ tài khoản mint
       0, // Số thập phân (decimals)
-      new PublicKey(phantomWallet), // mintAuthority
-      new PublicKey(phantomWallet), // freezeAuthority (nếu có)
+      new PublicKey(wallet.walletAddress), // mintAuthority
+      new PublicKey(wallet.walletAddress), // freezeAuthority (nếu có)
       TOKEN_PROGRAM_ID
     );
     console.log("collectionAddress", collectionAddress.publicKey.toBase58());
@@ -49,14 +48,14 @@ export const initCollection = async (
 
     const associatedToken = getAssociatedTokenAddressSync( //Get the address of the associated token account for a given mint and owner
       collectionAddress.publicKey, //collection Mint
-      new PublicKey(phantomWallet), // oner
+      new PublicKey(wallet.walletAddress), // oner
       false,
       // TOKEN_PROGRAM_ID,
     )
     const initializeMintInstructionAssociatedTokenAccount = createAssociatedTokenAccountInstruction(
-      new PublicKey(phantomWallet),
+      new PublicKey(wallet.walletAddress),
       associatedToken,
-      new PublicKey(phantomWallet),
+      new PublicKey(wallet.walletAddress),
       collectionAddress.publicKey,
       programId,
       associatedTokenProgramId
@@ -74,7 +73,7 @@ export const initCollection = async (
     const mintToAddressCollectionToTokenAccount = createMintToInstruction(
       collectionAddress.publicKey,
       associatedToken,
-      new PublicKey(phantomWallet),
+      new PublicKey(wallet.walletAddress),
       1
     );
 
@@ -90,19 +89,24 @@ export const initCollection = async (
       {
         metadata: collectionMetadataAccount,
         mint: collectionAddress.publicKey,
-        mintAuthority: new PublicKey(phantomWallet),
-        payer: new PublicKey(phantomWallet),
-        updateAuthority: new PublicKey(phantomWallet),
+        mintAuthority: new PublicKey(wallet.walletAddress),
+        payer: new PublicKey(wallet.walletAddress),
+        updateAuthority: new PublicKey(wallet.walletAddress),
       },
       {
         createMetadataAccountArgsV3: {
           data: {
-            name: "MarketPlace Test 2",
-            symbol: "ARTCHAIN",
-            uri: "https://azure-acute-bee-777.mypinata.cloud/ipfs/QmeheDt5FVAEXS6FAcxyNYtT8JtdXSGoiuYRmyukkCV3F6",
-            //https://azure-acute-bee-777.mypinata.cloud/ipfs/QmbYs1wAD9xJFBGf3YPZccLw5Hkng9WQC1En3D9qTTJdQT
+            name: data.name,
+            symbol: data.symbol,
+            uri:metadataURL,
             sellerFeeBasisPoints: 0,
-            creators: null,
+            creators: [
+              {
+                address: new PublicKey(wallet.walletAddress),
+                verified : 1,
+                share: 100
+              }
+            ],
             collection: null,
             uses: null,
           },
@@ -127,9 +131,9 @@ export const initCollection = async (
       {
         edition: collectionMasterEditionAccount,
         mint: collectionAddress.publicKey,
-        mintAuthority:  new PublicKey(phantomWallet),
-        payer:  new PublicKey(phantomWallet),
-        updateAuthority:  new PublicKey(phantomWallet),
+        mintAuthority:  new PublicKey(wallet.walletAddress),
+        payer:  new PublicKey(wallet.walletAddress),
+        updateAuthority:  new PublicKey(wallet.walletAddress),
         metadata: collectionMetadataAccount,
         tokenProgram: TOKEN_PROGRAM_ID
       },
@@ -145,7 +149,7 @@ export const initCollection = async (
     const sizeCollectionIX = createSetCollectionSizeInstruction(
       {
         collectionMetadata: collectionMetadataAccount,
-        collectionAuthority:  new PublicKey(phantomWallet),
+        collectionAuthority:  new PublicKey(wallet.walletAddress),
         collectionMint: collectionAddress.publicKey,
       },
       {
@@ -154,21 +158,6 @@ export const initCollection = async (
       TOKEN_METADATA_PROGRAM_ID
     );
     console.log("sizeCollectionIX",sizeCollectionIX);
-    // const transaction = new Transaction().add(
-    //   SystemProgram.createAccount({
-    //     fromPubkey: new PublicKey(phantomWallet),
-    //     newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
-    //     space: MINT_SIZE,
-    //     lamports,
-    //     programId,
-    //   }),
-    //   createInitializeMintInstruction(
-    //     collectionAddress.publicKey, // Địa chỉ tài khoản mint
-    //     0, // Số thập phân (decimals)
-    //     new PublicKey(phantomWallet), // mintAuthority
-    //   )
-
-    // )
 
     try {
       const transaction = new Transaction()
@@ -179,7 +168,8 @@ export const initCollection = async (
       .add(collectionMeatadataIX)
       .add(collectionMasterEditionIX)
       .add(sizeCollectionIX);
-      transaction.feePayer = new PublicKey(phantomWallet);
+
+      transaction.feePayer = new PublicKey(wallet.walletAddress);
       const { blockhash } = await con.getRecentBlockhash();
       transaction.recentBlockhash = blockhash;
       transaction.sign(collectionAddress);
@@ -203,17 +193,17 @@ export const initCollection = async (
     }
   };
 
-export async function main(){
-    // const keypair = loadWalletKey("CNFTKDRCpENe7S1hPvDS2E6YJr3fKKUbc3DWuyjF1mEW.json");
-    const wallet = Keypair.fromSecretKey(
-        new Uint8Array([
-          201, 248, 129, 145, 128, 218, 95, 80, 230, 175, 113, 51, 40, 111, 217, 130, 27, 158, 254, 75, 166, 97, 134, 232,
-          205, 29, 151, 131, 103, 218, 67, 92, 202, 211, 163, 67, 242, 61, 145, 96, 8, 57, 157, 60, 198, 140, 88, 205, 229,
-          202, 166, 35, 239, 197, 255, 166, 80, 232, 220, 82, 176, 178, 112, 116
-        ])
-      )
-    const connection = new Connection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",'confirmed');
+// export async function main(){
+//     // const keypair = loadWalletKey("CNFTKDRCpENe7S1hPvDS2E6YJr3fKKUbc3DWuyjF1mEW.json");
+//     const wallet = Keypair.fromSecretKey(
+//         new Uint8Array([
+//           201, 248, 129, 145, 128, 218, 95, 80, 230, 175, 113, 51, 40, 111, 217, 130, 27, 158, 254, 75, 166, 97, 134, 232,
+//           205, 29, 151, 131, 103, 218, 67, 92, 202, 211, 163, 67, 242, 61, 145, 96, 8, 57, 157, 60, 198, 140, 88, 205, 229,
+//           202, 166, 35, 239, 197, 255, 166, 80, 232, 220, 82, 176, 178, 112, 116
+//         ])
+//       )
+//     const connection = new Connection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",'confirmed');
     
-  await initCollection(connection, wallet);
-}
+//   await initCollection(connection, wallet);
+// }
 

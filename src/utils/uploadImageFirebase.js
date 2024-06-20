@@ -11,8 +11,8 @@ export const uploadImgaeFirebase =async (imageUpload,imageFolder)=>{
     // console.log(firebaseStore);
     try {
         const imgRef =  ref(firebaseStore,`${imageFolder}/${imageUpload.name + v4()}`);
-        const result = await uploadBytes(imgRef,imageUpload).then(value=>{
-            console.log(value.metadata);
+        const result = await uploadBytes(imgRef,imageUpload)
+            .then(value=>{
             // getDownloadURL(value.ref).then(url=>{
             //     setImgUrl(data=>[...data,url])
             // })
