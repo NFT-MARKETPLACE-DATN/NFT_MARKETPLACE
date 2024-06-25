@@ -107,13 +107,14 @@ const MintNFTPage = () => {
           if (uploadDataToIDFS.status == true) {
             const result =  await initCollection(data,uploadDataToIDFS.result);
             if(result.status){
+              
               setIsOpenDialogMintNFT(true)
             }else{}
           }else{
-  
+            toast.error('Upload file IDFS flase. Try again ')
           }
         }else{
-  
+          toast.error('Upload file flase. Try again')
         }
       } catch (error) {
         console.log(error);
@@ -158,7 +159,7 @@ const MintNFTPage = () => {
                     if (file) {
                       const fileSize = file.size / (1024 * 1024)
                       if (fileSize > 10) {
-                        toast.error('> 10MB ')
+                        toast.error('File > 10MB ')
                         return
                       }
                       const fileUrl = URL.createObjectURL(file)
@@ -207,7 +208,7 @@ const MintNFTPage = () => {
                       if (file) {
                         const fileSize = file.size / (1024 * 1024)
                         if (fileSize > 10) {
-                          toast.error('10MB 未満の Img ファイルをインポートしてください。')
+                          toast.error('File > 10MB ')
                           return
                         }
                         const fileUrl = URL.createObjectURL(file)
