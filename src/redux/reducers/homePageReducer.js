@@ -1,8 +1,11 @@
-import {SET_WALLET} from "../constants/homePageConstant";
+import {
+    SET_WALLET,
+    SET_LOGIN
+} from "../constants/homePageConstant";
 
 const initialState = {
     account:null,
-    wallet:false
+    isLogin:false
 };
 
 const homePageReducer = (state = initialState, action) => {
@@ -11,8 +14,12 @@ const homePageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 account: action.data,
-                wallet: true,
             };
+        case SET_LOGIN:
+            return{
+                ...state,
+                isLogin:action.data
+            }
         default:
             return state;
     }

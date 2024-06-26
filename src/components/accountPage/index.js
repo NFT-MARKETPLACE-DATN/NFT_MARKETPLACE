@@ -229,9 +229,11 @@ const AccountPage = () => {
             >
               <Tab value={1}  label='All' />
               <Tab value={2} label='Listed' />
-              <Tab value={3} label='Offers made' />
-              <Tab value={4} label='Deals' />
-              <Tab value={5} label='Created' />
+              <Tab value={3} label='Created' />
+              <Tab value={4} label='Transaction' />
+              {/* <Tab value={5} label='Offers made' />
+              <Tab value={6} label='Deals' /> */}
+            
             </Tabs>
           </div>
           <div className='accountPageItem'>

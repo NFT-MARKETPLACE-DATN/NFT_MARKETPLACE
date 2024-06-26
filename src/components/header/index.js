@@ -21,17 +21,22 @@ import InstallPhanTomWallet from '../../containers/WalletConnect/InstallPhanTomW
 import BaseButton from '../../containers/base/Button'
 import { toast } from 'react-toastify'
 // import history from '../../utils/history';
-import NFT_logo from '../../images/logos/NFT-Marketplace.svg'
-import { useSelector } from 'react-redux';
+import NFT_logo from '../../images/logos/NFT-Marketplace.svg';
+import { setLogin,setWallet } from "../../redux/actions";
 // import { createStructuredSelector } from 'reselect';
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
+  const {
+    isLogin,
+    account
+  } = useSelector(state => state.globalState || {});
+
   const [isOpenWalletConnect, setIsOpenWalletConnect] = useState(false)
   const [isInstallWallet, setIsInstallWallet] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   // const [anchorMenuMobile, setAnchorMenuMobile] = useState(null);
-  const [account, setAcount] = useState('')
   const [code, setCode] = useState()
   const [bgColor, setBgColor] = useState('#189e00')
   // const [isOpen, setIsOpen] = useState(false);
@@ -39,8 +44,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
   const location = useLocation();
   const navigate = useNavigate();
-  const {wallet} = useSelector(state => state.globalState || {});
-// console.log(wallet);
+  const dispatch = useDispatch();
   // const handleClickMenuMobile = event => {
   //     setAnchorMenuMobile(event.currentTarget);
   //     setIsOpen(!isOpen);
@@ -51,10 +55,11 @@ const Header = () => {
   }
   const handleDisConnect = async () => {
     await window.phantom.solana.disconnect({ onlyIfTrusted: true })
-    setAcount('');
+    // setAcount('');
     setCode();
     localStorage.removeItem('walletAdress');
-    navigate('/')
+    navigate('/');
+    dispatch(setWallet(null));
     // localStorage.clear();
   }
   const handleOpenUserInfo = (event) => {
@@ -68,7 +73,8 @@ const Header = () => {
   useEffect(() => {
     if (Number(code) == 0) {
       setIsInstallWallet(true)
-      setAcount('')
+      // setAcount('')
+      dispatch(setWallet(null));
       setCode()
     }
     // else if (Number(code) == 1) {
@@ -80,7 +86,12 @@ const Header = () => {
   useEffect(() => {
     localStorage.removeItem('walletAdress')
   }, [])
-
+  useEffect(()=>{
+    if(isLogin) {
+      setIsOpenWalletConnect(true);
+      dispatch(setLogin(false));
+    }
+  },[isLogin])
   return (
     <>
       <HeaderStyle>
@@ -96,7 +107,7 @@ const Header = () => {
           </Grid>
           <Grid item xs={8} sm={7} className='left-header'>
             <div className='left-header-item'>
-              {account == '' || account == null ? (
+              {account == null ? (
                 <Button className='connectBtn' width='100%' variant='contained' onClick={handleOpen}>
                   <WalletIcon className='loginIcon' />
                   Login
@@ -170,7 +181,6 @@ const Header = () => {
         onClose={() => {
           setIsOpenWalletConnect(false)
         }}
-        setAcount={setAcount}
         setCode={setCode}
       />
 
@@ -179,7 +189,6 @@ const Header = () => {
         onClose={() => {
           setIsInstallWallet(false)
         }}
-        // setAcount={setAcount}
         setCode={setCode}
       />
     </>

@@ -37,10 +37,11 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { getConnected } from "../../utils/walletConnet";
 import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram ,Keypair, sendAndConfirmTransaction} from '@solana/web3.js';
-import { useSelector } from 'react-redux';
 import {initCollection} from "../../utils/createMintNFT";
 import { approveNFT } from '../../utils/approveNFT';
 import { transferNFT } from '../../utils/transferNFT';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLogin } from "../../redux/actions";
 import * as token from "@solana/spl-token"
 const DetailNFT = () => {
   const params = useSearchQuery();
@@ -49,9 +50,13 @@ const DetailNFT = () => {
   const onCollapse = ()=>{
     setIsCollapse(!isCollapse);
   };
-  const {account, wallet} = useSelector(state => state.globalState || {});
+  const dispatch = useDispatch();
+  const {account} = useSelector(state => state.globalState || {});
   
-  const handleCreateTransaction = async()=> {
+  const handlerBuyNFT = async()=> {
+    if(!account){
+      dispatch(setLogin(true));
+    }
     // const wallet =await getConnected();
     // const transaction = new Transaction().add(
     //   SystemProgram.transfer({
@@ -99,7 +104,7 @@ const DetailNFT = () => {
     //   console.log(error);
     // }
     // console.log(account);
-   await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
+  //  await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
     // await approveNFT(account);
     // await transferNFT();
 
@@ -141,9 +146,12 @@ const DetailNFT = () => {
                 </CardContent>
                 <hr width="100%"/>
                 <CardContent className='infoSmartContract'>
+               
                   <div className='labelInfoSC'>
-                  <img src={InfoIcon} alt='fasdf'/>
-                  <div className='labelText'>Detail</div>
+                  <Tooltip title='NFT Detail' placeholder='bottom' arrow>
+                    <img src={InfoIcon} alt='fasdf'/>
+                  </Tooltip>
+                    <div className='labelText'>Detail</div>
                   </div>
                  
                   <IconButton onClick={event => onCollapse()}>
@@ -186,7 +194,7 @@ const DetailNFT = () => {
             
             <div className='tradeNFT'>
               <div className='priceNFT'>
-                <Button className='buyBtn' width='100%' variant='contained' onClick={handleCreateTransaction}>
+                <Button className='buyBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
                   Buy
                 </Button>
                 </div>

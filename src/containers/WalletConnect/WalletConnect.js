@@ -29,18 +29,18 @@ const WalletConnect = (props) => {
     const {setAcount, onCloseDialog, setCode} = props;
     const dispatch = useDispatch();
     const onConnectWallet = async () => {
-        const account = await getConnected();
-        // console.log(account);
-        if(account.code == 1){
-            localStorage.setItem('walletAdress',account.walletAddress);
-            dispatch(setWallet(account.walletAddress))
+        const login = await getConnected();
+        // console.log(login);
+        if(login.code == 1){
+            localStorage.setItem('walletAdress',login.walletAddress);
+            dispatch(setWallet(login.walletAddress))
             toast.success("Success")
         }
-        setAcount(account.walletAddress);
-        setCode(account.code);
+        // setAcount(login.walletAddress);
+        setCode(login.code);
         onCloseDialog();
        
-        // console.log(account);
+        // console.log(login);
     }
     return (
         <WalletConnectStyle>

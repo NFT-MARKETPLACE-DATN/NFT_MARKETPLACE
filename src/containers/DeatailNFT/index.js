@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
     Dialog,
     IconButton,
@@ -9,15 +8,15 @@ import {
     InputAdornment,
     DialogTitle,
     DialogContent,
+    DialogActions,
 } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import CloseIcon from "../../images/closeIc.svg";
-import NFT_logo from "../../images/logos/NFT-Marketplace.svg"
-import WalletConnect from './WalletConnect';
-import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const WalletConnectDialog = (props) => {
-    const { visible, onClose, setCode } = props;
+const DeatailNFT = (props) => {
+    const { visible, onClose, } = props;
+    const navigate = useNavigate();
     const onCloseDialog = () => {
         onClose();
     };
@@ -29,7 +28,6 @@ const WalletConnectDialog = (props) => {
             open={visible}
             // onClose={onCloseDialog}
             className='dialogs'
-         
         >
             <DialogTitle
                 className='dialog-title'
@@ -52,18 +50,10 @@ const WalletConnectDialog = (props) => {
                 style={{
                     height:"100%"
                 }}>
-                {/* <div className="login">PhanTom</div>
-                    <button onClick={onConnectWallet}>Connect</button>
-                    {account != null && (<div>account: {account}</div>)} */}
-                <WalletConnect 
-                // onConnectWallet ={onConnectWallet}
-                // setAcount ={setAcount}
-                onCloseDialog={onCloseDialog}
-                setCode= {setCode}
-                />
+                    Congratulations, you have successfully created an NFT
             </DialogContent>
         </Dialog>
     )
-}
+};
+export {DeatailNFT}
 
-export default WalletConnectDialog;

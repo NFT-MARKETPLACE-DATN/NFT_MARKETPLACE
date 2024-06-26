@@ -41,7 +41,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
-  const {account, wallet} = useSelector(state => state.globalState || {});
+  const {account} = useSelector(state => state.globalState || {});
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
   const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
