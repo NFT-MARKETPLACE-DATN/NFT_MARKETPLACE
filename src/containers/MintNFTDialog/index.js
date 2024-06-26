@@ -17,7 +17,7 @@ import { useFormik } from 'formik';
 import {validateNftTrait} from "./validate";
 
 const MintNFTDialog = (props) => {
-    const { visible, onClose, setAcount,setCode } = props;
+    const { visible, onClose, transaction , setAcount,setCode } = props;
     const navigate = useNavigate();
     const onCloseDialog = () => {
         onClose();
@@ -55,6 +55,40 @@ const MintNFTDialog = (props) => {
                     height:"100%"
                 }}>
                     Congratulations, you have successfully created an NFT
+            </DialogContent>
+            <DialogContent
+                style={{
+                    height:"100%"
+                }}>
+                <div>
+                    {/* <span>
+                        View transaction in Solana explorer:
+                    </span> */}
+                    <a 
+                    href={`https://explorer.solana.com/tx/${transaction}?cluster=devnet`}
+                    target="_blank"
+                    role="button"
+                    tabIndex="0"
+                    style={{ color: 'blue',textDecoration:'none' }}
+                    >
+                        {/* { transaction ? `${transaction.substring(0,3)}...${transaction.substring(transaction.length-4,3)}` : <></>} */}
+                        View Transaction
+                    </a>
+
+                </div>
+                {/* <div>
+                    <span>
+                        View NFT in Solana explorer:
+                    </span>
+                    <a 
+                    href={`https://explorer.solana.com/tx/${transaction}?cluster=devnet`}
+                    target="_blank"
+                    role="button"
+                    tabIndex="0"
+                    style={{ color: 'blue',textDecoration:'none' }}>{transaction}
+                    </a>
+                </div> */}
+               
             </DialogContent>
         </Dialog>
     )

@@ -12,154 +12,154 @@ export const initCollection = async (
   data,
   metadataURL
   ) => {
-    const con = new Connection(process.env.SOLANA_URL, 'confirmed');
-    const wallet = await getConnected();
-    const collectionAddress = Keypair.generate(); //Token mint account
-
-    const lamports = await getMinimumBalanceForRentExemptMint(new Connection(process.env.SOLANA_URL, 'confirmed'));
-    const programId = TOKEN_PROGRAM_ID;
-    const associatedTokenProgramId  = ASSOCIATED_TOKEN_PROGRAM_ID;
-    
-    const createAccountInstructionAddressCollection = SystemProgram.createAccount({
-      fromPubkey: new PublicKey(wallet.walletAddress),
-      newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
-      space: MINT_SIZE,
-      lamports,
-      programId,
-    });
-    const initializeMintInstructionAddressCollection = createInitializeMintInstruction(
-      collectionAddress.publicKey, // Địa chỉ tài khoản mint
-      0, // Số thập phân (decimals)
-      new PublicKey(wallet.walletAddress), // mintAuthority
-      new PublicKey(wallet.walletAddress), // freezeAuthority (nếu có)
-      TOKEN_PROGRAM_ID
-    );
-    console.log("collectionAddress", collectionAddress.publicKey.toBase58());
-
-    // const tokenAccountCollection = Keypair.generate();//Token Account quản lý collection
-    
-    // const createAccountInstructionTokenAccount = SystemProgram.createAccount({
-    //   fromPubkey: new PublicKey(phantomWallet),
-    //   newAccountPubkey: tokenAccountCollection.publicKey,
-    //   space: MINT_SIZE,
-    //   lamports,
-    //   programId,
-    // });
-
-    const associatedToken = getAssociatedTokenAddressSync( //Get the address of the associated token account for a given mint and owner
-      collectionAddress.publicKey, //collection Mint
-      new PublicKey(wallet.walletAddress), // oner
-      false,
-      // TOKEN_PROGRAM_ID,
-    )
-    const initializeMintInstructionAssociatedTokenAccount = createAssociatedTokenAccountInstruction(
-      new PublicKey(wallet.walletAddress),
-      associatedToken,
-      new PublicKey(wallet.walletAddress),
-      collectionAddress.publicKey,
-      programId,
-      associatedTokenProgramId
-    )
-    console.log("tokenAccountCollection", associatedToken.toBase58());
-    // const initializeMintInstructionTokenAccount =  createInitializeAccountInstruction(
-    //   tokenAccountCollection.publicKey,
-    //   collectionAddress.publicKey,
-    //   new PublicKey(phantomWallet),
-    //   TOKEN_PROGRAM_ID
-    // );
-    // console.log("tokenAccountCollection", tokenAccountCollection.publicKey.toBase58());
-  
-    // 1 token  collectionMint vào account collectionTokenAccount
-    const mintToAddressCollectionToTokenAccount = createMintToInstruction(
-      collectionAddress.publicKey,
-      associatedToken,
-      new PublicKey(wallet.walletAddress),
-      1
-    );
-
-    const [collectionMetadataAccount, _b] = PublicKey.findProgramAddressSync(
-      [
-        Buffer.from("metadata", "utf8"),
-        TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-        collectionAddress.publicKey.toBuffer(),
-      ],
-      TOKEN_METADATA_PROGRAM_ID
-    );
-    const collectionMeatadataIX = createCreateMetadataAccountV3Instruction(
-      {
-        metadata: collectionMetadataAccount,
-        mint: collectionAddress.publicKey,
-        mintAuthority: new PublicKey(wallet.walletAddress),
-        payer: new PublicKey(wallet.walletAddress),
-        updateAuthority: new PublicKey(wallet.walletAddress),
-      },
-      {
-        createMetadataAccountArgsV3: {
-          data: {
-            name: data.name,
-            symbol: data.symbol,
-            uri:metadataURL,
-            sellerFeeBasisPoints: 0,
-            creators: [
-              {
-                address: new PublicKey(wallet.walletAddress),
-                verified : 1,
-                share: 100
-              }
-            ],
-            collection: null,
-            uses: null,
-          },
-          isMutable: true,
-          collectionDetails: null,
-        },
-      }, 
-      TOKEN_METADATA_PROGRAM_ID
-    );
-    console.log("collectionMeatadataIX",collectionMeatadataIX);
-    const [collectionMasterEditionAccount, _b2] =
-        PublicKey.findProgramAddressSync(
-          [
-            Buffer.from("metadata", "utf8"),
-            TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-            collectionAddress.publicKey.toBuffer(),
-            Buffer.from("edition", "utf8"),
-          ],
-          TOKEN_METADATA_PROGRAM_ID
-    );
-    const collectionMasterEditionIX = createCreateMasterEditionV3Instruction(
-      {
-        edition: collectionMasterEditionAccount,
-        mint: collectionAddress.publicKey,
-        mintAuthority:  new PublicKey(wallet.walletAddress),
-        payer:  new PublicKey(wallet.walletAddress),
-        updateAuthority:  new PublicKey(wallet.walletAddress),
-        metadata: collectionMetadataAccount,
-        tokenProgram: TOKEN_PROGRAM_ID
-      },
-      {
-        createMasterEditionArgs: {
-          maxSupply: 0,
-        },
-      }, 
-      TOKEN_METADATA_PROGRAM_ID
-    );
-    console.log("collectionMasterEditionIX",collectionMasterEditionIX);
-
-    const sizeCollectionIX = createSetCollectionSizeInstruction(
-      {
-        collectionMetadata: collectionMetadataAccount,
-        collectionAuthority:  new PublicKey(wallet.walletAddress),
-        collectionMint: collectionAddress.publicKey,
-      },
-      {
-        setCollectionSizeArgs: { size: 10000 },
-      },
-      TOKEN_METADATA_PROGRAM_ID
-    );
-    console.log("sizeCollectionIX",sizeCollectionIX);
-
     try {
+      const con = new Connection(process.env.SOLANA_URL, 'confirmed');
+      const wallet = await getConnected();
+      const collectionAddress = Keypair.generate(); //Token mint account
+
+      const lamports = await getMinimumBalanceForRentExemptMint(new Connection(process.env.SOLANA_URL, 'confirmed'));
+      const programId = TOKEN_PROGRAM_ID;
+      const associatedTokenProgramId  = ASSOCIATED_TOKEN_PROGRAM_ID;
+      
+      const createAccountInstructionAddressCollection = SystemProgram.createAccount({
+        fromPubkey: new PublicKey(wallet.walletAddress),
+        newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
+        space: MINT_SIZE,
+        lamports,
+        programId,
+      });
+      const initializeMintInstructionAddressCollection = createInitializeMintInstruction(
+        collectionAddress.publicKey, // Địa chỉ tài khoản mint
+        0, // Số thập phân (decimals)
+        new PublicKey(wallet.walletAddress), // mintAuthority
+        new PublicKey(wallet.walletAddress), // freezeAuthority (nếu có)
+        TOKEN_PROGRAM_ID
+      );
+      console.log("collectionAddress", collectionAddress.publicKey.toBase58());
+
+      // const tokenAccountCollection = Keypair.generate();//Token Account quản lý collection
+      
+      // const createAccountInstructionTokenAccount = SystemProgram.createAccount({
+      //   fromPubkey: new PublicKey(phantomWallet),
+      //   newAccountPubkey: tokenAccountCollection.publicKey,
+      //   space: MINT_SIZE,
+      //   lamports,
+      //   programId,
+      // });
+
+      const associatedToken = getAssociatedTokenAddressSync( //Get the address of the associated token account for a given mint and owner
+        collectionAddress.publicKey, //collection Mint
+        new PublicKey(wallet.walletAddress), // oner
+        false,
+        // TOKEN_PROGRAM_ID,
+      )
+      const initializeMintInstructionAssociatedTokenAccount = createAssociatedTokenAccountInstruction(
+        new PublicKey(wallet.walletAddress),
+        associatedToken,
+        new PublicKey(wallet.walletAddress),
+        collectionAddress.publicKey,
+        programId,
+        associatedTokenProgramId
+      )
+      console.log("tokenAccountCollection", associatedToken.toBase58());
+      // const initializeMintInstructionTokenAccount =  createInitializeAccountInstruction(
+      //   tokenAccountCollection.publicKey,
+      //   collectionAddress.publicKey,
+      //   new PublicKey(phantomWallet),
+      //   TOKEN_PROGRAM_ID
+      // );
+      // console.log("tokenAccountCollection", tokenAccountCollection.publicKey.toBase58());
+    
+      // 1 token  collectionMint vào account collectionTokenAccount
+      const mintToAddressCollectionToTokenAccount = createMintToInstruction(
+        collectionAddress.publicKey,
+        associatedToken,
+        new PublicKey(wallet.walletAddress),
+        1
+      );
+
+      const [collectionMetadataAccount, _b] = PublicKey.findProgramAddressSync(
+        [
+          Buffer.from("metadata", "utf8"),
+          TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+          collectionAddress.publicKey.toBuffer(),
+        ],
+        TOKEN_METADATA_PROGRAM_ID
+      );
+      const collectionMeatadataIX = createCreateMetadataAccountV3Instruction(
+        {
+          metadata: collectionMetadataAccount,
+          mint: collectionAddress.publicKey,
+          mintAuthority: new PublicKey(wallet.walletAddress),
+          payer: new PublicKey(wallet.walletAddress),
+          updateAuthority: new PublicKey(wallet.walletAddress),
+        },
+        {
+          createMetadataAccountArgsV3: {
+            data: {
+              name: data.name,
+              symbol: data.symbol,
+              uri:metadataURL,
+              sellerFeeBasisPoints: 0,
+              creators : null,
+              // creators: [
+              //   {
+              //     address: new PublicKey(wallet.walletAddress),
+              //     verified : 1,
+              //     share: 100
+              //   }
+              // ],
+              collection: null,
+              uses: null,
+            },
+            isMutable: true,
+            collectionDetails: null,
+          },
+        }, 
+        TOKEN_METADATA_PROGRAM_ID
+      );
+      console.log("collectionMeatadataIX",collectionMeatadataIX);
+      const [collectionMasterEditionAccount, _b2] =
+          PublicKey.findProgramAddressSync(
+            [
+              Buffer.from("metadata", "utf8"),
+              TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+              collectionAddress.publicKey.toBuffer(),
+              Buffer.from("edition", "utf8"),
+            ],
+            TOKEN_METADATA_PROGRAM_ID
+      );
+      const collectionMasterEditionIX = createCreateMasterEditionV3Instruction(
+        {
+          edition: collectionMasterEditionAccount,
+          mint: collectionAddress.publicKey,
+          mintAuthority:  new PublicKey(wallet.walletAddress),
+          payer:  new PublicKey(wallet.walletAddress),
+          updateAuthority:  new PublicKey(wallet.walletAddress),
+          metadata: collectionMetadataAccount,
+          tokenProgram: TOKEN_PROGRAM_ID
+        },
+        {
+          createMasterEditionArgs: {
+            maxSupply: 0,
+          },
+        }, 
+        TOKEN_METADATA_PROGRAM_ID
+      );
+      console.log("collectionMasterEditionIX",collectionMasterEditionIX);
+
+      const sizeCollectionIX = createSetCollectionSizeInstruction(
+        {
+          collectionMetadata: collectionMetadataAccount,
+          collectionAuthority:  new PublicKey(wallet.walletAddress),
+          collectionMint: collectionAddress.publicKey,
+        },
+        {
+          setCollectionSizeArgs: { size: 10000 },
+        },
+        TOKEN_METADATA_PROGRAM_ID
+      );
+      console.log("sizeCollectionIX",sizeCollectionIX);
       const transaction = new Transaction()
       .add(createAccountInstructionAddressCollection)
       .add(initializeMintInstructionAddressCollection)
@@ -187,7 +187,7 @@ export const initCollection = async (
       console.log(error);
       return {
         status : false,
-        result : error
+        result : error.message
       }
      
     }

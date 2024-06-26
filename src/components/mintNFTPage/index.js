@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import MintNFTStyle from './mintNFTStyle'
-import { useFormik } from 'formik'
+import React, { useState, useEffect } from 'react';
+import MintNFTStyle from './mintNFTStyle';
+import { useFormik } from 'formik';
+import Loading from '../../containers/Loading';
 import {
   TextField,
   InputAdornment,
@@ -41,9 +42,10 @@ import { useSelector } from 'react-redux';
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const {account, wallet} = useSelector(state => state.globalState || {});
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
-  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false)
-  const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false)
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
+  const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
+  const [transaction,setTransaction] = useState();
   const [nftTrait, setNftTrait] = useState([])
   const navigate = useNavigate()
   const handlerDeleteImageNFT = () => {
@@ -107,9 +109,11 @@ const MintNFTPage = () => {
           if (uploadDataToIDFS.status == true) {
             const result =  await initCollection(data,uploadDataToIDFS.result);
             if(result.status){
-              
+              setTransaction(result.result);
               setIsOpenDialogMintNFT(true)
-            }else{}
+            }else{
+              toast.error(result.result)
+            }
           }else{
             toast.error('Upload file IDFS flase. Try again ')
           }
@@ -128,6 +132,8 @@ const MintNFTPage = () => {
     }
   })
   return (
+    <>
+    <Loading loading={false}></Loading>
     <MintNFTStyle>
       <div className='MintNFTPage'>
         <div className='header comon-style'>
@@ -154,7 +160,7 @@ const MintNFTPage = () => {
                   variant='outlined'
                   onBlur={formik.handleBlur}
                   onChange={(event) => {
-                    console.log(event.target.files[0])
+                    // console.log(event.target.files[0])
                     const file = event.target.files[0]
                     if (file) {
                       const fileSize = file.size / (1024 * 1024)
@@ -343,6 +349,7 @@ const MintNFTPage = () => {
         onClose={() => {
           setIsOpenDialogMintNFT(false)
         }}
+        transaction={transaction}
       />
       <AddTraitDialog
         visible={isOpenDialogAddTrait}
@@ -352,6 +359,8 @@ const MintNFTPage = () => {
         setNftTrait={setNftTrait}
       />
     </MintNFTStyle>
+    </>
+
   )
 }
 
