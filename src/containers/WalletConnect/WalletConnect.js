@@ -22,25 +22,28 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 // import {fetchDatas} from "../../redux/actions/homePageAction";
-import { setWallet } from "../../redux/actions";
+import { setWallet,login } from "../../redux/actions";
 import { useDispatch, useSelector } from 'react-redux';
 
 const WalletConnect = (props) => {
     const {setAcount, onCloseDialog, setCode} = props;
     const dispatch = useDispatch();
     const onConnectWallet = async () => {
-        const login = await getConnected();
-        // console.log(login);
-        if(login.code == 1){
-            localStorage.setItem('walletAdress',login.walletAddress);
-            dispatch(setWallet(login.walletAddress))
-            toast.success("Success")
+        const wallet = await getConnected();
+        // console.log(wallet);
+        if(wallet.code == 1){
+            localStorage.setItem('walletAdress',wallet.walletAddress);
+            dispatch(login({
+                address: wallet.walletAddress
+            }))
+            // dispatch(setWallet(wallet.walletAddress))
+            // toast.success("Success")
         }
-        // setAcount(login.walletAddress);
-        setCode(login.code);
+        // setAcount(wallet.walletAddress);
+        setCode(wallet.code);
         onCloseDialog();
        
-        // console.log(login);
+        // console.log(wallet);
     }
     return (
         <WalletConnectStyle>

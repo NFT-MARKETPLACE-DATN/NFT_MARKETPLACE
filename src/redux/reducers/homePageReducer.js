@@ -1,11 +1,16 @@
 import {
     SET_WALLET,
-    SET_LOGIN
-} from "../constants/homePageConstant";
+    SET_LOGIN,
+    LOGIN_PENDING,
+    LOGIN_SUCCESS,
+    LOGIN_ERROR
+} from "../constants/index";
 
 const initialState = {
     account:null,
-    isLogin:false
+    isLogin:false,
+    accountInfo:{},
+    loading: false,
 };
 
 const homePageReducer = (state = initialState, action) => {
@@ -19,6 +24,25 @@ const homePageReducer = (state = initialState, action) => {
             return{
                 ...state,
                 isLogin:action.data
+            }
+        case LOGIN_PENDING:
+            return{
+                ...state,
+                loading:true,
+                accountInfo:{}
+            }
+        case LOGIN_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                accountInfo: action.respond.data,
+                account:action.respond.data.address
+            }
+        case LOGIN_ERROR:
+            return{
+                ...state,
+                loading:false,
+                accountInfo:{}
             }
         default:
             return state;

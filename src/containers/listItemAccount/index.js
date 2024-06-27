@@ -28,7 +28,7 @@ import BuyIcon from '../../images/logos/BuyIcon.svg'
 import { useNavigate } from 'react-router-dom'
 import BaseButton from '../../containers/base/Button'
 const ItemList = (props) => {
-  const { data, account } = props
+  const { data } = props
   const navigate = useNavigate()
   const handlerClick = (item) => {
     console.log(item)

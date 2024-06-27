@@ -12,12 +12,13 @@ import {
   Menu,
   MenuItem
 } from '@mui/material'
-import WalletIcon from '@mui/icons-material/Wallet'
-import userIcon from '../../images/logos/account.svg'
-import userIconClick from '../../images/logos/accountClick.svg'
-import HeaderStyle from './HeaderStyle'
-import WalletConnectDialog from '../../containers/WalletConnect'
-import InstallPhanTomWallet from '../../containers/WalletConnect/InstallPhanTomWallet'
+import WalletIcon from '@mui/icons-material/Wallet';
+import userIcon from '../../images/logos/account.svg';
+import userIconClick from '../../images/logos/accountClick.svg';
+import HeaderStyle from './HeaderStyle';
+import WalletConnectDialog from '../../containers/WalletConnect';
+import InstallPhanTomWallet from '../../containers/WalletConnect/InstallPhanTomWallet';
+import Loading from '../../containers/Loading';
 import BaseButton from '../../containers/base/Button'
 import { toast } from 'react-toastify'
 // import history from '../../utils/history';
@@ -30,9 +31,10 @@ import { useDispatch, useSelector } from 'react-redux';
 const Header = () => {
   const {
     isLogin,
-    account
+    account,
+    accountInfo={},
+    loading = false
   } = useSelector(state => state.globalState || {});
-
   const [isOpenWalletConnect, setIsOpenWalletConnect] = useState(false)
   const [isInstallWallet, setIsInstallWallet] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -94,6 +96,7 @@ const Header = () => {
   },[isLogin])
   return (
     <>
+     <Loading loading={loading}></Loading>
       <HeaderStyle>
         <Grid container className='bottomHeader'>
           <Grid item xs={4} sm={5} className='right-header'>
@@ -123,7 +126,7 @@ const Header = () => {
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      {isHovered ? `Disconnect` : `${account.substring(0, 3)}... | 10 SOL`}
+                      {isHovered ? `Disconnect` : `${accountInfo?.address ? accountInfo?.address.substring(0, 3) : null}... | ${ parseFloat(accountInfo.balance).toFixed(3)}... SOL`}
                     </Button>
                     <div className='userIcon'>
                       <button

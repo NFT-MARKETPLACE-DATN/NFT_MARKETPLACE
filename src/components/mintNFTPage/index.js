@@ -39,6 +39,7 @@ import { uploadMetaData } from '../../utils/uploadMetaData'
 import { initCollection } from '../../utils/createMintNFT'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
   const {account} = useSelector(state => state.globalState || {});

@@ -27,7 +27,7 @@ const WalletConnectDialog = (props) => {
             fullWidth
             maxWidth="xs"
             open={visible}
-            // onClose={onCloseDialog}
+            onClose={onCloseDialog}
             className='dialogs'
          
         >

@@ -173,10 +173,14 @@ export const initCollection = async (
       const { blockhash } = await con.getRecentBlockhash();
       transaction.recentBlockhash = blockhash;
       transaction.sign(collectionAddress);
-      const signedTransaction = await wallet.provider.signTransaction(transaction);
-      console.log(signedTransaction);
-      const signature = await con.sendRawTransaction(signedTransaction.serialize());
+      // const signedTransaction = await wallet.provider.signTransaction(transaction);
+      // console.log(signedTransaction);
+      // const signature = await con.sendRawTransaction(signedTransaction.serialize());
+      // console.log(signature);
+      const { signature } = await wallet.provider.signAndSendTransaction(transaction);
       console.log(signature);
+      const result = await con.getSignatureStatus(signature);
+      console.log(result);
       return {
         mint_address:collectionAddress.publicKey.toBase58(),
         token_account : associatedToken.toBase58(),
