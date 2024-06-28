@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   GET_NFT_LISTED_PENDING,
   GET_NFT_LISTED_SUCCESS,
-  GET_NFT_LISTED_ERROR
+  GET_NFT_LISTED_ERROR,
+  SET_LOADING
 } from "../constants/index";
 
 export const setWallet = (data) => ({
@@ -17,7 +18,10 @@ export const setLogin = (data) => ({
   type: SET_LOGIN,
   data
 })
-
+export const setLoading = (data) => ({
+  type: SET_LOADING,
+  data
+})
 export function login(data) {
   return {
     type: LOGIN_PENDING,

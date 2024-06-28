@@ -99,7 +99,7 @@ const HeaderStyle = styled.div`
                 .connectBtn{
                     gap:10px;
                     // width:100%;
-                    min-width:110px;
+                    // min-width:110px;
                     font-size: 16px;
                     text-transform: capitalize;
                     border-radius: 10px;
@@ -132,7 +132,12 @@ const HeaderStyle = styled.div`
                     background: linear-gradient(to left, rgb(205, 116, 204), rgb(255, 189, 89), rgb(112, 221, 136));
 
                 }
-
+                .connectBtn{
+                  min-width:110px;
+                }
+                .disconnectBtn{
+                  min-width:230px;
+                }
                 // .left-menu-mobile{
                 //     @media screen and (max-width: 600px) {
                 //         align-items: center;

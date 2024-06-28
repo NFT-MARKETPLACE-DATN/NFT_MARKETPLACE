@@ -96,7 +96,7 @@ const Header = () => {
   },[isLogin])
   return (
     <>
-     <Loading loading={loading}></Loading>
+     {/* <Loading loading={loading}></Loading> */}
       <HeaderStyle>
         <Grid container className='bottomHeader'>
           <Grid item xs={4} sm={5} className='right-header'>
@@ -126,7 +126,7 @@ const Header = () => {
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      {isHovered ? `Disconnect` : `${accountInfo?.address ? accountInfo?.address.substring(0, 3) : null}... | ${ parseFloat(accountInfo.balance).toFixed(3)}... SOL`}
+                      {isHovered ? `Disconnect` : `${accountInfo?.address ? accountInfo?.address.substring(0, 3) : null}... | ${ accountInfo.balance == 0 ? 0 : `${parseFloat(accountInfo.balance).toFixed(3)}...`} SOL`}
                     </Button>
                     <div className='userIcon'>
                       <button
@@ -169,6 +169,17 @@ const Header = () => {
                         >
                           <div>Mint NFT</div>
                         </MenuItem>
+                        {accountInfo.roleID == 1 && (
+                          <MenuItem
+                            onClick={() => {
+                              navigate('/admin')
+                              handleClose()
+                            }}
+                          >
+                          <div>Admin</div>
+                          </MenuItem>
+                        )}
+                        {/* {console.log(accountInfo.roleID ==2)} */}
                       </Menu>
                     </div>
                   </div>

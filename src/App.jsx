@@ -9,6 +9,8 @@ import ErroPage from './components/erroPage';
 import AccountPage from './components/accountPage';
 import MintNFTPage from './components/mintNFTPage';
 import DetailNFTPage from './components/nftPage';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from './containers/Loading';
 const App = () => {
   // const [openWalletConnect, setOpenWalletConnect] = useState(false)
   // const [account, setAcount] = useState('')
@@ -23,11 +25,15 @@ const App = () => {
   // const handleInstallPhanTomWallet = async () => {
   //   window.open('https://phantom.app/', '_blank')
   // }
+  const {
+    loading = false
+  } = useSelector(state => state.globalState || {});
   return (
     <>
       {/* <Router> */}
         <Header />
         <BaseToast />
+        <Loading loading={loading}/>
         {/* <BrowserRouter> */}
         <Routes>
           <Route path='/' element={<HomePage />} />

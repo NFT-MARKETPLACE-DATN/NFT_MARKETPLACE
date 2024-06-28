@@ -38,17 +38,21 @@ import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase'
 import { uploadMetaData } from '../../utils/uploadMetaData'
 import { initCollection } from '../../utils/createMintNFT'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import {createNft,setLoading} from "../../redux/actions";
+import { useDispatch, useSelector } from 'react-redux';
 
 const MintNFTPage = () => {
   // const [fileKey, setFileKey] = useState(0)
-  const {account} = useSelector(state => state.globalState || {});
+  const dispatch = useDispatch();
+  const {account,accountInfo} = useSelector(state => state.globalState || {});
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [isOpenDialogMintNFT, setIsOpenDialogMintNFT] = useState(false);
   const [isOpenDialogAddTrait, setIsOpenDialogAddTrait] = useState(false);
   const [transaction,setTransaction] = useState();
-  const [nftTrait, setNftTrait] = useState([])
-  const navigate = useNavigate()
+  const [addressNft,setAddressNft] = useState();
+  const [nftTrait, setNftTrait] = useState([]);
+  const navigate = useNavigate();
+  
   const handlerDeleteImageNFT = () => {
     setImagePreviewUrl(null);
     formik.setFieldValue('imageNFT', null);
@@ -81,6 +85,7 @@ const MintNFTPage = () => {
       // await dispatch(register(values));
       setSubmitting(true);
       try {
+        dispatch(setLoading(true));
         const imageURL = await uploadImgaeFirebase(values.imageNFT, 'imageNFT');
         if (imageURL.status == true) {
           const data = {
@@ -111,18 +116,41 @@ const MintNFTPage = () => {
             const result =  await initCollection(data,uploadDataToIDFS.result);
             if(result.status){
               setTransaction(result.result);
+              setAddressNft(result.mint_address);
+              const params = {
+                nftName:values.nameNFT,
+                symbol: values.nameNFT,
+                image: imageURL.result,
+                description: values.descriptionNFT,
+                attribute: nftTrait,
+                mintAddress: result.mint_address,
+                tokenAccount: result.token_account,
+                transaction: result.result,
+                userID: accountInfo.id
+              }
+              dispatch(createNft(params))
               setIsOpenDialogMintNFT(true)
             }else{
-              toast.error(result.result)
+              if(result.result == "Unexpected error"){
+                toast.error("Your SOL balance is insufficient OR Blockchain Solana slot not running ");//Please check your account balance again
+              }else{
+                toast.error(result.result);
+              }
+              
+              dispatch(setLoading(false))
             }
           }else{
-            toast.error('Upload file IDFS flase. Try again ')
+            toast.error('Upload file IDFS flase. Try again ');
+            dispatch(setLoading(false))
           }
         }else{
-          toast.error('Upload file flase. Try again')
+          toast.error('Upload file flase. Try again');
+          dispatch(setLoading(false))
         }
       } catch (error) {
+        toast.error(error.message);
         console.log(error);
+        dispatch(setLoading(false))
       }finally {
         setSubmitting(false);
       }
@@ -351,6 +379,7 @@ const MintNFTPage = () => {
           setIsOpenDialogMintNFT(false)
         }}
         transaction={transaction}
+        addressNft={addressNft}
       />
       <AddTraitDialog
         visible={isOpenDialogAddTrait}

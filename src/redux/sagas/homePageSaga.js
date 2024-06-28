@@ -52,7 +52,7 @@ function* getAccountInfo(action){
           yield put(loginError(respond.message));
         }
     } catch (error) {
-        yield put(loginError(respond.message));
+        yield put(loginError(error.message));
     }
 }
 export default function* todoSaga() {

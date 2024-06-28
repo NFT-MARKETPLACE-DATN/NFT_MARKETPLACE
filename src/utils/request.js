@@ -2,7 +2,6 @@ import axios from 'axios';
 // // import history from 'utils/history';
 import { toast } from 'react-toastify';
 import { ROOT_URI, API_TIMEOUT, ROUTER_LOGIN } from './constants';
-
 // export const instance = axios.create({
 //   baseURL: ROOT_URI,
 // //   timeout: API_TIMEOUT,

@@ -177,6 +177,13 @@ export const initCollection = async (
       // console.log(signedTransaction);
       // const signature = await con.sendRawTransaction(signedTransaction.serialize());
       // console.log(signature);
+      // const serializedTransaction = transaction.serialize({
+      //   requireAllSignatures: false,
+      // });
+      // const transactionSize = serializedTransaction.length;
+      // const feePerSignature = await con.getFeeCalculatorForBlockhash(blockhash);
+      // const totalFee = feePerSignature.value.lamportsPerSignature * transaction.signatures.length;
+      // console.log(totalFee);
       const { signature } = await wallet.provider.signAndSendTransaction(transaction);
       console.log(signature);
       const result = await con.getSignatureStatus(signature);

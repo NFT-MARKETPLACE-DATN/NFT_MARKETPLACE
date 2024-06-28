@@ -134,7 +134,7 @@ const AccountPage = () => {
                       variant='outlined'
                       // onBlur={formik.handleBlur}
                       onChange={(event) => {
-                        console.log(event.target.files[0])
+                        // console.log(event.target.files[0])
                         const file = event.target.files[0]
                         if (file) {
                           const fileSize = file.size / (1024 * 1024)

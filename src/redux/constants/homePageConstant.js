@@ -1,5 +1,6 @@
 export const SET_WALLET = 'app/App/SET_WALLET';
 export const SET_LOGIN = 'app/App/SET_LOGIN';
+export const SET_LOADING = 'app/App/SET_LOADING';
 export const LOGIN_PENDING = 'app/App/LOGIN_PENDING';
 export const LOGIN_SUCCESS = 'app/App/LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'app/App/LOGIN_ERROR';
