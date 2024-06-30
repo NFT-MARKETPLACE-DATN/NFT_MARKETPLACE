@@ -1,9 +1,14 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
-import { CREATE_NFT_PENDING } from '../constants'
-import { createNftSuccess, createNftError } from '../actions'
+import { 
+    GET_NFT_INFO_PENDING 
+} from '../constants'
+import { 
+    getNftInfoSuccess, 
+    getNftInfoError 
+} from '../actions'
 import * as Api from '../../utils/request'
 import { toast } from 'react-toastify'
-function* createNft(action) {
+function* getNftInfo(action) {
   try {
     const { data } = action
     const payload = {
@@ -22,19 +27,19 @@ function* createNft(action) {
         transaction: data.transaction
       }
     }
-    const respond = yield call(Api.post, payload);
+    const respond = yield call(Api.get, payload);
     // console.log(respond);
     if (respond.success) {
-      yield put(createNftSuccess(respond))
+      yield put(getNftInfoSuccess(respond))
       toast.success('Create NFT success')
     } else {
-      yield put(createNftError(respond.message))
+      yield put(getNftInfoError(respond.message))
     }
   } catch (error) {
-    yield put(createNftError(error.message))
+    yield put(getNftInfoError(error.message))
   }
 }
 export default function* todoSaga() {
   // yield takeLatest(SET_WALLET, fetchDataSaga);
-  yield takeLatest(CREATE_NFT_PENDING, createNft)
+  yield takeLatest(GET_NFT_INFO_PENDING, getNftInfo)
 }

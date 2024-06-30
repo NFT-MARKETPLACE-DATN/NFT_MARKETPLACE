@@ -148,6 +148,8 @@ const AccountPageStyle = styled.div`
     // .mainAccountPage{
       .accountTab{
         margin-top:15px;
+        display:flex;
+        justify-content: space-between;
         .MuiTabs-root{
           .MuiTabs-scroller{
             .MuiTabs-flexContainer{
@@ -157,9 +159,31 @@ const AccountPageStyle = styled.div`
             }
           }
         }
+        .search-accountpage{
+          .searchInput{
+            div {
+              border-radius: 20px;
+              background-color: #fafafa;
+              height: 40px;
+            }
+          }
+          @media screen and (max-width: 850px) {
+           width: 180px;
+          }
+          @media screen and (max-width: 650px) {
+            width: 130px;
+          }
+        }
       }
       .accountPageItem{
-        
+        width: 100%
+        padding-left:5px;
+        padding-right:5px;
+        .pagination{
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
       }
       // }
     

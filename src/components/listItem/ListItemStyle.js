@@ -107,7 +107,23 @@ const ListItemStyle = styled.div`
                         
                     }
                     .nameNFT{
-                       
+                       padding:10px;
+                       text-transform:none;
+                       text-align: start;
+                       font-weight: 600;
+                       width: fit-content;
+                       font-size: 20px;
+                    }
+                    .priceNFT{
+                        padding:0px 10px 10px 10px;
+                        text-align: start;
+                        font-weight: 500;
+                        width: fit-content;
+                        font-size: 16px;
+                    }
+                    .nameNFT,
+                    .priceNFT{
+                        text-align: start;
                     }
                     .buyNFT{
                         // display:none;

@@ -77,14 +77,28 @@ const HomePageStye = styled.div`
             display:flex;
             justify-content: space-between;
             padding: 10px 10px 0px 10px;
+            .tabSelect{
+                @media screen and (max-width: 850px) {
+                    padding: 8px 10px;
+                    font-size: 14px;
+                }
+               @media screen and (max-width: 600px) {
+                    min-width:80px
+                }
+            }
             .search-homepage{
-                
                 .searchInput{
                     div {
                         border-radius: 20px;
                         background-color: #fafafa;
                         height: 40px;
                     }
+                }
+                @media screen and (max-width: 850px) {
+                    width: 180px;
+                }
+                @media screen and (max-width: 650px) {
+                    width: 130px;
                 }
             }
             .arrow_price{
@@ -95,7 +109,12 @@ const HomePageStye = styled.div`
                     border-radius: 10px;
                     min-width: 150px;
                     text-align: center;
-                  }
+                    @media screen and (max-width: 850px) {
+                        min-width: 100px;
+                        font-size: 12px;
+                    }
+                }
+                
             }
         }
        
@@ -103,6 +122,11 @@ const HomePageStye = styled.div`
             width: 100%
             padding-left:5px;
             padding-right:5px;
+            .pagination{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            }
         }
     }
 

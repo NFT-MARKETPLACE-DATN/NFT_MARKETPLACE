@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useCallback,useMemo } from 'react'
 import {
   TextField,
   InputAdornment,
@@ -20,112 +20,40 @@ import {
   CardContent,
   CardActions,
   Tabs,
-  Tab
+  Tab,
+  Pagination
 } from '@mui/material'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import { debounce } from 'lodash'; //import  _debounce  from 'lodash/debounce';
 import HomePageStye from './HomePageStyle'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Scrollbar, A11y, EffectCube, Autoplay } from 'swiper/modules'
+import { Navigation, Scrollbar, A11y, EffectCube, Autoplay } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import ItemList from '../listItem/index';
-import SearchIcon from '../../images/logos/SearchIcon.svg'
-
+import SearchIcon from '../../images/logos/SearchIcon.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNftListed } from "../../redux/actions";
+const initialPagination= { pageIndex:1,pageSize:1 };
 const HomePage = () => {
-  let listItem = [
-    {
-      id: 1,
-      name: '1',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwtZC6XZY4bYTIn-l0bPAj7PmPslRT-_2Uw&s',
-      descrioption: '',
-      pirce: 1
-    },
-    {
-      id: 1,
-      name: '7',
-      url: 'https://www.hollywoodreporter.com/wp-content/uploads/2021/10/Mutant-Demon-Ape-Credit-0xb1-copy-H-2021.jpg?w=1296',
-      descrioption: '',
-      pirce: 3
-    }
-  ]
-  const listItem1 = [
-    {
-      id: 1,
-      name: '1',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrv-C3ZAG_79rftgcNgNKhu9dSNpPoCqXiZw&s',
-      descrioption: '',
-      pirce: 5
-    },
-    {
-      id: 2,
-      name: '2',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Wype2GahvkPKVLoCJCbyABpNsi1mQXM4Tw&s',
-      descrioption: '',
-      pirce: 10
-    },
-    {
-      id: 3,
-      name: '3',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnBTLM3fiejglJvrp6eFHlWRjIjQ-iZrvosQ&s',
-      descrioption: '',
-      pirce: 3
-    },
-    {
-      id: 4,
-      name: '4',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwtZC6XZY4bYTIn-l0bPAj7PmPslRT-_2Uw&s',
-      descrioption: '',
-      pirce: 1
-    },
-    {
-      id: 5,
-      name: '5',
-      url: 'https://www.hollywoodreporter.com/wp-content/uploads/2021/10/Mutant-Demon-Ape-Credit-0xb1-copy-H-2021.jpg?w=1296',
-      descrioption: '',
-      pirce: 2
-    },
-    {
-      id: 6,
-      name: '5',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu86S8kzQmLj5h3yYV8cyVxnqql0t8ak-Mng&s',
-      descrioption: '',
-      pirce: 2
-    },
-    {
-      id: 7,
-      name: '5',
-      url: 'https://cdn.i-scmp.com/sites/default/files/styles/768x768/public/d8/images/canvas/2024/04/24/a94e2d09-2f19-4bd2-a13f-6d6eff58684c_eadcc3b5.jpg?itok=X0MrjxZs&v=1713940582',
-      descrioption: '',
-      pirce: 2
-    }, 
-    {
-      id: 8,
-      name: '5',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVlV665lQ4rn6d1IinhTlOFvzpwSCWImh42w&s',
-      descrioption: '',
-      pirce: 11
-    },   
-    {
-      id: 9,
-      name: '5',
-      url: 'https://media.vneconomy.vn/w800/images/upload/2022/06/08/nft-free-jpg-optimal.jpg',
-      descrioption: '',
-      pirce: 2
-    }
-  ]
-  const listItem2 = [
-    {
-      id: 1,
-      name: '6',
-      url: 'https://pantravel.vn/wp-content/uploads/2023/11/dong-thac-trang-xoa-do-xuong.jpg',
-      descrioption: '',
-      pirce: 2
-    },
+  const {
+    isLogin,
+    account,
+    accountInfo={},
+    loading = false,
+    dataNftListed = [],
+    totalRecordsNft
+  } = useSelector(state => state.globalState || {});
+  // console.log(dataNftListed);
+  const dispatch = useDispatch();
 
-  ]
+  const [pagination, setPagination] = useState(initialPagination);
   const [value, setValue] = useState(1);
-  const [typePrice,setTypePrice] = useState(10);
+  const [typePrice,setTypePrice] = useState("DESC");
   const [selectTab, setSelectTab] = useState(1);
-  const [listNFT, setListNFT] = useState(listItem1);
+  const [searchTerm,setSearchTerm] = useState(null);
+  const [isTrending, setIsTrending] = useState(false);
+  const [searchKey, setSearchKey] = useState(1);
+  // const [listNFT, setListNFT] = useState(listItem1);
   const handleChangeTab = (event, newValue) => {
     // if (newValue == 1) {
     //   if (value == selectTab) return
@@ -142,26 +70,95 @@ const HomePage = () => {
     // } else return
     setSelectTab(newValue);
     setValue(newValue);
+    setSearchTerm(null);
+   
   }
+  
   useEffect(() => {
-    console.log(selectTab)
-    if(selectTab == 1) setListNFT(listItem1);
-    else if(selectTab == 2 )setListNFT(listItem);
-    else if(selectTab == 3)  setListNFT(listItem2);
+    // console.log(selectTab)
+    if(selectTab == 1){
+      setPagination(initialPagination);
+      setTypePrice("DESC");
+      setIsTrending(false);
+      setSearchKey(1);
+      // setListNFT(listItem1);
+    } 
+    else if(selectTab == 2 ){
+      setPagination(initialPagination);
+      setTypePrice("DESC");
+      setIsTrending(true);
+      setSearchKey(0);
+      // setListNFT(listItem);
+    }
+
+    // else if(selectTab == 3)  setListNFT(listItem2);
   }, [selectTab])
 
-  const handleClickTab = (value) => {
-    console.log(value)
-  }
-  const handleChangeTypePrice = (event) =>{
+  useEffect(()=>{
+    // if(pagination.pageIndex != 1)
+      // console.log(pagination);
+    dispatch(getNftListed({
+      pageIndex: pagination.pageIndex,
+      pageSize:pagination.pageSize,
+      order:typePrice,
+      isTrending:isTrending,
+      search:searchTerm
+    }))
+    // fetchData();
+  },[pagination.pageIndex,isTrending,typePrice])
+  // const fetchData = useCallback(async () => {
+  //  console.log(pagination);
+  // }, [pagination.pageIndex]);
+  // const handleClickTab = (value) => {
+  //   console.log(value)
+  // }
+  const handlePageChange=(event, value)=>{
+    // console.log(value);
+    setPagination((pre)=>({
+      ...pre,
+      pageIndex:value
+    }))
+  };
+  const handleChangeOrderForPrice = (event) =>{
     setTypePrice(event.target.value);
-    console.log(event.target.value);;
-  }
+    setPagination(initialPagination);
+    // setSearchTerm(null);
+    // setSearchKey(3);
+    // console.log(event.target.value);
+  };
+  const handlerSearch = debounce((envent)=>{
+    const {value} = envent.target;
+    const trimmedValue = value.trim();
+    setSearchTerm(trimmedValue);
+    setPagination(initialPagination);
+    dispatch(
+      getNftListed({
+        pageIndex: 1,
+        pageSize:pagination.pageSize,
+        order:typePrice,
+        isTrending:isTrending,
+        search:value
+      })
+    )
+    // debouncedApiCall(trimmedValue);
+    // console.log(value);
+  },1000);
+  // const debouncedApiCall = debounce((value) => {
+  //    dispatch(
+  //     getNftListed({
+  //       pageIndex: 1,
+  //       pageSize:pagination.pageSize,
+  //       order:typePrice,
+  //       isTrending:isTrending,
+  //       search:value
+  //     })
+  //   )
+  // }, 1000);
   return (
     <HomePageStye>
       <div className='silde'>
         <Swiper
-          modules={[Navigation, Pagination, Scrollbar, A11y, EffectCube, Autoplay]}
+          modules={[Navigation, Scrollbar, A11y, EffectCube, Autoplay]}
           rewind
           // navigation
           // grabCursor={true}
@@ -277,12 +274,13 @@ const HomePage = () => {
               },
             }}
           >
-            <Tab value={1} label='ALL' />
-            <Tab value={2} label='Trending' />
+            <Tab value={1} className='tabSelect' label='ALL' />
+            <Tab value={2} className='tabSelect' label='Trending' />
             {/* <Tab value={3} label='Marketplace' /> */}
           </Tabs>
         <div className='search-homepage'>
           <TextField
+              key={searchKey}
               className={`searchInput`}
               fullWidth
               hiddenLabel
@@ -292,12 +290,19 @@ const HomePage = () => {
               variant="outlined"
               margin="dense"
               autoComplete="off"
-              // value={searchTerm}
+              defaultValue={searchTerm || null}
+              // value={searchTerm === null ? '' : searchTerm}
+              onChange={handlerSearch}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton>
-                      <img src={SearchIcon} alt="search-icon" />
+                      {searchTerm ? 
+                        <>
+                        </>
+                          :
+                        <img src={SearchIcon} alt="search-icon" />
+                      }
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -305,19 +310,19 @@ const HomePage = () => {
               // onChange={handleChangeInput}
               // onBlur={handleBlurInput}
             />
+            {/* {console.log(searchTerm)} */}
           </div>
         <div className='arrow_price'>
           {/* <div className="typeLabel">種別</div> */}
               <FormControl >
                 <Select
                   value={typePrice}
-                  onChange={handleChangeTypePrice}
+                  onChange={handleChangeOrderForPrice}
                   className="typeValue"
                   IconComponent={KeyboardArrowDownRoundedIcon}
                 >
-                   <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={'DESC'}>Price high to low</MenuItem>
+                  <MenuItem value={'ASC'}>Price low to high</MenuItem>
                     {/* {listTradeTypes.filter((tradeType) => tradeType.name !== "SENT" && tradeType.name !== "RECEIVED" && tradeType.name !== "TRANSFER")
                     .map((item, index) => (
                       <MenuItem key={index} value={item} className="typeText">
@@ -329,15 +334,22 @@ const HomePage = () => {
           </div>
         </div>
         <div className='list-item'>
-          {/* <Box sx={{ minWidth: "275px" }}>
-                        <Card variant="outlined" style={{ width: "100%" }}>
-                            <CardContent>
-                                divfsadfdsf
-                            </CardContent>
-                        </Card>
-                    </Box> */}
-          {/* <Box sx={{ flexGrow: 1 }}> */}
-          <ItemList data={listNFT} />
+          <ItemList data={dataNftListed} /> 
+          {/* listNFT */}
+          {dataNftListed.length >0 && (
+              <div className='pagination'>
+                <Pagination
+                count={Math.ceil(totalRecordsNft / pagination.pageSize)}
+                page={pagination.pageIndex}
+                // count={10}
+                // page={1}
+                onChange={handlePageChange}
+                color="primary"
+                />
+            </div>
+          )}
+          
+        
           {/* </Box> */}
         </div>
       </div>

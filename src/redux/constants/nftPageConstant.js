@@ -1,0 +1,3 @@
+export const GET_NFT_INFO_PENDING = 'app/Nft/GET_NFT_INFO_PENDING';
+export const GET_NFT_INFO_SUCCESS = 'app/Nft/GET_NFT_INFO_SUCCESS';
+export const GET_NFT_INFO_ERROR = 'app/Nft/GET_NFT_INFO_SUCCESS';

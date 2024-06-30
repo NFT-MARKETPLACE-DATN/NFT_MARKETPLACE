@@ -8,13 +8,21 @@ import {
     CREATE_NFT_PENDING,
     CREATE_NFT_SUCCESS,
     CREATE_NFT_ERROR,
-} from "../constants/index";
+    GET_NFT_LISTED_PENDING,
+    GET_NFT_LISTED_SUCCESS,
+    GET_NFT_LISTED_ERROR,
+    UPDATE_USER_BACKGROUND_PENDING,
+    UPDATE_USER_BACKGROUND_SUCCESS,
+    UPDATE_USER_BACKGROUND_ERROR
+} from "../constants";
 
 const initialState = {
     account:null,
     isLogin:false,
     accountInfo:{},
     loading: false,
+    dataNftListed:[],
+    totalRecordsNft:0
 };
 
 const homePageReducer = (state = initialState, action) => {
@@ -63,6 +71,44 @@ const homePageReducer = (state = initialState, action) => {
                 loading:false,
             }
         case CREATE_NFT_ERROR:
+            return{
+                ...state,
+                loading:false,
+            }
+        case GET_NFT_LISTED_PENDING:
+            return{
+                ...state,
+                loading:true,
+                // totalRecordsNft:0,
+            }
+        case GET_NFT_LISTED_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                totalRecordsNft:action.respond.data.totalRecord,
+                dataNftListed:action.respond.data.records
+            }
+        case GET_NFT_LISTED_ERROR:
+            return{
+                ...state,
+                loading:false,
+                totalRecordsNft:0,
+                dataNftListed:[]
+            }
+
+        case UPDATE_USER_BACKGROUND_PENDING:
+            return{
+                ...state,
+                loading:true,
+                    
+            }
+        case UPDATE_USER_BACKGROUND_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                accountInfo: action.respond.data,
+            }
+        case UPDATE_USER_BACKGROUND_ERROR:
             return{
                 ...state,
                 loading:false,

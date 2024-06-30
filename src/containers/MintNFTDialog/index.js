@@ -15,11 +15,23 @@ import CloseIcon from "../../images/closeIc.svg";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import {validateNftTrait} from "./validate";
+// import { setWallet,login } from "../../redux/actions";
+// import { useDispatch, useSelector } from 'react-redux';
 
 const MintNFTDialog = (props) => {
     const { visible, onClose, transaction , setAcount,setCode } = props;
+    // const dispatch = useDispatch();
+    // const {
+    //     isLogin,
+    //     account,
+    //     accountInfo={},
+    //     loading = false
+    //   } = useSelector(state => state.globalState || {});
     const navigate = useNavigate();
     const onCloseDialog = () => {
+        // dispatch(login({
+        //     address: accountInfo.address
+        // }));
         onClose();
         navigate('/');
     };
@@ -65,7 +77,7 @@ const MintNFTDialog = (props) => {
                         View transaction in Solana explorer:
                     </span> */}
                     <a 
-                    href={`https://explorer.solana.com/tx/${transaction}?cluster=devnet`}
+                    href={`https://explorer.solana.com/tx/${transaction}?cluster=testnet`}//devnet
                     target="_blank"
                     role="button"
                     tabIndex="0"
