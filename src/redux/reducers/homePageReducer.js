@@ -13,7 +13,8 @@ import {
     GET_NFT_LISTED_ERROR,
     UPDATE_USER_BACKGROUND_PENDING,
     UPDATE_USER_BACKGROUND_SUCCESS,
-    UPDATE_USER_BACKGROUND_ERROR
+    UPDATE_USER_BACKGROUND_ERROR,
+    SET_ACCOUNT
 } from "../constants";
 
 const initialState = {
@@ -112,6 +113,11 @@ const homePageReducer = (state = initialState, action) => {
             return{
                 ...state,
                 loading:false,
+            }
+        case SET_ACCOUNT:
+            return{
+                ...state,
+                accountInfo:{},
             }
         default:
             return state;

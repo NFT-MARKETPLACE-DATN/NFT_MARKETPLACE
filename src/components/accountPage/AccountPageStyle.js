@@ -174,6 +174,14 @@ const AccountPageStyle = styled.div`
             width: 130px;
           }
         }
+        .arrow_created{
+        
+        }
+        .type_transaction{
+          margin-right: 10px;
+          .typeTransaction{
+          }
+        }
       }
       .accountPageItem{
         width: 100%

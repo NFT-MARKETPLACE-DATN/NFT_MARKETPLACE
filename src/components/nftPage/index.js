@@ -36,22 +36,29 @@ import { useSearchQuery } from '../../utils/helpers';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from 'react-router-dom'
 import { getConnected } from "../../utils/walletConnet";
 import { Connection, PublicKey, clusterApiUrl, Transaction, SystemProgram ,Keypair, sendAndConfirmTransaction} from '@solana/web3.js';
 import {initCollection} from "../../utils/createMintNFT";
 import { approveNFT } from '../../utils/approveNFT';
 import { transferNFT } from '../../utils/transferNFT';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogin, getNftInfo } from "../../redux/actions";
+import { setLogin, getNftInfo, syncNftMarket } from "../../redux/actions";
 import Loading from '../../containers/Loading';
 import { formatString, formatDateByTz } from "../../utils/helpers";
-
+import { ChangePriceDialog } from '../../containers/changePrice';
 import * as token from "@solana/spl-token"
 const DetailNFT = () => {
+  const {account, accountInfo} = useSelector(state => state.globalState || {});
+  const {
+    loading , 
+    nftInfo
+  } = useSelector(state => state.nftState || {});
   const params = useSearchQuery();
   const [isCollapse, setIsCollapse] =useState(false);
   const [isCollapseTraits, setIsCollapseTraits] =useState(false);
-  // const connection = new Connection("https://solana-devnet.g.alchemy.com/v2/P4DtZuchPeew_-sMonOKOBavg0B8pj0j", 'confirmed');
+  const [isPrice, setIsPrice] =useState(false);
+  const navigate = useNavigate();
   const onCollapse = ()=>{
     setIsCollapse(!isCollapse);
   };
@@ -59,12 +66,8 @@ const DetailNFT = () => {
     setIsCollapseTraits(!isCollapseTraits);
   };
   const dispatch = useDispatch();
-  const {account} = useSelector(state => state.globalState || {});
-  const {
-    loading , 
-    nftInfo
-  } = useSelector(state => state.nftState || {});
-  console.log(nftInfo);
+
+  // console.log(nftInfo);
   useEffect(()=>{
     dispatch(
       getNftInfo({
@@ -72,6 +75,30 @@ const DetailNFT = () => {
       })
     )
   },[])
+
+  const handlerChangePrice = () =>{
+    setIsPrice(true)
+  }
+  const handlerUnList = async () =>{
+    const params = {
+      userID:accountInfo.id,
+      isAction: true,
+      nftID : nftInfo.id,
+      price : 0,
+      isList : false,
+      isTrending : false,
+    }
+    dispatch(syncNftMarket(params));
+    navigate("/")
+    // dispatch(
+    //   getNftInfo({
+    //     nftID:params.id
+    //   })
+    // )
+  }
+  const handlerList = async () =>{
+    setIsPrice(true)
+  }
   const handlerBuyNFT = async()=> {
     if(!account){
       dispatch(setLogin(true));
@@ -128,7 +155,6 @@ const DetailNFT = () => {
     // await transferNFT();
 
   }
-  // console.log(params);
   return (
     <>
     <Loading loading={loading}/>
@@ -158,10 +184,6 @@ const DetailNFT = () => {
               <CardContent className='labelDescription'>
                 <img src={SubjectIcon} alt='fasdf'/>
                 <div className='labelText'>Description</div>
-                {/* <div className=''></div> */}
-                {/* <CardContent className = "">
-                  <div className='textDescription'></div>
-                </CardContent> */}
                 </CardContent>
                 <hr width="100%"/>
               <CardContent className='creatorNFT'>
@@ -207,9 +229,6 @@ const DetailNFT = () => {
                       },
                     },
                   }}
-                  // placeholder='Enter a Description'
-                  // value={notes}
-                  // onChange={(event) => setNotes(event.target.value.trimStart())}
                   />
                 }
               
@@ -229,10 +248,10 @@ const DetailNFT = () => {
                   </IconButton>
                 </CardContent>
                 {nftInfo?.attribute && nftInfo?.attribute.length >0 ? 
-                  <Collapse in={isCollapseTraits} timeout="auto" unmountOnExit className=''>
-                      {nftInfo?.attribute.map((item)=>{
+                  <Collapse  in={isCollapseTraits} timeout="auto" unmountOnExit className=''>
+                      {nftInfo?.attribute.map((item,index)=>{
                         return (
-                          <CardContent>
+                          <CardContent key={index}>
                             <div>fasdf</div>
                           </CardContent>
                         )
@@ -289,7 +308,7 @@ const DetailNFT = () => {
                       }
                   </CardContent>
                   <CardContent className='info'>
-                      <div>Token StandardT</div>
+                      <div>Token Standard</div>
                       <div className='labelText'>SPL</div>
                   </CardContent>
                   <CardContent className='info'>
@@ -307,9 +326,10 @@ const DetailNFT = () => {
         </div>
         <div className='marketNFT'>
           <div className='nameNFT'>
-            <div className='nameNFT'>{nftInfo?.nftName} &nbsp;
-            </div>
-            <div className='symbolNFT'>{nftInfo?.symbol}</div>
+            <span className='name'>{nftInfo?.nftName}
+            <span className='symbol'>#{nftInfo?.symbol}</span>
+            </span>
+            
             <div className='ownerNFT'>
                 <span className='labelHeader'>Owner By&nbsp;</span> 
                   <Tooltip title='Owner Address' placeholder='bottom' arrow>
@@ -327,30 +347,67 @@ const DetailNFT = () => {
             </div>
           </div>
           <div className='listingNFT'>
+            {nftInfo?.isList == 1 &&
               <Card className='priceItemNFT'>
                 <div className='titilePrice'>Current price</div>
-                <CardContent>
-                  <div className='price'>{nftInfo?.price} SOL</div>
-                </CardContent>
-              
+                <div className="detailPrice">
+                  <CardContent>
+                    <div className='priceValue'>{nftInfo?.price} SOL</div>
+                  </CardContent>
+                  {nftInfo?.user_id == accountInfo.id && 
+                    <Button className='changePriceBtn' width='100%' variant='contained' onClick={handlerChangePrice}>
+                      ChangePrice
+                    </Button>
+                  }
+                </div>
+       
               </Card>
-            
+              }
+              
             <div className='tradeNFT'>
               <div className='priceNFT'>
-                <Button className='buyBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
-                  Buy
-                </Button>
+                {nftInfo?.user_id == accountInfo.id ? 
+                  // (nftInfo?.isList == 1 ? 
+
+                  //   <Button className='unListBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
+                  //     UnList
+                  //   </Button>
+                  //     :
+                  //   <Button className='listBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
+                  //     List
+                  //   </Button>
+                  // ) 
+                    <Button className='unListBtn' width='100%' variant='contained' onClick={nftInfo?.isList == 1 ? handlerUnList : handlerList }>
+                      {nftInfo?.isList == 1 ? `UnList` : `List`}
+                    </Button>
+                  :
+                  (nftInfo?.isList == 1 &&
+                  <Button className='buyBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
+                    Buy
+                  </Button>
+                  ) 
+                }
+               
                 </div>
-              <div className='offerNFT'>
+              {/* <div className='offerNFT'> */}
                 {/* <Button className='makeOfferBtn' width='100%' >
                    Make offer  
                 </Button> */}
-                </div>
+                {/* </div> */}
             </div>
           </div>
         </div>
       </div>
     </DetailNFTStyle>
+    <ChangePriceDialog
+      visible={isPrice}
+      onClose={() => {
+        setIsPrice(false)
+      }}
+      // setPrice = {setPrice}
+      // price = {nftInfo?.price}
+      // isList = {nftInfo?.isList }
+    ></ChangePriceDialog>
   </>
 
   )

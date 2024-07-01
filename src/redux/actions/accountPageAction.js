@@ -7,7 +7,8 @@ import {
     GET_NFT_BY_USER_ERROR,
     GET_TRANSACTION_BY_USER_PENDING,
     GET_TRANSACTION_BY_USER_SUCCESS,
-    GET_TRANSACTION_BY_USER_ERROR
+    GET_TRANSACTION_BY_USER_ERROR,
+    SET_ACCOUNT
   } from "../constants/index";
 
 export function updateUserBackground(data) {
@@ -66,3 +67,7 @@ export function getTransactionUserError(error) {
       error,
     };
   }
+export const setAccount = (data) => ({
+  type: SET_ACCOUNT,
+  data
+})

@@ -32,7 +32,7 @@ const DetailNFTStyle = styled.div`
       // flex-direction: column;
       @media screen and (max-width: 1100px) {
         max-width: 100%;
-        margin-top: 50px;
+        margin-top: 60px;
       }
       .imageNFT {
         width: 100%;
@@ -130,19 +130,28 @@ const DetailNFTStyle = styled.div`
           top: 10px;
 
         }
-        .nameNFT {
+        .name {
           font-size: 30px;
           font-weight: 600;
-          max-width: 100%;
+          // max-width: 100%;
           margin: 0px;
           overflow: hidden;
           text-overflow: ellipsis;
           line-height: normal;
+          .symbol{
+            margin-left:8px;
+            font-size: 20px;
+            color: rgb(138, 147, 155);
+          }
         }
-        .symbolNFT{
-          
-        }
+       
         .ownerNFT{
+          margin-top: 10px;
+          //  @media screen and (max-width: 1100px) {
+          //     margin:0;
+          //     position: relative;
+          //     top: 50px;
+          //   }
           .labelHeader {
             line-height: 24px;
             font-size: 16px;
@@ -161,33 +170,61 @@ const DetailNFTStyle = styled.div`
             line-height: 20px;
             color: rgb(138, 147, 155);
           }
-          .MuiCardContent-root{
-            padding:10px;
-            .price{
-              align-items: center;
-              display: flex;
+          .detailPrice{
+            display: flex;
+            align-items: center;
+            gap:10px;
+            .MuiCardContent-root{
+              padding:10px;
+              .priceValue{
+                align-items: center;
+                display: flex;
+                font-weight: 600;
+                font-size: 30px;
+              }
+            }
+            .changePriceBtn{
+              height: 45px;
+              line-height: 24px;
               font-weight: 600;
-              font-size: 30px;
+              font-size: 16px;
+              padding-top: .75rem;
+              padding-bottom: .75rem;
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+              color: #FFFF;
+              transition-duration: .2s;
+              animation-duration: .2s;
+              border-radius: 10px;
+              text-transform : capitalize;
             }
           }
-       
         }
         .tradeNFT{
           display: flex;
-          // justify-content: center;
           gap: 15px;
           margin-top:20px;
+          @media screen and (max-width: 1100px) {
+            justify-content: center;
+          }
           @media screen and (max-width: 600px) {
             flex-direction: column;
           }
           .priceNFT{
             width:50%;
+            @media screen and (max-width: 1100px) {
+              width:100%;
+              display: flex;
+              justify-content: center;
+            }
             @media screen and (max-width: 600px) {
               width:100%;
             }
-
+            .listBtn,
+            .unListBtn,
             .buyBtn{
               width:100%;
+              // min-width:200px;
               // height:50px;
               line-height: 24px;
               font-weight: 600;
@@ -201,6 +238,15 @@ const DetailNFTStyle = styled.div`
               animation-duration: .2s;
               border-radius: 10px;
               text-transform : capitalize;
+              @media screen and (max-width: 1100px) {
+                min-width:500px;
+              }
+              @media screen and (max-width: 800px) {
+                min-width:300px;
+              }
+              @media screen and (max-width: 600px) {
+                min-width:100%;
+              }
             }
           }
           .offerNFT{

@@ -23,7 +23,7 @@ import BaseButton from '../../containers/base/Button'
 import { toast } from 'react-toastify'
 // import history from '../../utils/history';
 import NFT_logo from '../../images/logos/NFT-Marketplace.svg';
-import { setLogin,setWallet } from "../../redux/actions";
+import { setLogin,setWallet ,setAccount } from "../../redux/actions";
 // import { createStructuredSelector } from 'reselect';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,6 +62,7 @@ const Header = () => {
     localStorage.removeItem('walletAdress');
     navigate('/');
     dispatch(setWallet(null));
+    dispatch(setAccount());
     // localStorage.clear();
   }
   const handleOpenUserInfo = (event) => {
