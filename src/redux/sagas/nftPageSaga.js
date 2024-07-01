@@ -12,26 +12,16 @@ function* getNftInfo(action) {
   try {
     const { data } = action
     const payload = {
-      url: `/nft/create-nft`,
+      url: `/nft/get-nft-by-id`,
       params: {
-        userId: data.userID
+        nftId: data.nftID
       },
-      data: {
-        nftName: data.nftName,
-        symbol: data.symbol,
-        image: data.image,
-        description: data.description,
-        attribute: data.attribute,
-        mintAddress: data.mintAddress,
-        tokenAccount: data.tokenAccount,
-        transaction: data.transaction
-      }
     }
     const respond = yield call(Api.get, payload);
     // console.log(respond);
     if (respond.success) {
       yield put(getNftInfoSuccess(respond))
-      toast.success('Create NFT success')
+      // toast.success('Create NFT success')
     } else {
       yield put(getNftInfoError(respond.message))
     }

@@ -1,5 +1,7 @@
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
+import * as dayjs from 'dayjs';
+export const formatDateByTz = (date, formatDate) =>dayjs(date).format(formatDate);
 
 const useSearchQuery = () => queryString.parse(useLocation().search);
 
@@ -19,4 +21,14 @@ export const arrayObjectOfUniques = (inputArray, keyNameObj) => {
     });
     return arrayOfUniques || [];
   };
+
+
+export const formatString = (input)=>{
+  if(input.length <= 15){
+    return input;
+  }
+  const start = input.slice(0, 6);
+  const end = input.slice(-4);
+  return `${start}...${end}`;
+}
 export {useSearchQuery}

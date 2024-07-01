@@ -152,12 +152,20 @@ const handleError = error => {
   if (error.response) {
     if (error.response.status === 401) {
     //   history.push(ROUTER_LOGIN);
-    toast.error(`Network error: Unable to connect to API`, {
-        icon: false,
-    });
+      toast.error(`Network error: Unable to connect to API`, {
+          icon: false,
+      });
+    }
+    if(error.response){
+      if (error.response.status === 500) {
+        //   history.push(ROUTER_LOGIN);
+          toast.error(`Internal Server Error`, {
+              icon: false,
+          });
+        }
     }
     return Promise.reject(
-      error.response.data.errors || error.response.data.error,
+      error.response.data.errors || error.response.data.error || error.response.data.message,
     );
   }
   if (error.message === 'Network Error') {
@@ -166,7 +174,6 @@ const handleError = error => {
       icon: false,
     });
   }
-
   return Promise.reject(error);
 };
 

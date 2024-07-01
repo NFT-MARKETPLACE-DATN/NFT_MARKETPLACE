@@ -126,10 +126,12 @@ const MintNFTPage = () => {
                 mintAddress: result.mint_address,
                 tokenAccount: result.token_account,
                 transaction: result.result,
-                userID: accountInfo.id
+                userID: accountInfo.id,
+                metadataUrl:uploadDataToIDFS.result
               }
               dispatch(createNft(params))
-              setIsOpenDialogMintNFT(true)
+              setIsOpenDialogMintNFT(true);
+              
             }else{
               if(result.result == "Unexpected error"){
                 toast.error("Your SOL balance is insufficient OR Blockchain Solana slot not running ");//Please check your account balance again

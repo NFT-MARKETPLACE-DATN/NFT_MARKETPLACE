@@ -26,7 +26,7 @@ const DetailNFTStyle = styled.div`
       padding: 20px;
     }
     .infoNFT {
-      max-width: 50%;
+      min-width: 50%;
       // gap:10px;
       // display: flex;
       // flex-direction: column;
@@ -36,6 +36,11 @@ const DetailNFTStyle = styled.div`
       }
       .imageNFT {
         width: 100%;
+        .cardNFT{
+          .image{
+            width: 100%;
+          }
+        }
       }
       .descriptionNFT {
         margin-top: 10px;
@@ -50,14 +55,41 @@ const DetailNFTStyle = styled.div`
           }
         }
         .creatorNFT {
-          align-items: center;
+          // align-items: center;
           // color: rgb(138, 147, 155);
           display: flex;
-
-          .labelHeader {
-            line-height: 24px;
-            font-size: 16px;
-            color: rgb(138, 147, 155);
+          flex-direction: column;
+          .infoCreated{
+            .labelHeader {
+              line-height: 24px;
+              font-size: 16px;
+              color: rgb(138, 147, 155);
+            }
+            .labelText{
+              font-weight: 600;
+            }
+          }
+          .infoDescription{
+            .MuiInputBase-root{
+              padding: 10px 0;
+              .MuiInputBase-input{
+                // color:black;
+                // font-weight: 400;
+              }
+            }
+          }
+        }
+        .infoTraits{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .labelTraits{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .labelText{
+              font-size: 18px;
+            }
           }
         }
         .infoSmartContract {
@@ -70,6 +102,15 @@ const DetailNFTStyle = styled.div`
             gap: 10px;
             .labelText {
               font-size: 18px;
+            }
+          }
+        }
+        .infoSC{
+          .info{
+            display: flex;
+            justify-content: space-between;
+            .labelText{
+              fontWeight:500
             }
           }
         }
@@ -89,7 +130,7 @@ const DetailNFTStyle = styled.div`
           top: 10px;
 
         }
-        .colationName {
+        .nameNFT {
           font-size: 30px;
           font-weight: 600;
           max-width: 100%;
@@ -98,7 +139,18 @@ const DetailNFTStyle = styled.div`
           text-overflow: ellipsis;
           line-height: normal;
         }
+        .symbolNFT{
+          
+        }
         .ownerNFT{
+          .labelHeader {
+            line-height: 24px;
+            font-size: 16px;
+            color: rgb(138, 147, 155);
+          }
+          .labelText{
+            font-weight: 600;
+          }
         }
       }
 

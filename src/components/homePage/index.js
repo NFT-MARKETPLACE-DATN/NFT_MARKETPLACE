@@ -97,13 +97,15 @@ const HomePage = () => {
   useEffect(()=>{
     // if(pagination.pageIndex != 1)
       // console.log(pagination);
-    dispatch(getNftListed({
+    dispatch(
+      getNftListed({
       pageIndex: pagination.pageIndex,
       pageSize:pagination.pageSize,
       order:typePrice,
       isTrending:isTrending,
       search:searchTerm
-    }))
+      })
+    )
     // fetchData();
   },[pagination.pageIndex,isTrending,typePrice])
   // const fetchData = useCallback(async () => {

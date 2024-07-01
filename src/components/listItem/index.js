@@ -32,7 +32,7 @@ const ItemList = (props) => {
   const { data, account } = props
   const navigate = useNavigate()
   const handlerClick = (item) => {
-    console.log(item)
+    // console.log(item)
     navigate(`/nft?id=${item.id}`)
   }
   return (

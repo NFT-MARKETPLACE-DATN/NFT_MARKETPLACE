@@ -19,7 +19,8 @@ function* createNft(action) {
         attribute: data.attribute,
         mintAddress: data.mintAddress,
         tokenAccount: data.tokenAccount,
-        transaction: data.transaction
+        transaction: data.transaction,
+        metadataUrl:data.metadataUrl
       }
     }
     const respond = yield call(Api.post, payload);
@@ -31,7 +32,7 @@ function* createNft(action) {
       yield put(createNftError(respond.message))
     }
   } catch (error) {
-    yield put(createNftError(error.message))
+    yield put(createNftError(error))
   }
 }
 export default function* todoSaga() {

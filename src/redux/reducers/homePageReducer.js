@@ -22,7 +22,7 @@ const initialState = {
     accountInfo:{},
     loading: false,
     dataNftListed:[],
-    totalRecordsNft:0
+    totalRecordsNft:0,
 };
 
 const homePageReducer = (state = initialState, action) => {
@@ -73,7 +73,7 @@ const homePageReducer = (state = initialState, action) => {
         case CREATE_NFT_ERROR:
             return{
                 ...state,
-                loading:false,
+                loading : false,
             }
         case GET_NFT_LISTED_PENDING:
             return{
