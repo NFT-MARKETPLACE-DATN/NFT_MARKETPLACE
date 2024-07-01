@@ -288,8 +288,6 @@ const DetailNFT = () => {
                           {nftInfo?.mint_address && formatString(nftInfo?.mint_address)}
                         </a>
                       </Tooltip>
-                      
-                      {/* <div className='labelText'>{nftInfo?.mint_address && formatString(nftInfo?.mint_address)}</div> */}
                   </CardContent>
                   <CardContent className='info'>
                       <div>MetaData NFT</div>
@@ -404,10 +402,7 @@ const DetailNFT = () => {
       onClose={() => {
         setIsPrice(false)
       }}
-      // setPrice = {setPrice}
-      // price = {nftInfo?.price}
-      // isList = {nftInfo?.isList }
-    ></ChangePriceDialog>
+    />
   </>
 
   )
