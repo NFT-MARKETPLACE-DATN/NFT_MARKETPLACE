@@ -36,7 +36,7 @@ import {isArrayLength , arrayObjectOfUniques, formatDateByTz} from "../../../uti
 import _debounce from 'lodash/debounce';
 import { size } from 'lodash';
 // import { debounce } from 'lodash';
-const initialPagination= { pageIndex:1,pageSize:10};
+const initialPagination= { pageIndex:1,pageSize:20};
 const Transaction = ({order, search}) =>{
   
     const {

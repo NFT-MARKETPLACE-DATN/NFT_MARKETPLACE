@@ -44,54 +44,91 @@ const DetailNFTStyle = styled.div`
       }
       .descriptionNFT {
         margin-top: 10px;
-        .labelDescription {
-          display: flex;
-          align-items: center;
-          .labelText {
-            line-height: 30px;
-            font-weight: 600;
-            font-size: 18px;
-            margin-left: 5px;
-          }
-        }
-        .creatorNFT {
-          // align-items: center;
-          // color: rgb(138, 147, 155);
-          display: flex;
-          flex-direction: column;
-          .infoCreated{
-            .labelHeader {
-              line-height: 24px;
-              font-size: 16px;
-              color: rgb(138, 147, 155);
-            }
-            .labelText{
+        .infoDescriptionNFT{
+          .labelDescription {
+            display: flex;
+            align-items: center;
+            .labelText {
+              line-height: 30px;
               font-weight: 600;
+              font-size: 18px;
+              margin-left: 5px;
             }
           }
-          .infoDescription{
-            .MuiInputBase-root{
-              padding: 10px 0;
-              .MuiInputBase-input{
-                // color:black;
-                // font-weight: 400;
+          .creatorNFT {
+            // align-items: center;
+            // color: rgb(138, 147, 155);
+            display: flex;
+            flex-direction: column;
+            .infoCreated{
+              .labelHeader {
+                line-height: 24px;
+                font-size: 18px;
+                color: rgb(138, 147, 155);
+              }
+              .labelText{
+                font-weight: 600;
+                font-size: 20px;
+              }
+            }
+            .infoDescription{
+              .MuiInputBase-root{
+                padding: 10px 0;
+                .MuiInputBase-input{
+                  // color:black;
+                  // font-weight: 400;
+                }
               }
             }
           }
-        }
-        .infoTraits{
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .labelTraits{
+          .infoTraits{
             display: flex;
             align-items: center;
-            gap: 10px;
-            .labelText{
-              font-size: 18px;
+            justify-content: space-between;
+            .labelTraits{
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              .labelText{
+                font-size: 18px;
+              }
             }
           }
+          .nftTraits{
+            // min-with:150px;
+            .gird{
+              .itemTraits{
+                
+                .item{
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  background: rgba(18, 18, 18, 0.04);
+                  gap:5px;
+                  .trait_type{
+                    line-height: 18px;
+                    font-size: 14px;
+                  }
+                  .value{
+                    line-height: 20px;
+                    font-weight: 600;
+                    font-size: 16px;
+                  }
+                }
+                .MuiCollapse-wrapper{
+                  .MuiCollapse-wrapperInner{
+                    // display: flex;
+                  }
+                }
+              }
+
+            }
+
+          }
         }
+       
+ 
+
         .infoSmartContract {
           display: flex;
           align-items: center;
@@ -131,7 +168,7 @@ const DetailNFTStyle = styled.div`
 
         }
         .name {
-          font-size: 30px;
+          font-size: 35px;
           font-weight: 600;
           // max-width: 100%;
           margin: 0px;
@@ -140,7 +177,7 @@ const DetailNFTStyle = styled.div`
           line-height: normal;
           .symbol{
             margin-left:8px;
-            font-size: 20px;
+            font-size: 22px;
             color: rgb(138, 147, 155);
           }
         }
@@ -159,6 +196,7 @@ const DetailNFTStyle = styled.div`
           }
           .labelText{
             font-weight: 600;
+            font-size: 20px;
           }
         }
       }
@@ -166,9 +204,10 @@ const DetailNFTStyle = styled.div`
       .listingNFT{
         .priceItemNFT{
           .titilePrice{
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
             color: rgb(138, 147, 155);
+            padding:5px;
           }
           .detailPrice{
             display: flex;
@@ -180,7 +219,7 @@ const DetailNFTStyle = styled.div`
                 align-items: center;
                 display: flex;
                 font-weight: 600;
-                font-size: 30px;
+                font-size: 35px;
               }
             }
             .changePriceBtn{

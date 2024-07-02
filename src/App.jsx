@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ErroPage from './components/erroPage';
 import AccountPage from './components/accountPage';
 import MintNFTPage from './components/mintNFTPage';
+import AdminPage from './components/adminPage';
 import DetailNFTPage from './components/nftPage';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from './containers/Loading';
@@ -41,7 +42,8 @@ const App = () => {
           <Route path='/account' element={<AccountPage />}></Route>
           <Route path='/mint' element={<MintNFTPage />}></Route>
           <Route path='/nft' element={<DetailNFTPage/>}></Route>
-          <Route path='/user' element={<DetailNFTPage/>}></Route>
+          {/* <Route path='/user' element={<DetailNFTPage/>}></Route> */}
+          <Route path='/admin' element={<AdminPage/>}></Route>
         </Routes>
         {/* </BrowserRouter> */}
       {/* </Router> */}

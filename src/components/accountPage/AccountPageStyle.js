@@ -143,6 +143,39 @@ const AccountPageStyle = styled.div`
         font-weight: 600;
         font-size: 32px;
         margin-left: 15px;
+        .account-address{
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          cursor: pointer;
+          // .address{
+          //   display: flex;
+          //   align-items: center;
+          //   gap: 2px;
+            width: fit-content;
+            .solanaIcon{
+              height:30px;
+              width:30px;
+            }
+            .tooltip{
+              display:flex;
+              .label-text{
+                line-height: 20px;
+                font-weight: 600;
+                font-size: 16px;
+              }
+            }
+            .account-join{
+              color:rgb(84 84 84);
+              line-height: 20px;
+              font-weight: 500;
+              font-size: 16px;
+              margin-left: 8px;
+            }
+          // }
+
+        }
       }
     }
     // .mainAccountPage{

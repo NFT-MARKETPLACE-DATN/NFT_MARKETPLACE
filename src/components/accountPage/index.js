@@ -21,7 +21,8 @@ import {
   CardActions,
   Tabs,
   Tab,
-  Pagination
+  Pagination,
+  Tooltip
 } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,13 +33,15 @@ import AccountPageStyle from './AccountPageStyle';
 import userIcon from '../../images/logos/account.svg';
 import FormatPaint from "../../images/logos/FormatPaint.svg";
 import SearchIcon from '../../images/logos/SearchIcon.svg';
+import SolanaIcon from '../../images/logos/SolanaIcon.svg';
 import ItemList from '../listItem/index';
 import { uploadImgaeFirebase } from '../../utils/uploadImageFirebase';
 import { setLoading,updateUserBackground,getNftByUser  } from "../../redux/actions";
 import Loading from '../../containers/Loading';
 import Transaction from './Transaction';
+import { formatString, formatDateByTz } from "../../utils/helpers";
 // import IteamListAccount from "../../containers/listItemAccount/index";
-const initialPagination= { pageIndex:1,pageSize:1 };
+const initialPagination= { pageIndex:1,pageSize:10 };
 const AccountPage = () => {
   const {
     account,
@@ -61,6 +64,7 @@ const AccountPage = () => {
   const [typePrice,setTypePrice] = useState("DESC");
   const [typeTransaction, setTypeTransaction] = useState(0);
   const [orderTransaction, setOrderTransaction] = useState("DESC");
+  const [itemCopy,setItemCopy] = useState("Copy");
   const navigate = useNavigate();
   const handleChangeTab = (event, newValue) => {
     setSelectTab(newValue)
@@ -106,6 +110,14 @@ const AccountPage = () => {
       pageIndex:value
     }))
   };
+  const onCopyLink = () => {
+    navigator.clipboard.writeText(accountInfo?.address);
+    setItemCopy("Copied")
+    // setTooltipVisible(true);
+    setTimeout(() => {
+      setItemCopy("Copy")
+    }, 600);
+  };
   useEffect(()=>{
     if(selectTab == 1) {
       setPagination(initialPagination);
@@ -139,11 +151,14 @@ const AccountPage = () => {
     }
   },[selectTab])
   useEffect(()=>{
-    if(!localStorage.getItem('walletAdress'))  navigate('/')
+    // if(!localStorage.getItem('walletAdress'))  navigate('/')
+    // console.log(Boolean(accountInfo))
+    if(!accountInfo.id) navigate('/')
+    // if(accountInfo?.id)
   },[]);
   useEffect(()=>{
     // if(pagination.pageIndex != 1)
-      // console.log(pagination);
+      // console.log(pagination)
     if(accountInfo){
       dispatch(
         getNftByUser({
@@ -236,7 +251,26 @@ const AccountPage = () => {
             <div className='account-name'>
               Unnamed
               <div className='account-address'>
-
+                <Tooltip title='Solana' placement='top' arrow>
+                  {/* <div className='address'> */}
+                    <img src={SolanaIcon} alt='image' className='solanaIcon' />  
+                  {/* </div> */}
+                </Tooltip>
+                <Tooltip  title="View on Solana Explorer" placement='bottom' arrow className='tooltip'>  {/* title={itemCopy} */}
+                  {/* <span className='label-text' >{accountInfo?.address && formatString(accountInfo?.address)}</span> */}
+                  {/* onClick={onCopyLink} */}
+                  <a 
+                    href={`https://explorer.solana.com/address/${accountInfo?.address}?cluster=testnet`}//devnet
+                    target="_blank"
+                    role="button"
+                    tabIndex="0"
+                    style={{ color: 'black',textDecoration:'none'}}
+                    className='label-text'
+                    >
+                    {accountInfo?.address && formatString(accountInfo?.address)}
+                  </a>
+                </Tooltip>
+                <span className='account-join'>Joined {formatDateByTz(accountInfo.created_date,'YYYY')}</span> {/* YYYY-MM-DD */}
               </div>
             </div>
           </div>
@@ -320,7 +354,7 @@ const AccountPage = () => {
                       className={`searchInput`}
                       fullWidth
                       hiddenLabel
-                      placeholder="検索"
+                      placeholder="Search for name"
                       name="search"
                       type="text"
                       variant="outlined"

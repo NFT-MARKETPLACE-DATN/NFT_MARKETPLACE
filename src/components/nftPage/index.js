@@ -89,6 +89,8 @@ const DetailNFT = () => {
       isTrending : false,
     }
     dispatch(syncNftMarket(params));
+    setTimeout(() => {
+    }, 1000);
     navigate("/")
     // dispatch(
     //   getNftInfo({
@@ -248,15 +250,20 @@ const DetailNFT = () => {
                   </IconButton>
                 </CardContent>
                 {nftInfo?.attribute && nftInfo?.attribute.length >0 ? 
-                  <Collapse  in={isCollapseTraits} timeout="auto" unmountOnExit className=''>
+                  <Collapse  in={isCollapseTraits} timeout="auto" unmountOnExit className='nftTraits'>
+                    <Grid className='gird' container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
                       {nftInfo?.attribute.map((item,index)=>{
                         return (
-                          <CardContent key={index}>
-                            <div>fasdf</div>
-                          </CardContent>
+                          <Grid item xs={4} md={2} xl={2} key={index} className='itemTraits'>
+                            <CardContent key={index} className='item'>
+                              <div className='trait_type'>{item.trait_type}</div>
+                              <div className='value'>{item.value}</div>
+                            </CardContent>
+                          </Grid>
                         )
-                        
                       })}
+                  
+                    </Grid>
                   </Collapse> 
                 : 
                 <></>  

@@ -4,7 +4,8 @@ import {
     GET_NFT_INFO_ERROR,
     SYNC_NFT_MARKET_PENDING,
     SYNC_NFT_MARKET_SUCCESS,
-    SYNC_NFT_MARKET_ERROR
+    SYNC_NFT_MARKET_ERROR,
+    SET_LOADING
 } from "../constants/index";
 
 const initialState = {
@@ -46,6 +47,11 @@ const nftPageReducer = (state = initialState, action)=>{
                 ...state,
                 loading: false,
             }
+        case SET_LOADING:
+            return{
+                ...state,
+                loading:action.data
+            };
         default:
             return state;
     }

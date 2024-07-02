@@ -68,7 +68,8 @@ const MintNFTPage = () => {
     setNftTrait((prevTraits) => prevTraits.filter((_, i) => i !== index))
   }
   useEffect(() => {
-    if (!localStorage.getItem('walletAdress')) navigate('/')
+    // if (!localStorage.getItem('walletAdress')) navigate('/')
+    if(!accountInfo.id) navigate('/')
   }, [])
   const formik = useFormik({
     enableReinitialize: true,

@@ -11,13 +11,14 @@ import {
     DialogActions,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import CloseIcon from "../../images/closeIc.svg";
+import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import validate from './validate';
+import CloseIcon from "../../images/closeIc.svg";
 import { useDispatch, useSelector } from 'react-redux';
-import {syncNftMarket } from "../../redux/actions";
-
+import { syncNftMarket,setLoading, getNftListed } from "../../redux/actions";
+import { approveNFT } from '../../utils/approveNFT';
 export const ChangePriceDialog = (props) => {
     const { visible, onClose, } = props;
     const { accountInfo} = useSelector(state => state.globalState || {});
@@ -36,8 +37,21 @@ export const ChangePriceDialog = (props) => {
            defaultPirce: nftInfo?.price
         },
         validate,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
            try {
+            let transaction = null;
+
+            if(!nftInfo?.isList){
+                dispatch(setLoading(true));
+                transaction = await approveNFT(nftInfo.mint_address,nftInfo.token_account);
+                // console.log(transaction);
+                if(!transaction.status){
+                    dispatch(setLoading(false));
+                    toast.error(transaction.result);
+                    onClose();
+                    return 
+                }
+            }
             const params ={
                 userID:accountInfo.id,
                 isAction: nftInfo?.isList == 1 ? false : true,
@@ -45,13 +59,24 @@ export const ChangePriceDialog = (props) => {
                 price : (values.price * Math.pow(10, 9)),
                 isList : true ,
                 isTrending : false,
+                transaction:transaction.result
             }
             dispatch(syncNftMarket(params));
            } catch (error) {
-            console.log(error);
+                console.log(error);
+                toast.error(error.message)
+                dispatch(setLoading(false));
            }
            onClose();
-           navigate('/')
+           setTimeout(() => {
+            }, 1000);
+           navigate('/');
+       
+        //    dispatch(getNftListed({
+        //         pageIndex: 1,
+        //         pageSize: 1,
+        //    }));
+
         }
       })
     return (

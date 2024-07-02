@@ -33,7 +33,7 @@ import ItemList from '../listItem/index';
 import SearchIcon from '../../images/logos/SearchIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNftListed } from "../../redux/actions";
-const initialPagination= { pageIndex:1,pageSize:1 };
+const initialPagination= { pageIndex:1,pageSize:10 };
 const HomePage = () => {
   const {
     isLogin,
@@ -286,7 +286,7 @@ const HomePage = () => {
               className={`searchInput`}
               fullWidth
               hiddenLabel
-              placeholder="検索"
+              placeholder="Search for name"
               name="search"
               type="text"
               variant="outlined"
