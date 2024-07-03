@@ -43,7 +43,8 @@ const BaseButtonStyle = styled.div`
     }
     button {
       color: #004b9e;
-      min-width: 110px;
+      // min-width: 110px;
+      width: 224px;
       font-size: 16px;
       font-weight: bold;
       border-radius: 50px;
@@ -74,6 +75,8 @@ const BaseButtonStyle = styled.div`
     button:hover {
       border: 2px solid #004b9e;
       background-color: #eff4f9;
+      // border: 2px solid rgb(0, 75, 158);
+      // background-color: rgb(239, 244, 249);
     }
   }
   .btnBoxNone {

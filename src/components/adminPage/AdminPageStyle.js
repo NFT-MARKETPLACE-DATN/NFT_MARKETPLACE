@@ -143,58 +143,73 @@ const AdminPageStyle = styled.div`
         font-weight: 600;
         font-size: 32px;
         margin-left: 15px;
-      }
-    }
-    // .mainAccountPage{
-      .accountTab{
-        margin-top:15px;
-        display:flex;
-        justify-content: space-between;
-        .MuiTabs-root{
-          .MuiTabs-scroller{
-            .MuiTabs-flexContainer{
-              button{
-                text-transform: capitalize;
+        .account-address{
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          cursor: pointer;
+          // .address{
+          //   display: flex;
+          //   align-items: center;
+          //   gap: 2px;
+            width: fit-content;
+            .solanaIcon{
+              height:30px;
+              width:30px;
+            }
+            .tooltip{
+              display:flex;
+              .label-text{
+                line-height: 20px;
+                font-weight: 600;
+                font-size: 16px;
               }
             }
-          }
-        }
-        .search-accountpage{
-          .searchInput{
-            div {
-              border-radius: 20px;
-              background-color: #fafafa;
-              height: 40px;
+            .account-join{
+              color:rgb(84 84 84);
+              line-height: 20px;
+              font-weight: 500;
+              font-size: 16px;
+              margin-left: 8px;
             }
-          }
-          @media screen and (max-width: 850px) {
-           width: 180px;
-          }
-          @media screen and (max-width: 650px) {
-            width: 130px;
+          // }
+
+        }
+      }
+    }
+    .tabButton {
+      display:flex;
+      column-gap: 24px;
+      justify-content: center;
+      margin-top: 30px;
+      @media screen and (max-width: 600px) {
+        column-gap: 16px;
+      }
+    }
+    .admin-body{
+      // display:flex;
+      // .admin-bar{
+      //   .itemList:hover {
+      //     background-color: #edf2f8;
+      //   }
+        .activeItem {
+          border-left: 4px solid #004b9e !important;
+        }
+        .itemButtonUser{
+          .user-logo{
+            border-radius: 50%;
+            padding: 4px;
           }
         }
-        .arrow_created{
-        
-        }
-        .type_transaction{
-          margin-right: 10px;
-          .typeTransaction{
+        .itemButtonNft{
+          .nft-logo{
+            border-radius: 50%;
+            padding: 4px;
           }
         }
       }
-      .accountPageItem{
-        width: 100%
-        padding-left:5px;
-        padding-right:5px;
-        .pagination{
-          display: flex;
-          justify-content: center;
-          margin-top: 20px;
-        }
-      }
-      // }
-    
+    }  
   }
 `
 

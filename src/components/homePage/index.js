@@ -244,7 +244,7 @@ const HomePage = () => {
         </Swiper>
       </div>
       <div className='main-homepage'>
-        <div className='tab-homepage'>
+        <div className='tab-homepage' style={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={value}
             onChange={handleChangeTab}
