@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import BaseButtonStyle from './BaseButtonStyle';
 
 const BaseButton = props => {
-  const { text, className, divClassName, type, width, height, typeButton, variant,icon } = props;
+  const { text, className, divClassName, type, width, height, typeButton, variant,icon,onClick } = props;
   const renderClassName = () => {
     switch (type) {
       case 'primary':
@@ -28,6 +28,7 @@ const BaseButton = props => {
           type={typeButton || 'submit'}
           className={className}
           sx={{ width, height, boxShadow: 'none !important' }}
+          onClick={onClick}
         //   {...props}
         >
           {text} {icon? <img src={icon} className='icon'/>:""}

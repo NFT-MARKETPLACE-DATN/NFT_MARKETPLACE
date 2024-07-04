@@ -41,12 +41,12 @@ import { setLoading, updateUserBackground, getNftByUser } from '../../redux/acti
 import Loading from '../../containers/Loading'
 import BaseButton from '../../containers/base/Button';
 import UserTabel from "./UserTabel/index"
+import NftTabel from "./NftTabel/index"
 import { formatString, formatDateByTz } from "../../utils/helpers";
 // import Transaction from './Transaction';
 // import IteamListAccount from "../../containers/listItemAccount/index";
 const initialPagination = { pageIndex: 1, pageSize: 10 }
 const AdminPage = () => {
-  const adminSelected='USER';
   const { account, accountInfo = {} } = useSelector((state) => state.globalState || {})
   const { loading = false, dataNftHolding = [], totalRecordsNft } = useSelector((state) => state.accountState || {})
   const dispatch = useDispatch()
@@ -60,12 +60,42 @@ const AdminPage = () => {
   const [isCreated, setIsCreated] = useState(false)
   const [typePrice, setTypePrice] = useState('DESC')
   const [typeTransaction, setTypeTransaction] = useState(0)
-  const [orderTransaction, setOrderTransaction] = useState('DESC')
-  const navigate = useNavigate()
+  const [orderTransaction, setOrderTransaction] = useState('DESC');
+  const [tab, setTab] = useState(0);
+  const [adminSelected,setAdminSelected] = useState("USER");
+  const navigate = useNavigate();
+  const tabs = [
+    {
+      id: 0,
+      label: 'User',
+    },
+    {
+      id: 1,
+      label: 'NFT',
+    },
+  ];
+  // const handleTabUser = () =>{
+  //   console.log("fdsafsdaf");
+  //   setAdminSelected("USER");
+  // };
+  // const handleTabNft = () =>{
+  //   console.log("asdfsadf");
+  //   setAdminSelected("NFT");
+  // }
+  const handleTab = (id)=>{
+    if(tab != id ){
+      setTab(id);
+      console.log("fasdf");
+    }
+    
+  }
+  // useEffect(()=>{
+  //   console.log("fasdf");
+  // },[tab])
   const handleChangeTab = (event, newValue) => {
-    setSelectTab(newValue)
-    setValue(newValue)
-    setSearchTerm(null)
+    setSelectTab(newValue);
+    setValue(newValue);
+    setSearchTerm(null);
   }
   const handlerSearch = debounce((envent) => {
     const { value } = envent.target
@@ -158,14 +188,12 @@ const AdminPage = () => {
   // },[pagination.pageIndex,isListed,isCreated,typePrice])
 
   const detailTabel = () => {
-    switch (adminSelected) {
-      case "USER":
+    switch (tab) {
+      case 0:
         return <UserTabel></UserTabel>
       // return <IteamListAccount data={listNFT}></IteamListAccount>
-      case "NFT":
-        return <ItemList data={dataNftHolding} account={accountInfo.id} />
-      case 3:
-        return <ItemList data={dataNftHolding} account={accountInfo.id} />
+      case 1:
+        return <NftTabel></NftTabel>
       //   case 4:
       //     return <Transaction order={orderTransaction} search={typeTransaction}/>
       // return  <IteamListAccount data={listNFT}></IteamListAccount>
@@ -290,19 +318,29 @@ const AdminPage = () => {
             </Tabs>
           </div> */}
           <div className='tabButton'>
-            <BaseButton
+            {/* <BaseButton
              text={"User"}
              type={adminSelected === "USER" ? 'secondary' : 'none'}
-            //  onClick={()=>handleTab(item.id)}
+             onClick={handleTabUser}
              className="buttonCurrency"
-            ></BaseButton>
+            />
             <BaseButton
              text={"NFT"}
              type={adminSelected === "NFT" ? 'secondary' : 'none'}
-            //  onClick={()=>handleTab(item.id)}
+             onClick={handleTabNft}
              className="buttonCurrency"
-            ></BaseButton>
-          </div>
+            />*/}
+            {tabs.map((item, index) => (
+                <BaseButton
+                  key={index}
+                  text={item.label}
+                  type={tab === item.id ? 'secondary' : 'none'}
+                  onClick={()=>handleTab(item.id)}
+                  className="buttonCurrency"
+                />
+              ))}
+          </div> 
+            
           <div className='admin-body'>
             {detailTabel()}
             {/* <div className='admin-bar'>

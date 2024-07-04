@@ -2,6 +2,9 @@ import styled from 'styled-components';
 const NftTabelStyle =  styled.div`
    margin-top: 20px;
    padding :0 2px;
+   .userTabel{
+      padding: 0 5px;
+   }
   // .tableTransaction {
     // .MuiBox-root{
     //     display:none;
@@ -175,14 +178,23 @@ const NftTabelStyle =  styled.div`
     }
   }
   .onOffText {
-    font-size: 12px;
-    margin-right: 24px;
+    font-size: 14px;
+    margin-right: 16px;
   }
   .onOffSwitch {
     margin-top: 16px;
     margin-bottom: 16px;
   }
-
+  .headerTabel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:8px;
+  }
+ .flex{
+    display: flex;
+    align-items: center;
+ }
   .dialogFilter {
     padding: 10px;
     border-radius: 6px;

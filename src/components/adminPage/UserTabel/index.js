@@ -23,6 +23,7 @@ import {
   Tab,
   CardHeader,
   CardMedia,
+  Checkbox,
   Avatar,
   Tooltip,
   Button
@@ -35,7 +36,13 @@ import { getTransactionUser  } from "../../../redux/actions";
 import {isArrayLength , arrayObjectOfUniques, formatDateByTz} from "../../../utils/helpers"
 import _debounce from 'lodash/debounce';
 import { size } from 'lodash';
-// import { debounce } from 'lodash';
+import tooltipIcon from '../../../images/logos/tooltip.svg';
+import BaseSwitch from '../../../containers/BaseSwitch';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'; 
+import { debounce } from 'lodash';
+import SearchIcon from '../../../images/logos/SearchIcon.svg';
+import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 const initialPagination= { pageIndex:1,pageSize:20};
 const UserTabel = ({order, search}) =>{
     const {
@@ -47,90 +54,123 @@ const UserTabel = ({order, search}) =>{
     //    dataNftHolding=[],
     //    totalRecordsNft
     } = useSelector(state => state.accountState || {});
-    const [value, setValue] = useState(1);
-    const [selectTab, setSelectTab] = useState(1);
     const [pagination, setPagination] = useState(initialPagination);
     const [screenEl, setScreenEl] = useState({});
-    const [dataTransactionState, setDataTransactionState] = useState([]);
+    const [dataUserState, setDataUserState] = useState([]);
+    const [showIsAmin, setShowIsAmin] = useState(false);
+    const [typePrice,setTypePrice] = useState("DESC");
+    const [searchTerm,setSearchTerm] = useState(null);
+    const [visibleColumn, setVisibleColumn] = useState({
+      isAdmin: false,
+      address: true,
+      balance: true,
+      countNft: true,
+    });
     const dispatch = useDispatch();
-    const handleChangeTab = (event, newValue) => {
-      setSelectTab(newValue)
-      setValue(newValue)
-      // setSearchTerm(null)
-    }
+
+    const handlerSearch = debounce((envent)=>{
+      const {value} = envent.target;
+      const trimmedValue = value.trim();
+      setSearchTerm(trimmedValue);
+      setPagination(initialPagination);
+      // debouncedApiCall(trimmedValue);
+      // console.log(value);
+    },1000);
+    const handleChangeOrderForCreated = (event) =>{
+      setTypePrice(event.target.value);
+      setPagination(initialPagination);
+      // setSearchTerm(null);
+      // setSearchKey(6);
+      // console.log(event.target.value);
+    };
     const columns = [
-        {
-          accessorKey: 'actionName',
-          header: 'Action',
-          size: 50,
-          Cell: ({ row }) => (
-            <Box>
-              <div
-                className={
-                    row.original.actionName === 'Create' || row.original.actionName === "Listed" || row.original.actionName === "Buy"
-                    ? 'typeTransactionCell buy'
-                    : 'typeTransactionCell sell'
-                }
-              >
-                {row.original.actionName}
-              </div>
-            </Box>
-          ),
-        },
-        {
-          accessorKey: 'nftName',
-          header: 'NFT',
+      {
+        accessorKey: 'isAdmin',
+        header: (
+          <div className="flex">
+            <div className="label">Admin</div>
+            <Tooltip
+              title="User is Admin"
+              placement="top"
+              arrow
+            >
+              <img src={tooltipIcon} alt="tooltip-icon" width={12} height={12} />
+            </Tooltip>
+          </div>
+        ),
+        size: 50,
+        Cell: ({ row }) => (
+          <Box>
+            <Checkbox
+              checked={row.original.isAdmin == 1 ? true : false}
+              onChange={event => {
+                console.log("fasdfsadf");
+                // dispatch();
+              }}
+              icon={
+                <CheckBoxOutlineBlankOutlinedIcon
+                  sx={{
+                    '& path': { fill: '#707070' },
+                  }}
+                />
+              }
+              checkedIcon={
+                <CheckBoxOutlinedIcon
+                  sx={{
+                    '& path': { fill: '#004B9E' },
+                  }}
+                />
+              }
+            />
+          </Box>
+        ),
+      },
+      {
+          accessorKey: 'address',
+          header: 'Address',
           size: 120,
           Cell: ({ row }) => (
             <Box >
-              <div className="nftName">
-                {row.original.nftName}
+              <div className="address">
+                {row.original.address}
               </div>
             </Box>
           ),
         },
         {
-            accessorKey: 'nftImage',
-            header: 'Image',
+            accessorKey: 'balance',
+            header: 'SOL balance',
             size: 180,
             Cell: ({ row }) => (
-              <Box className='nftImgae'>
-                  <img
-                    alt={row.original.nftImage}
-                    src={row.original.nftImage}
-                    loading="lazy"
-                    className="image"
-                />
+              <Box className='balance'>
+                 <div className="balance">
+                  {row.original.balance}
+                </div>
               </Box>
             )
           },
           {
-            accessorKey: 'txID',
-            header: 'Transaction',
+            accessorKey: 'countNft',
+            header: 'NFT',
             size: 200,
             Cell: ({ row }) => (
-              (row.original.actionName === 'Create' || row.original.actionName === 'Buy' || row.original.actionName === 'Listed' || row.original.actionName === 'SELL' ) &&
-              <Box className='transaction'>
-                <Tooltip   
-                    title="View Transaction in explorer"
-                    placement="top"
-                    arrow>
-                    <a 
-                        href={`https://explorer.solana.com/tx/${row.original.txID}?cluster=testnet`}//devnet
-                        target="_blank"
-                        role="button"
-                        tabIndex="0"
-                        style={{ color: 'black',textDecoration:'none' }}
-                    >
-                        {row.original.txID ? (size(row.original.txID)>50 ? `${row.original.txID.substring(0, 50)}...` : row.original.txID)  : null }
-                    </a>
-                </Tooltip>
-    
+              <Box className='countNft'>
+                 <div className="countNft">
+                  {row.original.countNft}
+                </div>
               </Box>
             )
           },
       ];
-
+    
+    const data = [
+      {
+        isAdmin:2,
+        address:'asdfsadfdsaf',
+        balance: "3232323",
+        countNft:"fasdfsdf"
+      }
+    ]
     // useEffect(()=>{
     //   getDataTransaction(1);
     //   setPagination({ ...pagination, pageIndex: 1});
@@ -140,18 +180,17 @@ const UserTabel = ({order, search}) =>{
     // }, [dataTransacitonUser]);;  
     const handleDataTransaction =()=>{
         if(isArrayLength(dataTransacitonUser,1)){
-            setDataTransactionState((preValue)=>pagination?.pageIndex === 1 ? [...dataTransacitonUser] : arrayObjectOfUniques([...preValue,...dataTransacitonUser],'id'))
+            setDataUserState((preValue)=>pagination?.pageIndex === 1 ? [...dataTransacitonUser] : arrayObjectOfUniques([...preValue,...dataTransacitonUser],'id'))
         }
         // else if(dataTransacitonUser.length == 0){
-        //   setDataTransactionState([])
+        //   setDataUserState([])
         // }
         else{
-          if(dataTransacitonUser !== null && isArrayLength(dataTransactionState,1)){
-            setDataTransactionState([])
+          if(dataTransacitonUser !== null && isArrayLength(dataUserState,1)){
+            setDataUserState([])
           }
         }
       };
-
     const getDataTransaction = (pageIndex)=>{
         dispatch(
             getTransactionUser({
@@ -186,43 +225,182 @@ const UserTabel = ({order, search}) =>{
     return (
     <UserTabelStyle>
       <div className='tabAdmin'>
-          <Tabs
-              value={value}
-              onChange={handleChangeTab}
-              textColor='secondary'
-              indicatorColor='secondary'
-              aria-label='secondary tabs example'
-              variant="scrollable"
-              scrollButtons="auto"
-              className='tab'
-              sx={{
-                '& .MuiTab-root': {
-                  minWidth: 120,
-                  color: 'text.primary',
-                  '&.Mui-selected': {
-                    color: 'white', // Color when tab is selected
-                    backgroundColor:'secondary.main',
-                    borderRadius: '8px',
-                    underline: 'none',
-                  },
-                  '&:hover': {
-                    // backgroundColor: 'action.hover', // Color when tab is hovered
-                  },
-                },
-                '& .MuiTabs-indicator':{
-                  display:'none'
-                },
-                '& .MuiTabs-scrollButtons': {
-                  color: 'secondary.main',
-                },
-              }}
-            >
-              <Tab value={1} label='All' />
-              <Tab value={2} label='Listed' />
-              <Tab value={3} label='Created' />
-            
-            </Tabs>
           </div>
+          <div className='userTabel'>
+            <div className='headerTabel'>
+              <div className="flex onOffSwitch">
+                <div className="onOffText">Add Admin</div>
+                <BaseSwitch
+                  checked={showIsAmin}
+                  onChange={event => {
+                    setShowIsAmin(event.target.checked);
+                  }}
+                />
+              </div>
+              <div className='search-accountpage'>
+                  <TextField
+                      // key={searchKey}
+                      className={`searchInput`}
+                      fullWidth
+                      hiddenLabel
+                      placeholder="Search for name"
+                      name="search"
+                      type="text"
+                      variant="outlined"
+                      margin="dense"
+                      autoComplete="off"
+                      defaultValue={searchTerm || null}
+                      // value={searchTerm === null ? '' : searchTerm}
+                      onChange={handlerSearch}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton>
+                              {searchTerm ? 
+                                <>
+                                </>
+                                :
+                                <img src={SearchIcon} alt="search-icon" />
+                              }
+                             
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                </div>
+                <div className='arrow_price'>
+                  <FormControl >
+                    <Select
+                      value={typePrice}
+                      onChange={handleChangeOrderForCreated}
+                      className="typeValue"
+                      IconComponent={KeyboardArrowDownRoundedIcon}
+                    >
+                      <MenuItem value={'DESC'}>Recently created</MenuItem>
+                      <MenuItem value={'ASC'}>Created earliest</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div> 
+            </div>
+         
+            <MaterialReactTable
+            columns={columns}
+            data={data || []}
+            enableExpandAll={false}
+            enableTopToolbar={false}
+            enableSorting={false}
+            initialState={{}}
+            renderEmptyRowsFallback={()=>(<NoDataComponent isShowText={true}/>)}
+            enablePagination={false}
+            state={{
+              expanded: true,
+              columnVisibility: {
+                ...visibleColumn,
+                'mrt-row-expand': false,
+                isAdmin: showIsAmin
+              },
+              pagination,
+            }}
+            muiTableContainerProps={{
+              sx: {
+                maxHeight: '620px',
+              },
+              onScroll: fetchMoreOnBottomReached
+            }}
+          //   rowCount={totalRecordsTransaction}
+            manualPagination
+            // onPaginationChange={(valuee)=>{console.log({valuee})}}
+            // localization={MRT_Localization_JA}
+            muiTablePaginationProps={{
+              rowsPerPageOptions: [20],
+            }}
+            onColumnVisibilityChange={setVisibleColumn}
+            positionExpandColumn="first"
+            renderDetailPanel={({ row }) => (
+              <div className="transactionDateTime">
+                {formatDateByTz(row.original.created, 'YYYY/MM/DD HH:mm')}{' '}
+              </div>
+            )}
+            muiTableBodyProps={
+              {
+                // children: 'Custom Table Body',
+                // sx: () => ({
+                //   '& tr:nth-child(even)': {
+                //     backgroundColor: '#ccc',
+                //   },
+                // }),
+              }
+            }
+            enableRowSelection={false}
+            enableSelectAll={false}
+            setRowSelection={setShowIsAmin}
+            muiSelectCheckboxProps={{
+              checkedIcon: ( <CheckBoxOutlinedIcon sx={{ '& path': { fill: '#004B9E' } }}/> ),
+            }}
+            enableFullScreenToggle={false}
+            enableDensityToggle={false}
+            enableColumnActions={false}
+            enableColumnFilters={false}
+            enableGlobalFilter={false}
+            // enableHiding={!!matches}
+            displayColumnDefOptions={{
+              'mrt-row-actions': {
+                size: 20,
+                sx: {
+                  cursor: 'pointer',
+                },
+              },
+              'mrt-row-expand': {
+                size: 20,
+                header: <></>,
+                muiTableHeadCellProps: {
+                  align: 'right',
+                  padding:'0px 8px 0px 8px'
+                },
+                muiTableBodyCellProps: {
+                  align: 'right',
+                },
+              },
+              'mrt-row-select': {
+                header: (
+                  <div className="flex">
+                    <div className="label">Admin</div>
+                    <Tooltip
+                      title="User has admin"
+                      placement="top"
+                      arrow
+                    >
+                      <img
+                        src={tooltipIcon}
+                        alt="tooltip-icon"
+                        width={12}
+                        height={12}
+                      />
+                    </Tooltip>
+                  </div>
+                ),
+              },
+            }}
+            muiTableBodyCellProps={{
+              sx: {
+                fontWeight: 'normal',
+                fontSize: 16,
+              },
+            }}
+            muiTableHeadCellProps={{
+              sx: {
+                fontWeight: 'normal',
+                fontSize: 12,
+                color: '#707070',
+                '& .Mui-TableHeadCell-Content': {
+                  justifyContent: 'space-between',
+                },
+              },
+            }}
+
+          />
+        </div>
     </UserTabelStyle>
 )
 }
