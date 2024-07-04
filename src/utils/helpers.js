@@ -12,6 +12,7 @@ export const isArrayLength = (a, length = 0) => {
     return false;
   };
 export const arrayObjectOfUniques = (inputArray, keyNameObj) => {
+  console.log(inputArray);
     const arrayOfUniques = [];
     inputArray.filter((item) => {
       const i = arrayOfUniques.findIndex((x) => (x[keyNameObj] === item[keyNameObj]));
@@ -19,6 +20,7 @@ export const arrayObjectOfUniques = (inputArray, keyNameObj) => {
         arrayOfUniques.push(item);
       }
     });
+    console.log(arrayOfUniques);
     return arrayOfUniques || [];
   };
 

@@ -39,10 +39,13 @@ const NftTabelStyle =  styled.div`
     }
     .nftImgae {
       .image{
-        width: 120px;
-        height: 120px;
+        width: 180px;
+        height: 180px;
       }
-
+    }
+    .isListed{
+      width: 40px;
+      height: 40px;
     }
     .currentValue {
       font-weight: 500;
@@ -182,6 +185,7 @@ const NftTabelStyle =  styled.div`
     margin-right: 16px;
   }
   .onOffSwitch {
+    min-width:170px;
     margin-top: 16px;
     margin-bottom: 16px;
   }

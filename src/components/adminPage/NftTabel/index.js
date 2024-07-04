@@ -28,37 +28,39 @@ import {
   Tooltip,
   Button
 } from '@mui/material'
-import NftTabelStyle from "./NftTabelStyle";
-import { MaterialReactTable } from 'material-react-table';
-import NoDataComponent from '../../../containers/NoData';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTransactionUser  } from "../../../redux/actions";
-import {isArrayLength , arrayObjectOfUniques, formatDateByTz} from "../../../utils/helpers"
 import _debounce from 'lodash/debounce';
 import { size } from 'lodash';
-import tooltipIcon from '../../../images/logos/tooltip.svg';
-import BaseSwitch from '../../../containers/BaseSwitch';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'; 
-import { debounce } from 'lodash';
-import SearchIcon from '../../../images/logos/SearchIcon.svg';
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
-const initialPagination= { pageIndex:1,pageSize:20};
-const NftTabel = ({order, search}) =>{
+import { MaterialReactTable } from 'material-react-table';
+import tooltipIcon from '../../../images/logos/tooltip.svg';
+import BaseSwitch from '../../../containers/BaseSwitch';
+import SearchIcon from '../../../images/logos/SearchIcon.svg';
+import CheckIcon from "../../../images/logos/CheckIcon.svg";
+import CloseIcon from "../../../images/logos/CloseIcon.svg";
+import {isArrayLength , arrayObjectOfUniques, formatDateByTz,formatString } from "../../../utils/helpers"
+import NoDataComponent from '../../../containers/NoData';
+import NftTabelStyle from "./NftTabelStyle";
+import { getTransactionUser,getNftByAdmin,updateNftTrending  } from "../../../redux/actions";
+
+const initialPagination= { pageIndex:1,pageSize:10};
+const NftTabel = () =>{
     const {
         accountInfo={},
       } = useSelector(state => state.globalState || {});
     const {
-       loading,
-       dataTransacitonUser = [],
-    //    dataNftHolding=[],
-    //    totalRecordsNft
-    } = useSelector(state => state.accountState || {});
+      loading,
+      dataNft=[],
+      isUpdateStatus
+    } = useSelector(state => state.adminState || {});
     const [pagination, setPagination] = useState(initialPagination);
     const [screenEl, setScreenEl] = useState({});
-    const [dataUserState, setDataUserState] = useState([]);
+    const [dataNftState, setDataNftState] = useState([]);
     const [showIsTrending, setShowIsTreding] = useState(false);
     const [searchTerm,setSearchTerm] = useState(null);
+    const [searchKey, setSearchKey] = useState(1);
     const [value, setValue] = useState(1);
     const [selectTab, setSelectTab] = useState(1);
     const [visibleColumn, setVisibleColumn] = useState({
@@ -71,7 +73,7 @@ const NftTabel = ({order, search}) =>{
     });
     const dispatch = useDispatch();
 
-    const handlerSearch = debounce((envent)=>{
+    const handlerSearch = _debounce((envent)=>{
       const {value} = envent.target;
       const trimmedValue = value.trim();
       setSearchTerm(trimmedValue);
@@ -83,7 +85,7 @@ const NftTabel = ({order, search}) =>{
         setSelectTab(newValue);
         setValue(newValue);
         setSearchTerm(null);
-       
+        setSearchKey(2);
       }
     useEffect(()=>{
         if(selectTab == 2){
@@ -95,12 +97,13 @@ const NftTabel = ({order, search}) =>{
             setVisibleColumn((pre)=>({
                 ...pre,
                 price : false
-            }))
+            }));
+            setShowIsTreding(false);
         }
     },[selectTab])
     const columns = [
       {
-        accessorKey: 'isTreding',
+        accessorKey: 'isTrending',
         header: (
           <div className="flex">
             <div className="label">Trending</div>
@@ -117,10 +120,16 @@ const NftTabel = ({order, search}) =>{
         Cell: ({ row }) => (
           <Box>
             <Checkbox
-              checked={row.original.isTreding == 1 ? true : false}
+              checked={row.original.isTrending == 1 ? true : false}
               onChange={event => {
-                console.log("fasdfsadf");
-                // dispatch();
+                // console.log(event.target.checked);
+                dispatch(
+                  updateNftTrending({
+                    nftID:row.original.id,
+                    isTrending:event.target.checked
+
+                    })
+                )
               }}
               icon={
                 <CheckBoxOutlineBlankOutlinedIcon
@@ -141,14 +150,25 @@ const NftTabel = ({order, search}) =>{
         ),
       },
       {
-          accessorKey: 'address',
-          header: 'Address',
+          accessorKey: 'userAddress',
+          header: 'User',
           size: 120,
           Cell: ({ row }) => (
             <Box >
-              <div className="address">
-                {row.original.address}
-              </div>
+                 <Tooltip   
+                    title="View user address in explorer"
+                    placement="top"
+                    arrow>
+                    <a 
+                        href={`https://explorer.solana.com/address/${row.original.userAddress}?cluster=testnet`}//devnet
+                        target="_blank"
+                        role="button"
+                        tabIndex="0"
+                        style={{ color: 'black',textDecoration:'none' }}
+                    >
+                        {row.original.userAddress && `${formatString(row.original.userAddress)}` }
+                    </a>
+                </Tooltip>
             </Box>
           ),
       },
@@ -181,13 +201,15 @@ const NftTabel = ({order, search}) =>{
       },
       {
         accessorKey: 'isListed',
-        header: 'Listed ',
+        header: 'List',
         size: 100,
         Cell: ({ row }) => (
           <Box >
-            <div className="isListed">
-              {row.original.isListed}
-            </div>
+            {row.original.isList ? 
+               <img className="isListed" src={CheckIcon} alt="list-icon" /> 
+               :
+               <img className="isListed" src={CloseIcon} alt="unlist-icon" />
+            }
           </Box>
         ),
      },
@@ -198,7 +220,7 @@ const NftTabel = ({order, search}) =>{
         Cell: ({ row }) => (
           <Box >
             <div className="Price">
-              {row.original.Price}
+              {row.original.price} SOL
             </div>
           </Box>
         ),
@@ -207,7 +229,7 @@ const NftTabel = ({order, search}) =>{
     
     const data = [
       {
-        isTreding:2,
+        isTrending:2,
         address:'asdfsadfdsaf',
         nftName: "3232323",
         nftImage:"fasdfsdf",
@@ -215,40 +237,40 @@ const NftTabel = ({order, search}) =>{
         price:2332
       }
     ]
-    // useEffect(()=>{
-    //   getDataTransaction(1);
-    //   setPagination({ ...pagination, pageIndex: 1});
-    // },[order,search])
-    // useEffect(() => {
-    //     handleDataTransaction();
-    // }, [dataTransacitonUser]);;  
+    useEffect(()=>{
+      getDataNft(1);
+      setPagination({ ...pagination, pageIndex: 1});
+    },[searchTerm,selectTab,isUpdateStatus])
+    useEffect(() => {
+        handleDataTransaction();
+    }, [dataNft]);
     const handleDataTransaction =()=>{
-        if(isArrayLength(dataTransacitonUser,1)){
-            setDataUserState((preValue)=>pagination?.pageIndex === 1 ? [...dataTransacitonUser] : arrayObjectOfUniques([...preValue,...dataTransacitonUser],'id'))
+        if(isArrayLength(dataNft,1)){
+            setDataNftState((preValue)=>pagination?.pageIndex === 1 ? [...dataNft] : arrayObjectOfUniques([...preValue,...dataNft],'id'))
         }
-        // else if(dataTransacitonUser.length == 0){
-        //   setDataUserState([])
+        // else if(dataNft.length == 0){
+        //   setDataNftState([])
         // }
         else{
-          if(dataTransacitonUser !== null && isArrayLength(dataUserState,1)){
-            setDataUserState([])
+          if(dataNft !== null && isArrayLength(dataNftState,1)){
+            setDataNftState([])
           }
         }
       };
-    const getDataTransaction = (pageIndex)=>{
+    const getDataNft = (pageIndex)=>{
+      // console.log("fdsfds");
         dispatch(
-            getTransactionUser({
-                userID:accountInfo.id,
-                pageIndex: pageIndex || pagination.pageIndex ,
-                pageSize:pagination.pageSize,
-                order:order,
-                search:search
+          getNftByAdmin({
+              pageIndex: pageIndex || pagination.pageIndex ,
+              pageSize:pagination.pageSize,
+              search:searchTerm,
+              isList:selectTab == 2 ? true : false
             })
         )
     }
     const fetchNextPage =()=>{
-        if(isArrayLength(dataTransacitonUser, pagination?.pageSize)){
-          getDataTransaction(pagination?.pageIndex + 1)
+        if(isArrayLength(dataNft, pagination?.pageSize)){
+          getDataNft(pagination?.pageIndex + 1)
           setPagination((prevValue)=>({...prevValue, pageIndex: prevValue?.pageIndex + 1}))
         }
       };
@@ -261,7 +283,7 @@ const NftTabel = ({order, search}) =>{
           if(screenEl?.scrollLeft !== scrollLeft) return
           //once the user has scrolled within 400px of the bottom of the table, fetch more data if we can
           const isScrollEnd = (scrollHeight - scrollTop) < clientHeight + 80;
-          if (isScrollEnd && !loading && isArrayLength(dataTransacitonUser, pagination?.pageSize)) {
+          if (isScrollEnd && !loading && isArrayLength(dataNft, pagination?.pageSize)) {
             debounceNextPage();
           }
         }
@@ -272,14 +294,23 @@ const NftTabel = ({order, search}) =>{
           </div>
           <div className='userTabel'>
             <div className='headerTabel'>
-              <div className="flex onOffSwitch">
-                <div className="onOffText">Add Trending</div>
-                <BaseSwitch
-                  checked={showIsTrending}
-                  onChange={event => {
+            <div className="flex onOffSwitch">
+              {selectTab == 2 ? 
+                  <>
+                  <div className="onOffText">Add Trending</div>
+                  <BaseSwitch
+                    checked={showIsTrending}
+                    onChange={event => {
                     setShowIsTreding(event.target.checked);
-                  }}
-                />
+                    }}
+                   />
+                  </>
+                 : 
+                 <>
+                  <div className="onOffText"></div>
+                 </>
+                 
+              }
               </div>
               <div>
               <Tabs
@@ -314,13 +345,13 @@ const NftTabel = ({order, search}) =>{
                 }}
             >
                 <Tab value={1} className='tabSelect' label='ALL' />
-                <Tab value={2} className='tabSelect' label='Trending' />
+                <Tab value={2} className='tabSelect' label='List on market' />
                 {/* <Tab value={3} label='Marketplace' /> */}
             </Tabs>
               </div>
               <div className='search-accountpage'>
                   <TextField
-                      // key={searchKey}
+                      key={searchKey}
                       className={`searchInput`}
                       fullWidth
                       hiddenLabel
@@ -355,7 +386,7 @@ const NftTabel = ({order, search}) =>{
          
             <MaterialReactTable
             columns={columns}
-            data={data || []}
+            data={dataNftState || []}
             enableExpandAll={false}
             enableTopToolbar={false}
             enableSorting={false}
@@ -367,13 +398,13 @@ const NftTabel = ({order, search}) =>{
               columnVisibility: {
                 ...visibleColumn,
                 'mrt-row-expand': false,
-                isTreding: showIsTrending
+                isTrending: showIsTrending
               },
               pagination,
             }}
             muiTableContainerProps={{
               sx: {
-                maxHeight: '620px',
+                maxHeight: '500px',
               },
               onScroll: fetchMoreOnBottomReached
             }}

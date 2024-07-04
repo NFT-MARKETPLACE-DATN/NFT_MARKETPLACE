@@ -11,9 +11,9 @@ import {
     getNftByUserError,
     getTransactionUserSuccess,
     getTransactionUserError
-} from '../actions'
-import * as Api from '../../utils/request'
-import { toast } from 'react-toastify'
+} from '../actions';
+import * as Api from '../../utils/request';
+import { toast } from 'react-toastify';
 
 function* updateUserBackground(action) {
   try {

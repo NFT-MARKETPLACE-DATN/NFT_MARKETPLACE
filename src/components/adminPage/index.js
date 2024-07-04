@@ -48,7 +48,10 @@ import { formatString, formatDateByTz } from "../../utils/helpers";
 const initialPagination = { pageIndex: 1, pageSize: 10 }
 const AdminPage = () => {
   const { account, accountInfo = {} } = useSelector((state) => state.globalState || {})
-  const { loading = false, dataNftHolding = [], totalRecordsNft } = useSelector((state) => state.accountState || {})
+  // const { loading = false, dataNftHolding = [], totalRecordsNft } = useSelector((state) => state.accountState || {})
+  const {
+    loading,
+  } = useSelector(state => state.adminState || {});
   const dispatch = useDispatch()
   const [value, setValue] = useState(1);
   const [selectTab, setSelectTab] = useState(1);
@@ -85,7 +88,7 @@ const AdminPage = () => {
   const handleTab = (id)=>{
     if(tab != id ){
       setTab(id);
-      console.log("fasdf");
+      // console.log("fasdf");
     }
     
   }
@@ -136,34 +139,34 @@ const AdminPage = () => {
       pageIndex: value
     }))
   }
-  useEffect(() => {
-    if (selectTab == 1) {
-      setPagination(initialPagination)
-      setTypePrice('DESC')
-      setIsListed(false)
-      setIsCreated(false)
-      setSearchKey(1)
-      setTypeTransaction(0)
-      setOrderTransaction('DESC')
-    } else if (selectTab == 2) {
-      setPagination(initialPagination)
-      setTypePrice('DESC')
-      setIsListed(true)
-      setIsCreated(false)
-      setSearchKey(2)
-      setTypeTransaction(0)
-      setOrderTransaction('DESC')
-    } else if (selectTab == 3) {
-      setPagination(initialPagination)
-      setTypePrice('DESC')
-      setIsListed(false)
-      setIsCreated(true)
-      setSearchKey(3)
-      setTypeTransaction(0)
-      setOrderTransaction('DESC')
-    } else if (selectTab == 4) {
-    }
-  }, [selectTab])
+  // useEffect(() => {
+  //   if (selectTab == 1) {
+  //     setPagination(initialPagination)
+  //     setTypePrice('DESC')
+  //     setIsListed(false)
+  //     setIsCreated(false)
+  //     setSearchKey(1)
+  //     setTypeTransaction(0)
+  //     setOrderTransaction('DESC')
+  //   } else if (selectTab == 2) {
+  //     setPagination(initialPagination)
+  //     setTypePrice('DESC')
+  //     setIsListed(true)
+  //     setIsCreated(false)
+  //     setSearchKey(2)
+  //     setTypeTransaction(0)
+  //     setOrderTransaction('DESC')
+  //   } else if (selectTab == 3) {
+  //     setPagination(initialPagination)
+  //     setTypePrice('DESC')
+  //     setIsListed(false)
+  //     setIsCreated(true)
+  //     setSearchKey(3)
+  //     setTypeTransaction(0)
+  //     setOrderTransaction('DESC')
+  //   } else if (selectTab == 4) {
+  //   }
+  // }, [selectTab])
   useEffect(() => {
     // if(!localStorage.getItem('walletAdress'))  navigate('/');
     // if(!accountInfo.id) navigate('/')
