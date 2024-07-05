@@ -86,17 +86,20 @@ const NftTabel = () =>{
         setValue(newValue);
         setSearchTerm(null);
         setSearchKey(2);
+        setScreenEl({})
       }
     useEffect(()=>{
         if(selectTab == 2){
             setVisibleColumn((pre)=>({
                 ...pre,
-                price : true
+                price : true,
+                isListed : false
             }))
         }else{
             setVisibleColumn((pre)=>({
                 ...pre,
-                price : false
+                price : false,
+                isListed : true
             }));
             setShowIsTreding(false);
         }
@@ -201,7 +204,7 @@ const NftTabel = () =>{
       },
       {
         accessorKey: 'isListed',
-        header: 'List',
+        header: 'List On Market',
         size: 100,
         Cell: ({ row }) => (
           <Box >
@@ -485,13 +488,13 @@ const NftTabel = () =>{
             muiTableBodyCellProps={{
               sx: {
                 fontWeight: 'normal',
-                fontSize: 16,
+                fontSize: 18,
               },
             }}
             muiTableHeadCellProps={{
               sx: {
                 fontWeight: 'normal',
-                fontSize: 12,
+                fontSize: 16,
                 color: '#707070',
                 '& .Mui-TableHeadCell-Content': {
                   justifyContent: 'space-between',

@@ -53,19 +53,19 @@ const AdminPage = () => {
     loading,
   } = useSelector(state => state.adminState || {});
   const dispatch = useDispatch()
-  const [value, setValue] = useState(1);
-  const [selectTab, setSelectTab] = useState(1);
-  const [pagination, setPagination] = useState(initialPagination);
-  // const [imagePreviewBackGround, setImagePreviewBackGround] = useState(null);
-  const [searchKey, setSearchKey] = useState(1)
-  const [searchTerm, setSearchTerm] = useState(null)
-  const [isListed, setIsListed] = useState(false)
-  const [isCreated, setIsCreated] = useState(false)
-  const [typePrice, setTypePrice] = useState('DESC')
-  const [typeTransaction, setTypeTransaction] = useState(0)
-  const [orderTransaction, setOrderTransaction] = useState('DESC');
+  // const [value, setValue] = useState(1);
+  // const [selectTab, setSelectTab] = useState(1);
+  // const [pagination, setPagination] = useState(initialPagination);
+  // // const [imagePreviewBackGround, setImagePreviewBackGround] = useState(null);
+  // const [searchKey, setSearchKey] = useState(1)
+  // const [searchTerm, setSearchTerm] = useState(null)
+  // const [isListed, setIsListed] = useState(false)
+  // const [isCreated, setIsCreated] = useState(false)
+  // const [typePrice, setTypePrice] = useState('DESC')
+  // const [typeTransaction, setTypeTransaction] = useState(0)
+  // const [orderTransaction, setOrderTransaction] = useState('DESC');
   const [tab, setTab] = useState(0);
-  const [adminSelected,setAdminSelected] = useState("USER");
+  // const [adminSelected,setAdminSelected] = useState("USER");
   const navigate = useNavigate();
   const tabs = [
     {
@@ -77,14 +77,6 @@ const AdminPage = () => {
       label: 'NFT',
     },
   ];
-  // const handleTabUser = () =>{
-  //   console.log("fdsafsdaf");
-  //   setAdminSelected("USER");
-  // };
-  // const handleTabNft = () =>{
-  //   console.log("asdfsadf");
-  //   setAdminSelected("NFT");
-  // }
   const handleTab = (id)=>{
     if(tab != id ){
       setTab(id);
@@ -92,84 +84,10 @@ const AdminPage = () => {
     }
     
   }
-  // useEffect(()=>{
-  //   console.log("fasdf");
-  // },[tab])
-  const handleChangeTab = (event, newValue) => {
-    setSelectTab(newValue);
-    setValue(newValue);
-    setSearchTerm(null);
-  }
-  const handlerSearch = debounce((envent) => {
-    const { value } = envent.target
-    const trimmedValue = value.trim()
-    setSearchTerm(trimmedValue)
-    setPagination(initialPagination)
-    dispatch(
-      getNftByUser({
-        userID: accountInfo.id,
-        pageIndex: 1,
-        pageSize: pagination.pageSize,
-        order: typePrice,
-        isListed: isListed,
-        isCreated: isCreated,
-        search: value
-      })
-    )
-    // debouncedApiCall(trimmedValue);
-    // console.log(value);
-  }, 1000)
-  const handleChangeOrderForCreated = (event) => {
-    setTypePrice(event.target.value)
-    setPagination(initialPagination)
-    // setSearchTerm(null);
-    // setSearchKey(6);
-    // console.log(event.target.value);
-  }
-  const handleChangeOrderTransaction = (event) => {
-    setOrderTransaction(event.target.value)
-  }
-  const handleChangeTypeTransaction = (event) => {
-    setTypeTransaction(event.target.value)
-  }
-  const handlePageChange = (event, value) => {
-    // console.log(value);
-    setPagination((pre) => ({
-      ...pre,
-      pageIndex: value
-    }))
-  }
-  // useEffect(() => {
-  //   if (selectTab == 1) {
-  //     setPagination(initialPagination)
-  //     setTypePrice('DESC')
-  //     setIsListed(false)
-  //     setIsCreated(false)
-  //     setSearchKey(1)
-  //     setTypeTransaction(0)
-  //     setOrderTransaction('DESC')
-  //   } else if (selectTab == 2) {
-  //     setPagination(initialPagination)
-  //     setTypePrice('DESC')
-  //     setIsListed(true)
-  //     setIsCreated(false)
-  //     setSearchKey(2)
-  //     setTypeTransaction(0)
-  //     setOrderTransaction('DESC')
-  //   } else if (selectTab == 3) {
-  //     setPagination(initialPagination)
-  //     setTypePrice('DESC')
-  //     setIsListed(false)
-  //     setIsCreated(true)
-  //     setSearchKey(3)
-  //     setTypeTransaction(0)
-  //     setOrderTransaction('DESC')
-  //   } else if (selectTab == 4) {
-  //   }
-  // }, [selectTab])
+
   useEffect(() => {
     // if(!localStorage.getItem('walletAdress'))  navigate('/');
-    // if(!accountInfo.id) navigate('/')
+    if(!accountInfo.id) navigate('/')
   }, [])
   // useEffect(()=>{
   //   // if(pagination.pageIndex != 1)
@@ -283,56 +201,7 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          {/* <div className='tabAdmin'>
-          <Tabs
-              value={value}
-              onChange={handleChangeTab}
-              textColor='secondary'
-              indicatorColor='secondary'
-              aria-label='secondary tabs example'
-              variant="scrollable"
-              scrollButtons="auto"
-              sx={{
-                '& .MuiTab-root': {
-                  minWidth: 120,
-                  color: 'text.primary',
-                  '&.Mui-selected': {
-                    color: 'white', // Color when tab is selected
-                    backgroundColor:'secondary.main',
-                    borderRadius: '8px',
-                    underline: 'none',
-                  },
-                  '&:hover': {
-                    // backgroundColor: 'action.hover', // Color when tab is hovered
-                  },
-                },
-                '& .MuiTabs-indicator':{
-                  display:'none'
-                },
-                '& .MuiTabs-scrollButtons': {
-                  color: 'secondary.main',
-                },
-              }}
-            >
-              <Tab value={1} label='All' />
-              <Tab value={2} label='Listed' />
-              <Tab value={3} label='Created' />
-            
-            </Tabs>
-          </div> */}
           <div className='tabButton'>
-            {/* <BaseButton
-             text={"User"}
-             type={adminSelected === "USER" ? 'secondary' : 'none'}
-             onClick={handleTabUser}
-             className="buttonCurrency"
-            />
-            <BaseButton
-             text={"NFT"}
-             type={adminSelected === "NFT" ? 'secondary' : 'none'}
-             onClick={handleTabNft}
-             className="buttonCurrency"
-            />*/}
             {tabs.map((item, index) => (
                 <BaseButton
                   key={index}
@@ -346,260 +215,7 @@ const AdminPage = () => {
             
           <div className='admin-body'>
             {detailTabel()}
-            {/* <div className='admin-bar'>
-             
-            </div>
-            <div className='admin-tab'>
-              asdfasdfasdfsdfasd
-            </div> */}
-             {/* <div className='accountTab'>
-            <Tabs
-              value={value}
-              onChange={handleChangeTab}
-              textColor='secondary'
-              indicatorColor='secondary'
-              aria-label='secondary tabs example'
-              variant="scrollable"
-              scrollButtons="auto"
-              sx={{
-                '& .MuiTab-root': {
-                  minWidth: 120,
-                  color: 'text.primary',
-                  '&.Mui-selected': {
-                    color: 'white', // Color when tab is selected
-                    backgroundColor:'secondary.main',
-                    borderRadius: '8px',
-                    underline: 'none',
-                  },
-                  '&:hover': {
-                    // backgroundColor: 'action.hover', // Color when tab is hovered
-                  },
-                },
-                '& .MuiTabs-indicator':{
-                  display:'none'
-                },
-                '& .MuiTabs-scrollButtons': {
-                  color: 'secondary.main',
-                },
-              }}
-            >
-              <Tab value={1} label='All' />
-              <Tab value={2} label='Listed' />
-              <Tab value={3} label='Created' />
-            
-            </Tabs>
-
-                <div className='search-accountpage'>
-                  <TextField
-                      key={searchKey}
-                      className={`searchInput`}
-                      fullWidth
-                      hiddenLabel
-                      placeholder="Search for name"
-                      name="search"
-                      type="text"
-                      variant="outlined"
-                      margin="dense"
-                      autoComplete="off"
-                      defaultValue={searchTerm || null}
-                      // value={searchTerm === null ? '' : searchTerm}
-                      onChange={handlerSearch}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton>
-                              {searchTerm ? 
-                                <>
-                                </>
-                                :
-                                <img src={SearchIcon} alt="search-icon" />
-                              }
-                             
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      // onChange={handleChangeInput}
-                      // onBlur={handleBlurInput}
-                    />
-                </div>
-                <div className='arrow_price'>
-                  <FormControl >
-                    <Select
-                      value={typePrice}
-                      onChange={handleChangeOrderForCreated}
-                      className="typeValue"
-                      IconComponent={KeyboardArrowDownRoundedIcon}
-                    >
-                      <MenuItem value={'DESC'}>Recently created</MenuItem>
-                      <MenuItem value={'ASC'}>Created earliest</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-
-          
-          </div> */}
-          {/* <div className='accountPageItem'>
-            {detailTabel()}
-            {selectTab !== 4 &&(
-              dataNftHolding.length >0 && (
-                <div className='pagination'>
-                  <Pagination
-                  count={Math.ceil(totalRecordsNft / pagination.pageSize)}
-                  page={pagination.pageIndex}
-                  // count={10}
-                  // page={1}
-                  onChange={handlePageChange}
-                  color="primary"
-                  />
-                </div>
-              )
-              )
-            }
-       
-          </div> */}
           </div>
-          {/* <div className='accountTab'>
-            <Tabs
-              value={value}
-              onChange={handleChangeTab}
-              textColor='secondary'
-              indicatorColor='secondary'
-              aria-label='secondary tabs example'
-              variant="scrollable"
-              scrollButtons="auto"
-              sx={{
-                '& .MuiTab-root': {
-                  minWidth: 120,
-                  color: 'text.primary',
-                  '&.Mui-selected': {
-                    color: 'white', // Color when tab is selected
-                    backgroundColor:'secondary.main',
-                    borderRadius: '8px',
-                    underline: 'none',
-                  },
-                  '&:hover': {
-                    // backgroundColor: 'action.hover', // Color when tab is hovered
-                  },
-                },
-                '& .MuiTabs-indicator':{
-                  display:'none'
-                },
-                '& .MuiTabs-scrollButtons': {
-                  color: 'secondary.main',
-                },
-              }}
-            >
-              <Tab value={1} label='All' />
-              <Tab value={2} label='Listed' />
-              <Tab value={3} label='Created' />
-            
-            </Tabs>
-            {selectTab == 4 ? 
-              <>
-                <div className='arrow_created'>
-                  <FormControl >
-                    <Select
-                      value={orderTransaction}
-                      onChange={handleChangeOrderTransaction}
-                      className="orderTransaction"
-                      IconComponent={KeyboardArrowDownRoundedIcon}
-                    >
-                      <MenuItem value={'DESC'}>Recently created</MenuItem>
-                      <MenuItem value={'ASC'}>Created earliest</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className='type_transaction'>
-                  <FormControl >
-                    <Select
-                      value={typeTransaction}
-                      onChange={handleChangeTypeTransaction}
-                      className="typeTransaction"
-                      IconComponent={KeyboardArrowDownRoundedIcon}
-                    >
-                      <MenuItem value={0}>ALL</MenuItem>
-                      <MenuItem value={1}>Create</MenuItem>
-                      <MenuItem value={2}>Listed</MenuItem>
-                      <MenuItem value={3}>Unlist</MenuItem>
-                      <MenuItem value={4}>Buy</MenuItem>
-                      <MenuItem value={5}>Sell</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </> 
-            :
-              <>
-                <div className='search-accountpage'>
-                  <TextField
-                      key={searchKey}
-                      className={`searchInput`}
-                      fullWidth
-                      hiddenLabel
-                      placeholder="Search for name"
-                      name="search"
-                      type="text"
-                      variant="outlined"
-                      margin="dense"
-                      autoComplete="off"
-                      defaultValue={searchTerm || null}
-                      // value={searchTerm === null ? '' : searchTerm}
-                      onChange={handlerSearch}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton>
-                              {searchTerm ? 
-                                <>
-                                </>
-                                :
-                                <img src={SearchIcon} alt="search-icon" />
-                              }
-                             
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      // onChange={handleChangeInput}
-                      // onBlur={handleBlurInput}
-                    />
-                </div>
-                <div className='arrow_price'>
-                  <FormControl >
-                    <Select
-                      value={typePrice}
-                      onChange={handleChangeOrderForCreated}
-                      className="typeValue"
-                      IconComponent={KeyboardArrowDownRoundedIcon}
-                    >
-                      <MenuItem value={'DESC'}>Recently created</MenuItem>
-                      <MenuItem value={'ASC'}>Created earliest</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-              </>
-            }
-          
-          </div>
-          <div className='accountPageItem'>
-            {detailTabel()}
-            {selectTab !== 4 &&(
-              dataNftHolding.length >0 && (
-                <div className='pagination'>
-                  <Pagination
-                  count={Math.ceil(totalRecordsNft / pagination.pageSize)}
-                  page={pagination.pageIndex}
-                  // count={10}
-                  // page={1}
-                  onChange={handlePageChange}
-                  color="primary"
-                  />
-                </div>
-              )
-              )
-            }
-       
-          </div> */}
         </div>
       </AdminPageStyle>
     </>

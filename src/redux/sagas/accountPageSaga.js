@@ -73,7 +73,7 @@ function* getNftByUser(action) {
 function* getTransactionUser(action) {
   try {
     const { data } = action;
-    console.log(data);
+    // console.log(data);
     const payload = {
       url: `/nft/get-transaction`,
       params: {

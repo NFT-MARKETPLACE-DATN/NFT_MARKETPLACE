@@ -47,17 +47,19 @@ import { setLogin, getNftInfo, syncNftMarket } from "../../redux/actions";
 import Loading from '../../containers/Loading';
 import { formatString, formatDateByTz } from "../../utils/helpers";
 import { ChangePriceDialog } from '../../containers/changePrice';
+import {HandlerBuyNftDialog, BuyNFTDialog} from "../../containers/BuyNftDialog";
 import * as token from "@solana/spl-token"
 const DetailNFT = () => {
   const {account, accountInfo} = useSelector(state => state.globalState || {});
   const {
-    loading , 
+    loading, 
     nftInfo
   } = useSelector(state => state.nftState || {});
   const params = useSearchQuery();
   const [isCollapse, setIsCollapse] =useState(false);
   const [isCollapseTraits, setIsCollapseTraits] =useState(false);
   const [isPrice, setIsPrice] =useState(false);
+  const [isPay, setIsPay] =useState(false);
   const navigate = useNavigate();
   const onCollapse = ()=>{
     setIsCollapse(!isCollapse);
@@ -104,7 +106,9 @@ const DetailNFT = () => {
   const handlerBuyNFT = async()=> {
     if(!account){
       dispatch(setLogin(true));
+      return;
     }
+    setIsPay(true)
     // const wallet =await getConnected();
     // const transaction = new Transaction().add(
     //   SystemProgram.transfer({
@@ -125,35 +129,7 @@ const DetailNFT = () => {
     // } catch (error) {
     //   console.log(error);
     // }
-    // const lamports = await token.getMinimumBalanceForRentExemptMint(connection);
-    // const collectionAddress = Keypair.generate();
-    // console.log(collectionAddress.publicKey.toBase58());
-    // const programId = token.TOKEN_PROGRAM_ID
-    // const transaction = new Transaction().add(
-    //   SystemProgram.createAccount({
-    //     fromPubkey: new PublicKey(wallet.walletAddress),
-    //     newAccountPubkey: collectionAddress.publicKey, // địa chỉ tài khoản
-    //     space: token.MINT_SIZE,
-    //     lamports,
-    //     programId,
-    //   }),
-    // )
-    // transaction.feePayer = new PublicKey(wallet.walletAddress);
-    // const { blockhash } = await connection.getRecentBlockhash();
-    // transaction.recentBlockhash = blockhash;
-    // // console.log(transaction);
-    // transaction.sign(collectionAddress);
-    // try {
-    //   const signedTransaction = await wallet.provider.signTransaction(transaction);
-    //   console.log(signedTransaction);
-    //   const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-    //   console.log(signature);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // console.log(account);
-  //  await initCollection("https://solana-devnet.g.alchemy.com/v2/UZe8cyrmtLjH44EJ2mm8VZdo1ofTDCfA",account)
-    // await approveNFT(account);
+
     // await transferNFT();
 
   }
@@ -409,6 +385,12 @@ const DetailNFT = () => {
       onClose={() => {
         setIsPrice(false)
       }}
+    />
+    <HandlerBuyNftDialog
+    visible={isPay}
+    onClose={() => {
+      setIsPay(false)
+    }}
     />
   </>
 

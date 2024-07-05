@@ -9,6 +9,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Tooltip
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CloseIcon from "../../images/closeIc.svg";
@@ -19,7 +20,7 @@ import {validateNftTrait} from "./validate";
 // import { useDispatch, useSelector } from 'react-redux';
 
 const MintNFTDialog = (props) => {
-    const { visible, onClose, transaction , setAcount,setCode } = props;
+    const { visible, onClose, transaction, addressNft } = props;
     // const dispatch = useDispatch();
     // const {
     //     isLogin,
@@ -70,36 +71,44 @@ const MintNFTDialog = (props) => {
             </DialogContent>
             <DialogContent
                 style={{
-                    height:"100%"
+                    height:"100%",
+                    display:"flex",
+                    justifyContent:"space-between"
                 }}>
                 <div>
                     {/* <span>
                         View transaction in Solana explorer:
                     </span> */}
-                    <a 
-                    href={`https://explorer.solana.com/tx/${transaction}?cluster=testnet`}//devnet
-                    target="_blank"
-                    role="button"
-                    tabIndex="0"
-                    style={{ color: 'blue',textDecoration:'none' }}
-                    >
-                        {/* { transaction ? `${transaction.substring(0,3)}...${transaction.substring(transaction.length-4,3)}` : <></>} */}
-                        View Transaction
-                    </a>
+                    <Tooltip title=' View transaction in Solana explorer' placement='bottom' arrow>
+                        <a 
+                        href={`https://explorer.solana.com/tx/${transaction}?cluster=testnet`}//devnet
+                        target="_blank"
+                        role="button"
+                        tabIndex="0"
+                        style={{ color: 'blue',textDecoration:'none' }}
+                        >
+                            View Transaction
+                        </a>
+                    </Tooltip>
+    
 
                 </div>
-                {/* <div>
-                    <span>
+                <div>
+                    {/* <span>
                         View NFT in Solana explorer:
-                    </span>
-                    <a 
-                    href={`https://explorer.solana.com/tx/${transaction}?cluster=devnet`}
-                    target="_blank"
-                    role="button"
-                    tabIndex="0"
-                    style={{ color: 'blue',textDecoration:'none' }}>{transaction}
-                    </a>
-                </div> */}
+                    </span> */}
+                    <Tooltip title='View NFT in Solana explorer' placement='bottom' arrow>
+                        <a 
+                        href={`https://explorer.solana.com/address/${addressNft}?cluster=testnet`}
+                        target="_blank"
+                        role="button"
+                        tabIndex="0"
+                        style={{ color: 'blue',textDecoration:'none' }}>
+                            View NFT
+                        </a>
+                    </Tooltip>
+  
+                </div>
                
             </DialogContent>
         </Dialog>

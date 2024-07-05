@@ -14,6 +14,11 @@ const initialState = {
 };
 const nftPageReducer = (state = initialState, action)=>{
     switch (action.type) {
+        case SET_LOADING:
+            return{
+                ...state,
+                loading:action.data
+            };
         case GET_NFT_INFO_PENDING:
             return{
                 ...state,

@@ -127,7 +127,7 @@ const Header = () => {
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      {isHovered ? `Disconnect` : `${accountInfo?.address ? accountInfo?.address.substring(0, 3) : null}... | ${ accountInfo.balance == 0 ? 0 : `${parseFloat(accountInfo.balance).toFixed(3)}...`} SOL`}
+                      {isHovered ? `Disconnect` : `${accountInfo?.address ? accountInfo?.address.substring(0, 3) : null}... | ${ accountInfo.balance == 0 ? 0 : `${(accountInfo.balance).toFixed(5)}...`} SOL`}
                     </Button>
                     <div className='userIcon'>
                       <button

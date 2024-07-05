@@ -61,7 +61,7 @@ const NftTabelStyle =  styled.div`
       margin-top: 4px;
     }
     .transactionDateTime {
-      font-size: 15px;
+      font-size: 12px;
       font-weight: 500;
     }
     .rangeDateContainer {

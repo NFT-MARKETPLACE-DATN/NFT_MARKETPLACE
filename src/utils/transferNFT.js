@@ -5,6 +5,7 @@ import {
     PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID,
   } from "@metaplex-foundation/mpl-token-metadata";
   import { getConnected } from "./walletConnet";
+
 export const transferNFT = async () =>{
   const con = new Connection(process.env.SOLANA_URL, 'confirmed');
   const wallet = await getConnected();
@@ -58,3 +59,41 @@ export const transferNFT = async () =>{
     
   }
 }
+
+
+export const BuyNFT = async (formAddress, toAddress, price) =>{
+  try {
+    const con = new Connection(process.env.SOLANA_URL, 'confirmed');
+    const wallet = await getConnected();
+    const payNFT = SystemProgram.transfer({
+      fromPubkey: new PublicKey(formAddress),
+      toPubkey: new PublicKey(toAddress),
+      lamports: price* Math.pow(10, 9), // Số lượng lamports (1 SOL = 10^9 lamports)
+    });
+    const feeTransferNFT =   SystemProgram.transfer({
+      fromPubkey: new PublicKey(formAddress),
+      toPubkey: new PublicKey("ARTcqiXX4qxWdteFSQ3eHgmCbaZArFxxxmFSK9PSQzjD"),
+      lamports: 10000, // Số lượng lamports (1 SOL = 10^9 lamports)
+    })
+    const transaction = new Transaction()
+    .add(payNFT)
+    .add(feeTransferNFT)
+    transaction.feePayer =  new PublicKey(formAddress);
+    const { blockhash } = await con.getRecentBlockhash();
+    transaction.recentBlockhash = blockhash;
+    const signedTransaction = await wallet.provider.signTransaction(transaction);
+    console.log(signedTransaction);
+    const signature = await con.sendRawTransaction(signedTransaction.serialize());
+    console.log(signature);
+    return {
+      result : signature,
+      status : true
+    }
+  } catch (error) {
+    return {
+      status : false,
+      result : error.message
+    }
+  }
+}
+

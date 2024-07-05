@@ -256,7 +256,7 @@ const AccountPage = () => {
                     <img src={SolanaIcon} alt='image' className='solanaIcon' />  
                   {/* </div> */}
                 </Tooltip>
-                <Tooltip  title="View on Solana Explorer" placement='bottom' arrow className='tooltip'>  {/* title={itemCopy} */}
+                <Tooltip key="Explorer" title="View on Solana Explorer" placement='bottom' arrow className='tooltip'>  {/* title={itemCopy} */}
                   {/* <span className='label-text' >{accountInfo?.address && formatString(accountInfo?.address)}</span> */}
                   {/* onClick={onCopyLink} */}
                   <a 

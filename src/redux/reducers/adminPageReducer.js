@@ -46,16 +46,19 @@ const adminPageReducer = (state = initialState, action) => {
             return{
                 ...state,
                 loading:true,
+                isUpdateStatus:false,
             }
         case UPDATE_ROLE_USER_SUCCESS:
             return{
                 ...state,
                 loading:false,
+                isUpdateStatus:true,
             }
         case UPDATE_ROLE_USER_ERROR:
             return{
                ...state,
                 loading:false,
+                isUpdateStatus:false,
             }
         case GET_NFT_BY_ADMIN_PENDING:
             return{
