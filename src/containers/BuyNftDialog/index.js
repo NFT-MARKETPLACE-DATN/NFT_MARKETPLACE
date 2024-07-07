@@ -52,7 +52,10 @@ export const HandlerBuyNftDialog = (props) => {
         }
         const result = await BuyNFT(accountInfo.address,nftInfo.ownAddress,nftInfo.price);
         if(result.status){
-
+            
+        }else{
+            toast.error(result.result);
+            return ;
         }
     }
     return (
