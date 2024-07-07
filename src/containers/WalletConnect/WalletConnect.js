@@ -31,6 +31,7 @@ const WalletConnect = (props) => {
     const onConnectWallet = async () => {
         const wallet = await getConnected();
         // console.log(wallet);
+        setCode(wallet.code);
         if(wallet.code == 1){
             localStorage.setItem('walletAdress',wallet.walletAddress);
             dispatch(login({
@@ -38,9 +39,10 @@ const WalletConnect = (props) => {
             }))
             // dispatch(setWallet(wallet.walletAddress))
             // toast.success("Success")
+        }else{
+            toast.error(wallet.provider);
         }
         // setAcount(wallet.walletAddress);
-        setCode(wallet.code);
         onCloseDialog();
        
         // console.log(wallet);

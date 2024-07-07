@@ -42,7 +42,8 @@ export const getConnected = async () => {
     }
     return{
       walletAddress: null,
-      code:0
+      code:0,
+      provider : "Connect Fail"
     }
     // window.open('https://phantom.app/', '_blank');
      
@@ -73,9 +74,10 @@ export const getConnected = async () => {
 
   } catch (err) {
     console.log(`Login to wallet error`, err);
-
     return {
+      code:-1,
       walletAddress: null,
+      provider : err.message
     };
   }
 };

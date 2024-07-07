@@ -59,7 +59,7 @@ export const ChangePriceDialog = (props) => {
                 price : (values.price * Math.pow(10, 9)),
                 isList : true ,
                 isTrending : false,
-                transaction:transaction.result
+                transaction:transaction?.result | null
             }
             dispatch(syncNftMarket(params));
            } catch (error) {
