@@ -1,6 +1,6 @@
 import { createCreateMetadataAccountV3Instruction, createCreateMasterEditionV3Instruction, createSetCollectionSizeInstruction } from "@metaplex-foundation/mpl-token-metadata";
-import { TOKEN_PROGRAM_ID,createTransferInstruction,createMintToInstruction,createApproveInstruction,getAssociatedTokenAddressSync,ASSOCIATED_TOKEN_PROGRAM_ID, createAssociatedTokenAccountInstruction ,createAccount, createMint,getMint, mintTo, getMinimumBalanceForRentExemptMint,getAccountLenForMint ,MINT_SIZE ,createInitializeMintInstruction, createInitializeAccountInstruction } from "@solana/spl-token";
-import { Connection,getOrCreateAssociatedTokenAccount, Keypair, PublicKey, Transaction,sendAndConfirmTransaction,  Signer , SystemProgram , clusterApiUrl   } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID,createTransferInstruction,createMintToInstruction,createApproveInstruction,getAssociatedTokenAddressSync,ASSOCIATED_TOKEN_PROGRAM_ID, createAssociatedTokenAccountInstruction , createMint ,MINT_SIZE } from "@solana/spl-token";
+import { Connection, Keypair, PublicKey, Transaction,sendAndConfirmTransaction,  Signer , SystemProgram , clusterApiUrl   } from "@solana/web3.js";
 import {
     PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID,
   } from "@metaplex-foundation/mpl-token-metadata";
@@ -86,13 +86,13 @@ export const BuyNFT = async (formAddress, toAddress, price) =>{
     const signature = await con.sendRawTransaction(signedTransaction.serialize());
     console.log(signature);
     return {
-      result : signature,
+      transaction : signature,
       status : true
     }
   } catch (error) {
     return {
       status : false,
-      result : error.message
+      transaction : error.message
     }
   }
 }

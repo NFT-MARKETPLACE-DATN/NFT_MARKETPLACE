@@ -1,13 +1,16 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { 
     GET_NFT_INFO_PENDING,
-    SYNC_NFT_MARKET_PENDING 
+    SYNC_NFT_MARKET_PENDING,
+    BUY_NFT_BY_USER_PENDING
 } from '../constants'
 import { 
     getNftInfoSuccess, 
     getNftInfoError,
     syncNftMarketSuccess,
-    syncNftMarketError 
+    syncNftMarketError ,
+    buyNftByUserSuccess,
+    buyNftByUserError
 } from '../actions'
 import * as Api from '../../utils/request'
 import { toast } from 'react-toastify'
@@ -64,8 +67,39 @@ function* syncNftMarket(action) {
   }
 }
 
+function* buyNftByUser(action) {
+  try {
+    const { data } = action
+    const payload = {
+      url: `/nft/transfer-nft`,
+      params: {
+        userId: data.userID,
+        nftId: data.nftID
+      },
+      data:{
+        userBuyAddress: data.userBuyAddress,
+        mintAddress: data.mintAddress,
+        tokenAccount: data.tokenAccount,
+        transactionBuy: data.transactionBuy,
+      }
+    }
+    const respond = yield call(Api.post, payload);
+    if (respond.success) {
+      yield put(buyNftByUserSuccess(respond))
+      toast.success(respond.message)
+    } else {
+      yield put(buyNftByUserError(respond.message))
+      toast.error(respond.message)
+    }
+  } catch (error) {
+    yield put(buyNftByUserError(error.message))
+    toast.error(error.message)
+  }
+}
+
 export default function* todoSaga() {
   // yield takeLatest(SET_WALLET, fetchDataSaga);
   yield takeLatest(GET_NFT_INFO_PENDING, getNftInfo);
-  yield takeLatest(SYNC_NFT_MARKET_PENDING, syncNftMarket)
+  yield takeLatest(SYNC_NFT_MARKET_PENDING, syncNftMarket);
+  yield takeLatest(BUY_NFT_BY_USER_PENDING, buyNftByUser);
 }

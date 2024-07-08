@@ -281,9 +281,9 @@ const DetailNFT = () => {
                             target="_blank"
                             role="button"
                             tabIndex="0"
-                            style={{ color: 'blue',textDecoration:'none',fontWeight:"600" }}
+                            style={{ color: 'black',textDecoration:'none',fontWeight:"600" }}
                             >
-                            { formatString(nftInfo?.metadataUrl)}
+                            { formatString(nftInfo?.metadataUrl.replace(/^https?:\/\//, ''))}
                           </a>
                         </Tooltip>
                       }
@@ -347,7 +347,7 @@ const DetailNFT = () => {
               
             <div className='tradeNFT'>
               <div className='priceNFT'>
-                {nftInfo?.user_id == accountInfo.id ? 
+                { nftInfo?.user_id == accountInfo.id ? 
                   // (nftInfo?.isList == 1 ? 
 
                   //   <Button className='unListBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
@@ -362,7 +362,7 @@ const DetailNFT = () => {
                       {nftInfo?.isList == 1 ? `UnList` : `List`}
                     </Button>
                   :
-                  (nftInfo?.isList == 1 &&
+                  ( nftInfo?.isList == 1 &&
                   <Button className='buyBtn' width='100%' variant='contained' onClick={handlerBuyNFT}>
                     Buy
                   </Button>

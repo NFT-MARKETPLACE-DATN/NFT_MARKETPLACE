@@ -65,9 +65,11 @@ const MintNFTDialog = (props) => {
             </DialogTitle>
             <DialogContent
                 style={{
-                    height:"100%"
+                    height:"100%",
+                    fontSize:"16px",
+                    fontWeight:500
                 }}>
-                    Congratulations, you have successfully created an NFT
+                    Congratulations, you have successfully created NFT
             </DialogContent>
             <DialogContent
                 style={{

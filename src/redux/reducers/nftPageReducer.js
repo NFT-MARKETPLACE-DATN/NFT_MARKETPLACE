@@ -5,7 +5,11 @@ import {
     SYNC_NFT_MARKET_PENDING,
     SYNC_NFT_MARKET_SUCCESS,
     SYNC_NFT_MARKET_ERROR,
-    SET_LOADING
+    // SET_LOADING,
+    BUY_NFT_BY_USER_PENDING,
+    BUY_NFT_BY_USER_SUCCESS,
+    BUY_NFT_BY_USER_ERROR,
+    SET_LOADING_NFT
 } from "../constants/index";
 
 const initialState = {
@@ -14,7 +18,7 @@ const initialState = {
 };
 const nftPageReducer = (state = initialState, action)=>{
     switch (action.type) {
-        case SET_LOADING:
+        case SET_LOADING_NFT:
             return{
                 ...state,
                 loading:action.data
@@ -52,11 +56,20 @@ const nftPageReducer = (state = initialState, action)=>{
                 ...state,
                 loading: false,
             }
-        case SET_LOADING:
+        case BUY_NFT_BY_USER_PENDING:
             return{
                 ...state,
-                loading:action.data
-            };
+            }   
+        case BUY_NFT_BY_USER_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+            }
+        case BUY_NFT_BY_USER_ERROR:
+            return{
+                ...state,
+                loading: false,
+            }
         default:
             return state;
     }

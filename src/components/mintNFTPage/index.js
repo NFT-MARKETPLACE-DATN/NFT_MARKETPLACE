@@ -91,7 +91,7 @@ const MintNFTPage = () => {
         if (imageURL.status == true) {
           const data = {
             name: values.nameNFT,
-            symbol: values.nameNFT,
+            symbol: values.symbolNFT,
             description: values.descriptionNFT,
             seller_fee_basis_points: 100,
             image: imageURL.result,
@@ -120,7 +120,7 @@ const MintNFTPage = () => {
               setAddressNft(result.mint_address);
               const params = {
                 nftName:values.nameNFT,
-                symbol: values.nameNFT,
+                symbol: values.symbolNFT,
                 image: imageURL.result,
                 description: values.descriptionNFT,
                 attribute: nftTrait,
@@ -190,7 +190,7 @@ const MintNFTPage = () => {
                   inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
                   type='file'
                   variant='outlined'
-                  onBlur={formik.handleBlur}
+                  // onBlur={formik.handleBlur}
                   onChange={(event) => {
                     // console.log(event.target.files[0])
                     const file = event.target.files[0]
@@ -239,7 +239,7 @@ const MintNFTPage = () => {
                     inputProps={{ accept: '.jpg,.jpeg,.png,.gif,.svg,.mp4' }}
                     type='file'
                     variant='outlined'
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
                     onChange={(event) => {
                       console.log(event.target.files[0])
                       const file = event.target.files[0]

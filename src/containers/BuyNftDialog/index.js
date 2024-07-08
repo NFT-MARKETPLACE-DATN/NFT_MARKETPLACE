@@ -9,6 +9,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Tooltip
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CloseIcon from "../../images/closeIc.svg";
@@ -16,7 +17,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import {validateNftTrait} from "./validate";
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogin, getNftInfo, syncNftMarket, setLoading } from "../../redux/actions";
+import {setLoadingNft,buyNftByUser } from "../../redux/actions";
 import { toast } from 'react-toastify';
 import { BuyNFT } from '../../utils/transferNFT';
 export const HandlerBuyNftDialog = (props) => {
@@ -26,8 +27,10 @@ export const HandlerBuyNftDialog = (props) => {
       loading , 
       nftInfo
     } = useSelector(state => state.nftState || {});
+    const [transaction,setTransaction] = useState();
+    const [isOpenDialogNotification, setIsOpenDialogNotification] = useState(false);
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const onCloseDialog = () => {
         onClose();
     };
@@ -44,22 +47,42 @@ export const HandlerBuyNftDialog = (props) => {
     //     }
     //   })
     const handlerBuyNFT = async ()=>{
-        dispatch(setLoading(true));
-        if(accountInfo.balance <= nftInfo.price){
-            toast.error("Your balance is not enough to pay NFT");
-            dispatch(setLoading(false));
-            return;
+        try {
+            dispatch(setLoadingNft(true));
+            if(accountInfo.balance <= nftInfo.price){
+                toast.error("Your balance is not enough to pay NFT");
+                dispatch(setLoadingNft(false));
+                return;
+            }
+            const result = await BuyNFT(accountInfo.address,nftInfo.ownAddress,nftInfo.price);
+            if(result.status){
+                setTransaction(result.transaction);
+                const params = {
+                    userID : accountInfo.id,
+                    nftID : nftInfo.id,
+                    userBuyAddress: accountInfo.address,
+                    mintAddress: nftInfo.mint_address,
+                    tokenAccount: nftInfo.token_account,
+                    transactionBuy: result.transaction,
+                  };
+                dispatch(buyNftByUser(params));
+                onCloseDialog();
+                setIsOpenDialogNotification(true);
+            }else{
+                toast.error(result.transaction);
+                dispatch(setLoadingNft(false));
+                return ;
+            }
+        } catch (error) {
+            toast.error(error.message);
+            dispatch(setLoadingNft(false));
+            console.log(error);
         }
-        const result = await BuyNFT(accountInfo.address,nftInfo.ownAddress,nftInfo.price);
-        if(result.status){
-            
-        }else{
-            toast.error(result.result);
-            return ;
-        }
+       
     }
-    return (
-        <Dialog
+    return (<>
+
+      <Dialog
             fullWidth
             maxWidth="xs"
             open={visible}
@@ -94,7 +117,7 @@ export const HandlerBuyNftDialog = (props) => {
                         </div>
                         <div style={{textAlign:"center"}}>
                             <span style={{lineHeight:"1.75rem", fontWeight:"700",fontSize:"1.375rem", }}>{nftInfo?.nftName}</span>
-                            <span style={{lineHeight:"1.75rem",fontSize:"22px;", textAlign:"center", color:"rgb(138, 147, 155)"}}>#{nftInfo?.symbol}</span>
+                            <span style={{lineHeight:"1.75rem",fontSize:"22px", textAlign:"center", color:"rgb(138, 147, 155)"}}>#{nftInfo?.symbol}</span>
                         </div>
                         
                         <div style={{lineHeight:"1.25rem", fontWeight:"400",fontSize:"1rem", textAlign:"center", letterSpacing:"-32"}}>Buying for {nftInfo?.price} SOL</div>
@@ -116,6 +139,16 @@ export const HandlerBuyNftDialog = (props) => {
             {/* </form> */}
            
         </Dialog>
+
+        <BuyNFTDialog
+        visible={isOpenDialogNotification}
+        onClose={() => {
+            setIsOpenDialogNotification(false)
+        }}
+        transaction={transaction}
+        />
+    </>
+      
     )
 };
 
@@ -158,41 +191,28 @@ export const BuyNFTDialog = (props) => {
                 style={{
                     height:"100%"
                 }}>
-                    Congratulations, you have successfully created an NFT
+                    Congratulations on your successful NFT purchase. Please check your address
             </DialogContent>
             <DialogContent
                 style={{
-                    height:"100%"
+                    height:"100%",
+                    display : "flex",
+                    justifyContent:"center"
                 }}>
                 <div>
-                    {/* <span>
-                        View transaction in Solana explorer:
-                    </span> */}
+                <Tooltip title=' View transaction in Solana explorer' placement='bottom' arrow>
                     <a 
                     href={`https://explorer.solana.com/tx/${transaction}?cluster=testnet`}//devnet
                     target="_blank"
                     role="button"
                     tabIndex="0"
-                    style={{ color: 'blue',textDecoration:'none' }}
+                    style={{ color: 'blue',textDecoration:'none' , fontSize:"18px"}}
                     >
                         {/* { transaction ? `${transaction.substring(0,3)}...${transaction.substring(transaction.length-4,3)}` : <></>} */}
                         View Transaction
                     </a>
-
+                </Tooltip>
                 </div>
-                {/* <div>
-                    <span>
-                        View NFT in Solana explorer:
-                    </span>
-                    <a 
-                    href={`https://explorer.solana.com/tx/${transaction}?cluster=devnet`}
-                    target="_blank"
-                    role="button"
-                    tabIndex="0"
-                    style={{ color: 'blue',textDecoration:'none' }}>{transaction}
-                    </a>
-                </div> */}
-               
             </DialogContent>
         </Dialog>
     )

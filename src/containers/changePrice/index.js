@@ -17,7 +17,7 @@ import { useFormik } from 'formik';
 import validate from './validate';
 import CloseIcon from "../../images/closeIc.svg";
 import { useDispatch, useSelector } from 'react-redux';
-import { syncNftMarket,setLoading, getNftListed } from "../../redux/actions";
+import { syncNftMarket,setLoadingNft, getNftListed } from "../../redux/actions";
 import { approveNFT } from '../../utils/approveNFT';
 export const ChangePriceDialog = (props) => {
     const { visible, onClose, } = props;
@@ -34,7 +34,7 @@ export const ChangePriceDialog = (props) => {
         enableReinitialize: true,
         initialValues: {
            price: nftInfo?.isList == 1 ? nftInfo?.price : 0,
-           defaultPirce: nftInfo?.price
+           defaultPirce: nftInfo?.isList == 1 ? nftInfo?.price : 0
         },
         validate,
         onSubmit: async (values) => {
@@ -42,11 +42,11 @@ export const ChangePriceDialog = (props) => {
             let transaction = null;
 
             if(!nftInfo?.isList){
-                dispatch(setLoading(true));
+                dispatch(setLoadingNft(true));
                 transaction = await approveNFT(nftInfo.mint_address,nftInfo.token_account);
                 // console.log(transaction);
                 if(!transaction.status){
-                    dispatch(setLoading(false));
+                    dispatch(setLoadingNft(false));
                     toast.error(transaction.result);
                     onClose();
                     return 
@@ -59,13 +59,13 @@ export const ChangePriceDialog = (props) => {
                 price : (values.price * Math.pow(10, 9)),
                 isList : true ,
                 isTrending : false,
-                transaction:transaction?.result | null
+                transaction:transaction ?  transaction?.result : null
             }
             dispatch(syncNftMarket(params));
            } catch (error) {
                 console.log(error);
                 toast.error(error.message)
-                dispatch(setLoading(false));
+                dispatch(setLoadingNft(false));
            }
            onClose();
            setTimeout(() => {
