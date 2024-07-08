@@ -104,7 +104,7 @@ const Transaction = ({order, search}) =>{
             header: 'Transaction',
             size: 200,
             Cell: ({ row }) => (
-              (row.original.actionName === 'Create' || row.original.actionName === 'Buy' || row.original.actionName === 'Listed' || row.original.actionName === 'SELL' ) &&
+              (row.original.actionName === 'Create' || row.original.actionName === 'Buy' || row.original.actionName === 'Listed' || row.original.actionName === 'Sell' ) &&
               <Box className='transaction'>
                 <Tooltip   
                     title="View Transaction in explorer"

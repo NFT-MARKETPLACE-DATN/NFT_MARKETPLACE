@@ -407,7 +407,7 @@ const NftTabel = () =>{
             }}
             muiTableContainerProps={{
               sx: {
-                maxHeight: '500px',
+                maxHeight: '620px',
               },
               onScroll: fetchMoreOnBottomReached
             }}

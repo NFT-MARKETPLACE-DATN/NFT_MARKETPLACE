@@ -185,7 +185,7 @@ const AdminPage = () => {
                 <Tooltip title='Solana' placement='top' arrow>
                     <img src={SolanaIcon} alt='image' className='solanaIcon' />  
                 </Tooltip>
-                <Tooltip  title="View on Solana Explorer" placement='bottom' arrow className='tooltip'> 
+                <Tooltip key="Explorer" title="View on Solana Explorer" placement='bottom' arrow className='tooltip'> 
                   <a 
                     href={`https://explorer.solana.com/address/${accountInfo?.address}?cluster=testnet`}//devnet
                     target="_blank"

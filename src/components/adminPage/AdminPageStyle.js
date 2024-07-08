@@ -160,11 +160,11 @@ const AdminPageStyle = styled.div`
             }
             .tooltip{
               display:flex;
-              .label-text{
+              // .label-text{
                 line-height: 20px;
                 font-weight: 600;
                 font-size: 16px;
-              }
+              // }
             }
             .account-join{
               color:rgb(84 84 84);
