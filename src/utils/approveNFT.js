@@ -27,7 +27,7 @@ export const approveNFT = async (mintAdress,tokenAccount) =>{
       )
     );
     transaction.feePayer =  new PublicKey(wallet.walletAddress);
-    const { blockhash } = await con.getRecentBlockhash();
+    const { blockhash } = await con.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
     // const signedTransaction = await wallet.provider.signTransaction(transaction);
     // console.log(signedTransaction);

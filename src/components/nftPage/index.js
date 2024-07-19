@@ -118,7 +118,7 @@ const DetailNFT = () => {
     //   })
     // );
     // transaction.feePayer = new PublicKey(wallet.walletAddress);
-    // const { blockhash } = await connection.getRecentBlockhash();
+    // const { blockhash } = await connection.getLatestBlockhash();
     // transaction.recentBlockhash = blockhash;
     // console.log(transaction);
     // try {

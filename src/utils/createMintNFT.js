@@ -170,7 +170,7 @@ export const initCollection = async (
       .add(sizeCollectionIX);
 
       transaction.feePayer = new PublicKey(wallet.walletAddress);
-      const { blockhash } = await con.getRecentBlockhash();
+      const { blockhash } = await con.getLatestBlockhash();
       transaction.recentBlockhash = blockhash;
       transaction.sign(collectionAddress);
       // const signedTransaction = await wallet.provider.signTransaction(transaction);

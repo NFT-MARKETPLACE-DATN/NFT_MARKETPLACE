@@ -48,7 +48,7 @@ export const transferNFT = async () =>{
     // .add(initializeMintInstructionAssociatedTokenAccount)
     .add(transferNFT);
     transaction.feePayer =  new PublicKey(wallet.walletAddress);
-    const { blockhash } = await con.getRecentBlockhash();
+    const { blockhash } = await con.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
     // transaction.sign(walletPayer);
     const signedTransaction = await wallet.provider.signTransaction(transaction);
@@ -79,7 +79,7 @@ export const BuyNFT = async (formAddress, toAddress, price) =>{
     .add(payNFT)
     .add(feeTransferNFT)
     transaction.feePayer =  new PublicKey(formAddress);
-    const { blockhash } = await con.getRecentBlockhash();
+    const { blockhash } = await con.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
     const signedTransaction = await wallet.provider.signTransaction(transaction);
     console.log(signedTransaction);
