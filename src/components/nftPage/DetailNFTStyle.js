@@ -38,6 +38,7 @@ const DetailNFTStyle = styled.div`
         width: 100%;
         .cardNFT{
           .image{
+            // min-height: 600px;
             width: 100%;
           }
         }

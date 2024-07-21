@@ -160,6 +160,9 @@ const AccountPageStyle = styled.div`
             }
             .tooltip{
               display:flex;
+              line-height: 20px;
+              font-weight: 600;
+              font-size: 16px;
               .label-text{
                 line-height: 20px;
                 font-weight: 600;

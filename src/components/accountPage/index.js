@@ -41,7 +41,7 @@ import Loading from '../../containers/Loading';
 import Transaction from './Transaction';
 import { formatString, formatDateByTz } from "../../utils/helpers";
 // import IteamListAccount from "../../containers/listItemAccount/index";
-const initialPagination= { pageIndex:1,pageSize:10 };
+const initialPagination= { pageIndex:1,pageSize:12 };
 const AccountPage = () => {
   const {
     account,
@@ -252,20 +252,16 @@ const AccountPage = () => {
               Unnamed
               <div className='account-address'>
                 <Tooltip title='Solana' placement='top' arrow>
-                  {/* <div className='address'> */}
                     <img src={SolanaIcon} alt='image' className='solanaIcon' />  
-                  {/* </div> */}
                 </Tooltip>
-                <Tooltip key="Explorer" title="View on Solana Explorer" placement='bottom' arrow className='tooltip'>  {/* title={itemCopy} */}
-                  {/* <span className='label-text' >{accountInfo?.address && formatString(accountInfo?.address)}</span> */}
-                  {/* onClick={onCopyLink} */}
+                <Tooltip key="Explorer" title="View on Solana Explorer" placement='bottom' arrow className='tooltip'>  
                   <a 
                     href={`https://explorer.solana.com/address/${accountInfo?.address}?cluster=testnet`}//devnet
                     target="_blank"
                     role="button"
                     tabIndex="0"
                     style={{ color: 'black',textDecoration:'none'}}
-                    className='label-text'
+                    className='label-text tooltip'
                     >
                     {accountInfo?.address && formatString(accountInfo?.address)}
                   </a>

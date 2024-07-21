@@ -150,6 +150,7 @@ const MintNFTStyle = styled.div`
           .imageHover {
             width: 100%;
             height:100%;
+            max-height:550px;
             img {
               width: 100%;
               height:100%;

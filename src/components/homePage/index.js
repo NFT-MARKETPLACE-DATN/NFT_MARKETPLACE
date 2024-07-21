@@ -33,7 +33,7 @@ import ItemList from '../listItem/index';
 import SearchIcon from '../../images/logos/SearchIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNftListed } from "../../redux/actions";
-const initialPagination= { pageIndex:1,pageSize:10 };
+const initialPagination= { pageIndex:1,pageSize:12 };
 const HomePage = () => {
   const {
     isLogin,
