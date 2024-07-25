@@ -33,6 +33,8 @@ import ItemList from '../listItem/index';
 import SearchIcon from '../../images/logos/SearchIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNftListed } from "../../redux/actions";
+import { useNavigate } from 'react-router-dom';
+
 const initialPagination= { pageIndex:1,pageSize:12 };
 const HomePage = () => {
   const {
@@ -156,6 +158,10 @@ const HomePage = () => {
   //     })
   //   )
   // }, 1000);
+  const navigate = useNavigate()
+  const handlerClick = (id) => {
+    navigate(`/nft?id=${id}`)
+  }
   return (
     <HomePageStye>
       <div className='silde'>
@@ -199,45 +205,38 @@ const HomePage = () => {
             },
           }}
         >
-          <SwiperSlide className='slide'>
+          <SwiperSlide className='slide' onClick={() => handlerClick(17)}>
             <img
               className='slide1'
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrv-C3ZAG_79rftgcNgNKhu9dSNpPoCqXiZw&s'
+              src='https://firebasestorage.googleapis.com/v0/b/marketplace-6d379.appspot.com/o/imageNFT%2Fimages.jpg9dab83b7-5806-42a2-9ea2-1c4549a1cbe5?alt=media'
               alt='imgae'
             />
           </SwiperSlide>
-          <SwiperSlide className='slide'>
+          <SwiperSlide className='slide' onClick={() => handlerClick(19)}>
             <img
               className='slide1'
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRbriYq2g5Kk5P4rveH-zgEgcQYJpB0k_wYQ&s'
+              src='https://firebasestorage.googleapis.com/v0/b/marketplace-6d379.appspot.com/o/imageNFT%2FMonster.jpge0497ae9-e16f-40a0-8a20-41dfb2e3809c?alt=media'
               alt='imgae'
             />
           </SwiperSlide>
-          <SwiperSlide className='slide'>
+          <SwiperSlide className='slide' onClick={() => handlerClick(20)}>
             <img
               className='slide1'
-              src='https://artlogic-res.cloudinary.com/w_1200,c_limit,f_auto,fl_lossy,q_auto/ws-artlogicwebsite0889/usr/images/news/main_image/6/nft-bored-ape-yacht-club.png'
+              src='https://firebasestorage.googleapis.com/v0/b/marketplace-6d379.appspot.com/o/imageNFT%2FMonaLisa.jpg9545c3c2-32e8-4acf-9fa0-ac8b0a0c7f59?alt=media'
               alt='imgae'
             />
           </SwiperSlide>
-          <SwiperSlide className='slide'>
+          <SwiperSlide className='slide' onClick={() => handlerClick(22)}>
             <img
               className='slide1'
-              src='https://i.seadn.io/gcs/files/f6497290ed37ccb7cbbe662a5b0a100f.png?auto=format&dpr=1&w=1000'
+              src='https://firebasestorage.googleapis.com/v0/b/marketplace-6d379.appspot.com/o/imageNFT%2Ftoithay1.jpg4aecf79e-1ca1-4b62-83c2-850b734e9542?alt=media'
               alt='imgae'
             />
           </SwiperSlide>
-          <SwiperSlide className='slide'>
+          <SwiperSlide className='slide' onClick={() => handlerClick(12)}>
             <img
               className='slide1'
-              src='https://i.seadn.io/gcs/files/f6497290ed37ccb7cbbe662a5b0a100f.png?auto=format&dpr=1&w=1000'
-              alt='imgae'
-            />
-          </SwiperSlide>
-          <SwiperSlide className='slide'>
-            <img
-              className='slide1'
-              src='https://i.seadn.io/gcs/files/f6497290ed37ccb7cbbe662a5b0a100f.png?auto=format&dpr=1&w=1000'
+              src='https://firebasestorage.googleapis.com/v0/b/marketplace-6d379.appspot.com/o/imageNFT%2Fsmile.jpg78c0235e-7849-40da-9020-737687031e3f?alt=media'
               alt='imgae'
             />
           </SwiperSlide>
